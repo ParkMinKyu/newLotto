@@ -11,7 +11,7 @@ $(function(){
 			for(var k = 0 ; k < ballList[i].length ; k ++){
 				var img = getBall(ballList[i][k]);
 				var $td = $('<td>',{
-					html : img
+					html : $(img).removeClass('noMatch')
 				});
 				$tr.append($td);
 			}
@@ -167,8 +167,4 @@ function setMatchNums(num){
 		}
 	}
 	$('#matchNums').append($select);
-	
-	$select.on('change',function(){
-		console.log($(this).val())
-	});
 }

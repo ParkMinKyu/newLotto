@@ -167,4 +167,8 @@ function setMatchNums(num){
 		}
 	}
 	$('#matchNums').append($select);
+	
+	$select.on('change',function(){
+		console.log($(this).val())
+	});
 }

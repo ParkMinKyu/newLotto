@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./lib/jquery.mobile-1.4.2.min.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="./lib/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="./js/main.js"></script>
+</head>
+<body>
+<div data-role="page" id="home">
+	<div data-role="header" data-theme="b">
+		<h3>Lotto 당첨 확인</h3>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#random" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">자동번호</a></li>
+				<li><a href="#hold" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">고정번호</a></li>
+				<li><a href="#comment" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">덧글</a></li>
+			</ul>
+		</div>
+	</div>
+	<div data-role="main" class="ui-content">
+		<div id="matchNums"  style="float: left;"></div><span style="padding-top: 2px;float: left;">회 당첨 번호 (2014. 06. 21)</span>
+		<div style="clear: both;"></div>
+		<table>
+			<thead id="realNums"></thead>
+		</table>
+		<span>내 번호 당첨 확인</span>
+		<table>
+			<tbody id="myNums"></tbody>
+		</table>
+	</div>
+	<div data-role="footer" data-theme="b">
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+			<a href="http://blog.naver.com/niee" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-icon-home ui-btn-icon-left">개발자 블로그</a>
+			<a href="mailto:niee@naver.com" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-icon-mail ui-btn-icon-left">메일 보내기</a>
+		</div>
+	</div>
+
+	<div data-role="popup" id="random">
+      <div data-role="header" data-theme="b">
+        <h1>자동번호</h1>
+        <a href="#" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back" data-rel="back">Go Back</a>
+      </div>
+      <div data-role="main" class="ui-content">
+      	<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+		  <a href="#" class="ui-btn" id="reBall">번호생성</a>
+		  <a href="#" class="ui-btn">번호저장</a>
+		</div>
+		 <table>
+			<tbody id="randomTable">
+			</tbody>
+		</table>
+      </div>
+  </div>
+  
+  <div data-role="popup" id="hold">
+      <div data-role="header" data-theme="b">
+        <h1>고정번호</h1>
+        <a href="#" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back" data-rel="back">Go Back</a>
+      </div>
+      
+      <div data-role="main" class="ui-content" style="text-align:center;">
+		<span>빈칸을 클릭 하세요.</span>
+		<table>
+			<thead>
+				<tr>
+					<th>공1</th>
+					<th>공2</th>
+					<th>공3</th>
+					<th>공4</th>
+					<th>공5</th>
+					<th>공6</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold1" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+				</tr>
+				<tr>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold2" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+				</tr>
+				<tr>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold3" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+				</tr>
+				<tr>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold4" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+				</tr>
+				<tr>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+					<td><div id="hold5" style="border: 1px solid;width: 35px;height: 35px;font-size:14px">선택!</div></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#" data-role="button">저장</a>
+      </div>
+  </div>
+</div>
+
+<div data-role="page" id="comment">
+	<div data-role="header" data-theme="b">
+		<h3>덧글 목록</h3>
+		<a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+	</div>
+	<div data-role="content">
+		<input type="text" name="comment" id="comment" maxlength="100" data-clear-btn="true" placeholder="100자 이내 입력만 가능 합니다.">
+		<a href="#" data-role="button" data-mini="true" data-corners="true">입력</a>
+		
+		<ul data-role="listview" data-inset="true">
+		   <li><a href="#">덧글1</a></li>
+		   <li><a href="#">덧글2</a></li>
+		   <li><a href="#">덧글3</a></li>
+		   <li><a href="#">덧글4</a></li>
+		   <li><a href="#">덧글5</a></li>
+		   <li><a href="#">덧글6</a></li>
+		   <li><a href="#">덧글7</a></li>
+		   <li><a href="#">덧글8</a></li>
+		   <li><a href="#">덧글9</a></li>
+		   <li><a href="#">덧글10</a></li>
+		</ul> 
+	</div>
+</div>
+</body>
+</html>

@@ -1,4 +1,5 @@
 var realNums = new Array();
+var selectBall = new Array();
 $(function(){
 	$('#reBall').on('tap',function(){
 		$('#randomTable').html('');
@@ -23,7 +24,51 @@ $(function(){
 	setMatchNums(602);
 	setRealNums([4,6,11,22,35,44,33]);
 	setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
+	createSelectBall();
 });
+
+//사용자 선택 볼 생성
+function createSelectBall(){
+	$('#ballList').html('');
+	var num = 1;
+	for(var i = 0 ; i < 9 ; i ++){
+		var $tr = $('<tr>');
+		for(var k = 0 ; k < 5 ; k ++){
+			var img = getBall(num);
+			var $td = $('<td>',{
+				html : img,
+				tap : function(){
+					var isNum = false;
+					var $obj = $(this).find('div');
+					var num = parseInt($obj.attr('num'));
+					for(var i = 0 ; i < selectBall.length ; i++){
+						if(selectBall[i] == num){
+							isNum = true;
+							break;
+						}
+					}
+					if(isNum){
+						var index = selectBall.indexOf(num);
+						if (index > -1) {
+							selectBall.splice(index, 1);
+						}
+						$obj.addClass('noMatch');
+					}else{
+						if(selectBall.length == 6){
+							alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
+							return;
+						}
+						selectBall.push(num);
+						$obj.removeClass('noMatch');
+					}
+				}
+			});
+			$tr.append($td);
+			num++;
+		}
+		$('#ballList').append($tr);
+	}
+}
 
 //당첨번호 셋팅
 function setRealNums(nums){
@@ -155,20 +200,19 @@ function checkBall($obj){
 
 //당첨 회차 생성
 function setMatchNums(num){
-	var $select = $('<select>'); 
 	for(var i = num ; i > 0 ; i --){
 		var $option = $('<option>',{
 			value : i,
 			text : i + " 회"
 		});
-		$select.append($option);
+		$('#matchNums').append($option);
 		if(i == num){
 			$option.attr("selected",true);
 		}
 	}
-	$('#matchNums').append($select);
+	$('#matchNums').selectmenu( "refresh" );
 	
-	$select.on('change',function(){
+	$('#matchNums').on('change',function(){
 		console.log($(this).val())
 	});
 }

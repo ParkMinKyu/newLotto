@@ -211,8 +211,4 @@ function setMatchNums(num){
 		}
 	}
 	$('#matchNums').selectmenu( "refresh" );
-	
-	$('#matchNums').on('change',function(){
-		console.log($(this).val())
-	});
 }

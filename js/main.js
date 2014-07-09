@@ -190,14 +190,13 @@ function checkBall($obj){
 			var obj = $myNums[k];
 			var num = parseInt($(obj).attr("num"));
 			if(realNums[i] == num){
-				checkCount++;
 				if(i == (realNums.length-1)){
 					if(checkCount >=5 ){
 						checkCount++;
 						$(obj).css('opacity','0.4');
 					}
-				}
-				if(checkCount >=5 ){
+				}else{
+					checkCount++;
 					$(obj).removeClass('noMatch');
 				}
 				break;

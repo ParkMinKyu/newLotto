@@ -72,6 +72,7 @@ function createSelectBall(){
 
 //당첨번호 셋팅
 function setRealNums(nums){
+	CallAndroid.Alert(""+nums);
 	$('#realNums').find('tr').remove();
 	var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
@@ -93,6 +94,7 @@ function setRealNums(nums){
 
 //내 번호 당첨 확인
 function setMyNums(nums){
+	CallAndroid.Alert(""+nums);
 	var length = nums.length;
 	$('#myNums').find('tr').remove();
 	
@@ -172,7 +174,6 @@ function checkBall($obj){
 			var obj = $myNums[k];
 			var num = parseInt($(obj).attr("num"));
 			if(realNums[i] == num){
-				CallAndroid.Alert(""+num);
 				checkCount++;
 				if(i == (realNums.length-1)){
 					checkCount++;

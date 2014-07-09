@@ -28,8 +28,7 @@ $(function(){
 	});
 	
 	$('#holdSave').on('tap',function(){
-		CallAndroid.saveRandomNum(ballList.toString());
-		$('#reBall').tap();
+		CallAndroid.holdRandomNum(selectBall.toString());
 		location.href="#home";
 	});
 	

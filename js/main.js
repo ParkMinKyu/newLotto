@@ -206,6 +206,8 @@ function setMatchNums(num){
 	
 	$('#gameyear').text(year);
 	
+	$('#matchNums').html('');
+	
 	for(var i = num ; i > 0 ; i --){
 		var $option = $('<option>',{
 			value : i,

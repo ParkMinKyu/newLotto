@@ -192,7 +192,7 @@ function checkBall($obj){
 			if(realNums[i] == num){
 				if(i == (realNums.length-1)){
 					if(checkCount >=5 ){
-						checkCount++;
+						checkCount+=2;
 						$(obj).css('opacity','0.4');
 					}
 				}else{

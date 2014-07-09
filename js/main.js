@@ -69,7 +69,7 @@ function createSelectBall(){
 						$obj.addClass('noMatch');
 					}else{
 						if(selectBall.length == 6){
-							CallAndroid..Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
+							CallAndroid.Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
 							return;
 						}
 						selectBall.push(num);

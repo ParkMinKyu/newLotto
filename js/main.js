@@ -205,24 +205,24 @@ function setMatchNums(num){
 	var num = parseInt(num.split(";")[1]);
 	
 	$('#gameyear').text(year);
-	
-	var len = $('#matchNums').find('option').length;
-	
-	if(len == 0){
-		for(var i = num ; i > 0 ; i --){
-			var $option = $('<option>',{
-				value : i,
-				text : i + " 회"
-			});
-			$('#matchNums').append($option);
-			if(i == num){
-				$option.attr("selected",true);
-			}
-		}
-		$('#matchNums').selectmenu( "refresh" );
-		
-		$('#matchNums').change(function(){
-			CallAndroid.getLastGameNum($(this).val());
+
+	CallAndroid.Alert($('#matchNums').find('option'));
+
+	for(var i = num ; i > 0 ; i --){
+		var $option = $('<option>',{
+			value : i,
+			text : i + " 회"
 		});
+		$('#matchNums').append($option);
+		if(i == num){
+			$option.attr("selected",true);
+		}
 	}
+	
+	$('#matchNums').selectmenu( "refresh" );
+	
+	$('#matchNums').change(function(){
+		CallAndroid.getLastGameNum($(this).val());
+	});
+
 }

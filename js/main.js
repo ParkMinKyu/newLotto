@@ -206,7 +206,7 @@ function setMatchNums(num){
 	
 	$('#gameyear').text(year);
 
-	CallAndroid.Alert($('#matchNums').find('option').length);
+	$('#matchNums').find('option').remove();
 
 	for(var i = num ; i > 0 ; i --){
 		var $option = $('<option>',{

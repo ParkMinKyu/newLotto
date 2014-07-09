@@ -72,7 +72,7 @@ function createSelectBall(){
 
 //당첨번호 셋팅
 function setRealNums(nums){
-	$('#realNums').find('tr').remove();
+	$('#realNums').html('');
 	var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
 		var img = getBall(nums[i]);

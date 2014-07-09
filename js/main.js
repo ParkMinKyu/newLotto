@@ -40,6 +40,10 @@ $(function(){
 		CallAndroid.clearNum();
 	});
 	
+	$('#callCamera').on('tap',function(){
+		CallAndroid.callCamera();
+	});
+	
 	$('#reBall').tap();
 	CallAndroid.getLastGameNum('');
 	//setRealNums([4,6,11,22,35,44,33]);

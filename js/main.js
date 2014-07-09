@@ -1,9 +1,10 @@
 var realNums = new Array();
+var ballList = new Array(); 
 var selectBall = new Array();
 $(function(){
 	$('#reBall').on('tap',function(){
 		$('#randomTable').html('');
-		var ballList = new Array(); 
+		ballList = new Array(); 
 		for(var i = 1 ; i <= 5 ; i ++){
 			ballList.push(randomBall());
 		}
@@ -18,6 +19,10 @@ $(function(){
 			}
 			$('#randomTable').append($tr);
 		}
+	});
+	
+	$('#randomSave').on('tap',function(){
+		CallAndroid.saveRandomNum(ballList.toString());
 	});
 	
 	$('#reBall').tap();

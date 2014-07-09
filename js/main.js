@@ -23,8 +23,8 @@ $(function(){
 	
 	$('#randomSave').on('tap',function(){
 		CallAndroid.saveRandomNum(ballList.toString());
-		$('#reBall').tap();
 		location.href="#home";
+		$('#reBall').tap();
 	});
 	
 	$('#holdSave').on('tap',function(){

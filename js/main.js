@@ -200,6 +200,12 @@ function checkBall($obj){
 
 //당첨 회차 생성
 function setMatchNums(num){
+	
+	var year = num.split(";")[0];
+	var num = num.split(";")[1];
+	
+	$('#gameyear').text(year);
+	
 	for(var i = num ; i > 0 ; i --){
 		var $option = $('<option>',{
 			value : i,

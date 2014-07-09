@@ -172,6 +172,7 @@ function checkBall($obj){
 			var obj = $myNums[k];
 			var num = parseInt($(obj).attr("num"));
 			if(realNums[i] == num){
+				CallAndroid.Alert(""+num);
 				checkCount++;
 				if(i == (realNums.length-1)){
 					checkCount++;

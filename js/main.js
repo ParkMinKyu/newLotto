@@ -28,8 +28,12 @@ $(function(){
 	});
 	
 	$('#holdSave').on('tap',function(){
-		CallAndroid.holdRandomNum(selectBall.toString());
-		location.href="#home";
+		if(selectBall.length < 6){
+			CallAndroid.Alert("6개의 번호를 선택 하세요.");
+		}else{
+			CallAndroid.holdRandomNum(selectBall.toString());
+			location.href="#home";
+		}
 	});
 	
 	$('#reBall').tap();

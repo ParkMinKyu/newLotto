@@ -73,6 +73,7 @@ function createSelectBall(){
 //당첨번호 셋팅
 function setRealNums(nums){
 	$('#realNums').find('tr').remove();
+	realNums = new Array();
 	var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
 		var img = getBall(nums[i]);
@@ -166,7 +167,6 @@ function isNum(list,num){
 //당첨 확인
 function checkBall($obj){
 	var $myNums = $obj.find('div');
-	CallAndroid.Alert(""+$myNums.length);
 	var checkCount = 0;
 	for(var i = 0 ; i < realNums.length ; i ++){
 		for(var k = 0 ; k < $myNums.length ; k ++ ){

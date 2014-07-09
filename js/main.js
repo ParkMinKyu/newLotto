@@ -27,6 +27,12 @@ $(function(){
 		location.href="#home";
 	});
 	
+	$('#holdSave').on('tap',function(){
+		CallAndroid.saveRandomNum(ballList.toString());
+		$('#reBall').tap();
+		location.href="#home";
+	});
+	
 	$('#reBall').tap();
 	CallAndroid.getLastGameNum('');
 	//setRealNums([4,6,11,22,35,44,33]);
@@ -37,6 +43,7 @@ $(function(){
 //사용자 선택 볼 생성
 function createSelectBall(){
 	$('#ballList').find('tr').remove();
+	selectBall = new Array();
 	var num = 1;
 	for(var i = 0 ; i < 9 ; i ++){
 		var $tr = $('<tr>');
@@ -62,7 +69,7 @@ function createSelectBall(){
 						$obj.addClass('noMatch');
 					}else{
 						if(selectBall.length == 6){
-							alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
+							CallAndroid..Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
 							return;
 						}
 						selectBall.push(num);

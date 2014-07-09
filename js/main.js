@@ -94,7 +94,7 @@ function setRealNums(nums){
 //내 번호 당첨 확인
 function setMyNums(nums){
 	var length = nums.length;
-	$('#myNums').find('tr').remove();
+	$('#myNums').find('div').remove();
 	
 	for(var i = 0 ; i < length ; i ++){
 		var $tr = $('<tr>');

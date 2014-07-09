@@ -24,7 +24,7 @@ $(function(){
 	CallAndroid.getLastGameNum('');
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
-	createSelectBall();
+	//createSelectBall();
 });
 
 //사용자 선택 볼 생성
@@ -72,7 +72,7 @@ function createSelectBall(){
 
 //당첨번호 셋팅
 function setRealNums(nums){
-	$('#realNums').html('');
+	$('#realNums').find('tr').remove();
 	var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
 		var img = getBall(nums[i]);
@@ -94,7 +94,7 @@ function setRealNums(nums){
 //내 번호 당첨 확인
 function setMyNums(nums){
 	var length = nums.length;
-	$('#myNums').html('');
+	$('#myNums').find('tr').remove();
 	
 	for(var i = 0 ; i < length ; i ++){
 		var $tr = $('<tr>');

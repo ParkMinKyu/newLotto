@@ -206,21 +206,23 @@ function setMatchNums(num){
 	
 	$('#gameyear').text(year);
 	
-	$('#matchNums').html('');
+	var len = $('#matchNums').find('option').length;
 	
-	for(var i = num ; i > 0 ; i --){
-		var $option = $('<option>',{
-			value : i,
-			text : i + " 회"
-		});
-		$('#matchNums').append($option);
-		if(i == num){
-			$option.attr("selected",true);
+	if(len == 0){
+		for(var i = num ; i > 0 ; i --){
+			var $option = $('<option>',{
+				value : i,
+				text : i + " 회"
+			});
+			$('#matchNums').append($option);
+			if(i == num){
+				$option.attr("selected",true);
+			}
 		}
+		$('#matchNums').selectmenu( "refresh" );
+		
+		$('#matchNums').change(function(){
+			CallAndroid.getLastGameNum($(this).val());
+		});
 	}
-	$('#matchNums').selectmenu( "refresh" );
-	
-	$('#matchNums').change(function(){
-		CallAndroid.getLastGameNum($(this).val());
-	});
 }

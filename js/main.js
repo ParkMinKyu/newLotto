@@ -207,9 +207,10 @@ function setMatchNums(num){
 	$('#gameyear').text(year);
 
 	var onum = parseInt($($('#matchNums').find('option')[0]).attr('value'));
+	
 	$('#matchNums').find('option').remove();
 
-	for(var i = onum?onum:num ; i > 0 ; i --){
+	for(var i = (onum?onum:num) ; i > 0 ; i --){
 		var $option = $('<option>',{
 			value : i,
 			text : i + " 회"

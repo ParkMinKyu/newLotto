@@ -20,7 +20,8 @@ $(function(){
 	});
 	
 	$('#reBall').tap();
-	setMatchNums(602);
+	//setMatchNums(602);
+	CallAndroid.getLastGameNum('');
 	setRealNums([4,6,11,22,35,44,33]);
 	setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
 });
@@ -169,6 +170,6 @@ function setMatchNums(num){
 	$('#matchNums').append($select);
 	
 	$select.on('change',function(){
-		console.log($(this).val())
+		CallAndroid.getLastGameNum($(this).val());
 	});
 }

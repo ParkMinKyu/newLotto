@@ -13,7 +13,6 @@ $(function(){
 			for(var k = 0 ; k < ballList[i].length ; k ++){
 				var img = getBall(ballList[i][k]);
 				var $td = $('<td>',{
-					css : {width:'240px'},
 					html : $(img).removeClass('noMatch')
 				});
 				$tr.append($td);
@@ -126,6 +125,7 @@ function setMyNums(nums){
 	if(length == 0){
 		var $tr = $('<tr>');
 		var $td = $('<td>',{
+                                css : {width:'240px'},
 				html : "번호를 생성 후 저장하세요."
 			});
 		$tr.append($td);

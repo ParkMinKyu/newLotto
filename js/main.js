@@ -23,6 +23,7 @@ $(function(){
 	
 	$('#randomSave').on('tap',function(){
 		CallAndroid.saveRandomNum(ballList.toString());
+		location.href="#home";
 	});
 	
 	$('#reBall').tap();

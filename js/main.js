@@ -131,13 +131,13 @@ function setMyNums(nums){
 
 //공 Object 리턴
 function getBall(num){
-	if(num > 40){
+	if(num >= 40){
 		return "<div class='ball1 noMatch' num='"+num+"'>"+num+"</div>";
-	}else if(num > 30){
+	}else if(num >= 30){
 		return "<div class='ball2 noMatch' num='"+num+"'>"+num+"</div>";
-	}else if(num > 20){
+	}else if(num >= 20){
 		return "<div class='ball3 noMatch' num='"+num+"'>"+num+"</div>";
-	}else if(num > 10){
+	}else if(num >= 10){
 		return "<div class='ball4 noMatch' num='"+num+"'>"+num+"</div>";
 	}else if(num > 0){
 		return "<div class='ball5 noMatch' num='"+num+"'>"+num+"</div>";

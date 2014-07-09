@@ -202,7 +202,7 @@ function checkBall($obj){
 function setMatchNums(num){
 	
 	var year = num.split(";")[0];
-	var num = num.split(";")[1];
+	var num = parseInt(num.split(";")[1]);
 	
 	$('#gameyear').text(year);
 	

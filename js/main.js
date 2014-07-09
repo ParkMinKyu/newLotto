@@ -114,8 +114,18 @@ function isNum(list,num){
 	for(var i = 0 ; i < list.length ; i ++ ){
 		if(list[i] == num){
 			return true;
+		}else{
+			for(var k = 0 ; k < ballList.length ; k ++){
+				for(var j = 0 ; j < ballList[k].length ; j++){
+					if(ballList[k][j] == num){
+						return true;
+					}
+				
+				}
+			}
 		}
 	}
+	
 }
 
 //당첨 확인

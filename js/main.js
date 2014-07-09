@@ -13,6 +13,7 @@ $(function(){
 			for(var k = 0 ; k < ballList[i].length ; k ++){
 				var img = getBall(ballList[i][k]);
 				var $td = $('<td>',{
+					colspan : 8,
 					html : $(img).removeClass('noMatch')
 				});
 				$tr.append($td);

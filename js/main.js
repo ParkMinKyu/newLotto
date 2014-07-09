@@ -29,7 +29,7 @@ $(function(){
 
 //사용자 선택 볼 생성
 function createSelectBall(){
-	$('#ballList').html('');
+	$('#ballList').find('tr').remove();
 	var num = 1;
 	for(var i = 0 ; i < 9 ; i ++){
 		var $tr = $('<tr>');
@@ -94,7 +94,7 @@ function setRealNums(nums){
 //내 번호 당첨 확인
 function setMyNums(nums){
 	var length = nums.length;
-	$('#myNums').find('div').remove();
+	$('#myNums').find('tr').remove();
 	
 	for(var i = 0 ; i < length ; i ++){
 		var $tr = $('<tr>');

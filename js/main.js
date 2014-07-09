@@ -224,7 +224,7 @@ function setMatchNums(num){
 	
 	$('#matchNums').selectmenu( "refresh" );
 	
-	$('#matchNums').change(function(){
+	$('#matchNums').die().live('change',function(){
 		CallAndroid.getLastGameNum($(this).val());
 	});
 

@@ -122,6 +122,15 @@ function setMyNums(nums){
 	var length = nums.length;
 	$('#myNums').find('tr').remove();
 	
+	if(length == 0){
+		var $tr = $('<tr>');
+		var $td = $('<td>',{
+				html : "번호를 생성 후 저장하세요."
+			});
+		$tr.append($td);
+		$('#myNums').append($tr);
+	}
+	
 	for(var i = 0 ; i < length ; i ++){
 		var $tr = $('<tr>');
 		for(var k = 0 ; k < nums[i].length ; k ++){

@@ -4,20 +4,21 @@ var selectBall = new Array();
 $(function(){
 	
 	$(document).on("pagecreate","#comment",function(){
-		$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
-			$('ul > li').remove();
-			for(var i = 0 ; i < data.length ; i ++){
-				var date = new Date(data[i].regtime.time);
-				var $li = $('<li>',{
-					html : data[i].comment + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
-					css : {"font-size" : "15px"} 
+		
+		getComment();
+		
+		$('#insertBtn').on('tap',function(){
+			if($('#comment').val() == '' || $('#comment').val().length > 100){
+				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
+				$('#comment').focus();
+			}else{
+				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('#comment').val()+,function(data){
+					getComment();
 				});
-				$('ul').append($li);
 			}
-			$('ul').listview();
-			$('ul').listview('refresh');
 		});
 	});
+	
 	
 	$('#reBall').on('tap',function(){
 		$('#randomTable').html('');
@@ -67,6 +68,23 @@ $(function(){
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
 	//createSelectBall();
 });
+
+//덧글 불러오기
+function getComment(){
+	$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
+			$('ul > li').remove();
+			for(var i = 0 ; i < data.length ; i ++){
+				var date = new Date(data[i].regtime.time);
+				var $li = $('<li>',{
+					html : data[i].comment + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
+					css : {"font-size" : "15px"} 
+				});
+				$('ul').append($li);
+			}
+			$('ul').listview();
+			$('ul').listview('refresh');
+		});
+}
 
 //사용자 선택 볼 생성
 function createSelectBall(){

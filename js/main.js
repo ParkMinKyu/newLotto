@@ -116,7 +116,7 @@ function createSelectBall(){
 			var img = getBall(num);
 			var $td = $('<td>',{
 				html : img,
-				tap : function(){
+				touchstart : function(e){
 					var isNum = false;
 					var $obj = $(this).find('div');
 					var num = parseInt($obj.attr('num'));
@@ -140,6 +140,7 @@ function createSelectBall(){
 						selectBall.push(num);
 						$obj.removeClass('noMatch');
 					}
+					e.preventDefault();
 				}
 			});
 			$tr.append($td);

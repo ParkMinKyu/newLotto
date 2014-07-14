@@ -13,7 +13,7 @@
 </head>
 <body>
 <div data-role="page" id="home">
-	<div data-role="header" data-theme="b">
+	<div data-role="header" data-theme="b" data-position="fixed">
 		<h3>Lotto 당첨 확인</h3>
 		<div data-role="navbar">
 			<ul>
@@ -22,13 +22,13 @@
 				<li><a href="#comment" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">덧글</a></li>
 			</ul>
 		</div>
-	</div>
-	<div data-role="main" class="ui-content">
 		<span id="gameyear">2014년 06월 21일 당첨 번호</span>
 		<select id="matchNums"></select>
 		<table>
 			<thead id="realNums"></thead>
 		</table>
+	</div>
+	<div data-role="main" class="ui-content">
 		<a href="#" data-role="button" data-mini="true" id="callCamera">QR코드로 당첨확인</a>
 		<span>내 번호 당첨 확인</span>
 		<table>

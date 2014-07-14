@@ -31,7 +31,9 @@ $(function(){
 				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
 				$('input[id=comment]').focus();
 			}else{
-				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('input[id=comment]').val(),function(data){
+				$.base64.utf8encode = true;
+				var message = $.base64.btoa($('input[id=comment]').val())
+				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+message,function(data){
 					getComment();
 				});
 			}
@@ -93,9 +95,11 @@ function getComment(){
 	$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
 			$('ul > li').remove();
 			for(var i = 0 ; i < data.length ; i ++){
+				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
+				var message = $.base64.atob(data[i].comment, true);
 				var $li = $('<li>',{
-					html : data[i].comment + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
+					html : message + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
 					css : {"font-size" : "15px"} 
 				});
 				$('ul').append($li);

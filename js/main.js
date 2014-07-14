@@ -89,11 +89,11 @@ function getComment(){
 				if(dd/1000 < 60 ){
 					dd = (dd/1000) +"초전";
 				}else if(dd/(1000*60) < 60){
-					dd = (dd/1000*60) +"분전";
+					dd = (dd/(1000*60)) +"분전";
 				}else if(dd/(1000*60*60) < 24){
-					dd = (dd/1000*60*60) +"시간 전";
+					dd = (dd/(1000*60*60)) +"시간 전";
 				}else{
-					dd = (dd/1000*60*60*24) +"일 전";
+					dd = (dd/(1000*60*60*24)) +"일 전";
 				}
 				message = message.replace(new RegExp('\\+','g'),' ');
 				message = message.replace(new RegExp('\\<','g'),'&lt;');

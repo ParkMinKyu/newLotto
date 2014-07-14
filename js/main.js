@@ -3,17 +3,17 @@ var ballList = new Array();
 var selectBall = new Array();
 $(function(){
 	
-	$.ajax(function(){
-	   url: "http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do",
-	   dataType: 'jsonp',
-	   jsonpCallback: "comment",
-	   success: function(data) {
-	     console.log("success : " , data);
-	   },
-	   error: function(data) {
-	     console.log('err : ', data);
-	   }
-		
+	$(document).on("pagecreate","#comment",function(){
+		$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
+			$('ul > li').remove();
+			for(var i = 0 ; i < data.length ; i ++){
+				var $li = $('<li>',{
+					html : data[i].comment + "( "+ new Date(data[i].regtime.time) +" )";
+				});
+				$('ul').append($li);
+			}
+			
+		});
 	});
 	
 	$('#reBall').on('tap',function(){

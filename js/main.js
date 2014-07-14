@@ -237,16 +237,19 @@ function randomBall(){
 
 //중복 생성 확인
 function isNum(list,num){
+	var isSame = $('#isSame').is(':checked');
 	for(var i = 0 ; i < list.length ; i ++ ){
 		if(list[i] == num){
 			return true;
 		}else{
-			for(var k = 0 ; k < ballList.length ; k ++){
-				for(var j = 0 ; j < ballList[k].length ; j++){
-					if(ballList[k][j] == num){
-						return true;
+			if(isSame){
+				for(var k = 0 ; k < ballList.length ; k ++){
+					for(var j = 0 ; j < ballList[k].length ; j++){
+						if(ballList[k][j] == num){
+							return true;
+						}
+	
 					}
-
 				}
 			}
 		}

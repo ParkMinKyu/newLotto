@@ -32,7 +32,8 @@ $(function(){
 				$('input[id=comment]').focus();
 			}else{
 				$.base64.utf8encode = true;
-				var message = $.base64.btoa($('input[id=comment]').val())
+				//var message = $.base64.btoa($('input[id=comment]').val())
+				var message = encodeURI(encodeURIComponent($('input[id=comment]').val()));
 				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+message,function(data){
 					getComment();
 				});

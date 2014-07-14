@@ -9,24 +9,6 @@ $(function(){
 		
 		$('#insertBtn').on('tap',function(){
 			
-	/*		$.base64.utf8encode = true;
-
-        enc.keyup(function () {
-            dec.val($.base64.btoa(this.value));
-            // also possible:
-            // dec.val( $.base64('encode', this.value) );
-            // dec.val( $.base64.encode(this.value) );
-        });
-
-
-        dec.keyup(function () {
-            // note: you can pass a third parameter to use the utf8 en- / decode option
-            enc.val($.base64.atob(this.value, true));
-            // also possible:
-            // dec.val( $.base64('decode', this.value) );
-            // dec.val( $.base64.decode(this.value) );
-        });*/
-			
 			if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
 				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
 				$('input[id=comment]').focus();
@@ -98,7 +80,7 @@ function getComment(){
 			for(var i = 0 ; i < data.length ; i ++){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
-				var message = $.base64.atob(data[i].comment, true);
+				var message = data[i].comment;
 				var $li = $('<li>',{
 					html : message + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
 					css : {"font-size" : "15px"} 

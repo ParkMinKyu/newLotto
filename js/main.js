@@ -173,7 +173,7 @@ function setMyNums(nums){
 		var $tr = $('<tr>');
 		var $td = $('<td>',{
                                 css : {width:'240px'},
-				html : "번호를 생성 후 저장하세요."
+				html : "자동 OR 고정번호를 생성 후 저장하세요."
 			});
 		$tr.append($td);
 		$('#myNums').append($tr);

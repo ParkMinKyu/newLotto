@@ -85,6 +85,16 @@ function getComment(){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
 				var message = decodeURI(data[i].comment);
+				var dd = new Date().getTime() - date.getTime()
+				if(dd/1000 < 60 ){
+					dd = (dd/1000) +"초전";
+				}else if(dd/(1000*60) < 60){
+					dd = (dd/1000*60) +"분전";
+				}else if(dd/(1000*60*60) < 24){
+					dd = (dd/1000*60*60) +"시간 전";
+				}else{
+					dd = (dd/1000*60*60*24) +"일 전";
+				}
 				message = message.replace(new RegExp('\\+','g'),' ');
 				message = message.replace(new RegExp('\\<','g'),'&lt;');
 				message = message.replace(new RegExp('\\>','g'),'&gt;');

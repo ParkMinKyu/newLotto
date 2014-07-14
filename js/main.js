@@ -10,7 +10,7 @@ $(function(){
 		
 	});
 	
-	$('#insertBtn').on('touch',function(){
+	$('#insertBtn').on('touchstart',function(){
 			
 		if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
 			CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
@@ -27,7 +27,7 @@ $(function(){
 	});
 	
 	
-	$('#reBall').on('touch',function(){
+	$('#reBall').on('touchstart',function(){
 		$('#randomTable').html('');
 		ballList = new Array(); 
 		for(var i = 1 ; i <= 5 ; i ++){
@@ -44,32 +44,37 @@ $(function(){
 			}
 			$('#randomTable').append($tr);
 		}
+		e.preventDefault();
 	});
 	
-	$('#randomSave').on('touch',function(){
+	$('#randomSave').on('touchstart',function(){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
 		$('#reBall').tap();
+		e.preventDefault();
 	});
 	
-	$('#holdSave').on('touch',function(){
+	$('#holdSave').on('touchstart',function(){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");
 		}else{
 			CallAndroid.holdRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
 			location.href="#home";
 		}
+		e.preventDefault();
 	});
 	
-	$('#allClear').on('touch',function(){
+	$('#allClear').on('touchstart',function(){
 		CallAndroid.clearNum();
+		e.preventDefault();
 	});
 	
-	$('#callCamera').on('touch',function(){
+	$('#callCamera').on('touchstart',function(){
 		CallAndroid.callCamera();
+		e.preventDefault();
 	});
 	
-	$('#reBall').touch();
+	//$('#reBall').touch();
 	CallAndroid.getLastGameNum('');
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
@@ -89,7 +94,7 @@ function getComment(){
 				message = message.replace(new RegExp('\\<','g'),'&lt;');
 				message = message.replace(new RegExp('\\>','g'),'&gt;');
 				var $li = $('<li>',{
-					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+ date.getHour()+" 시"+ date.getMinutes()+" 분 ) </span></p>"
+					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+ date.getHours()+" 시"+ date.getMinutes()+" 분 ) </span></p>"
 				});
 				$target.append($li);
 			}

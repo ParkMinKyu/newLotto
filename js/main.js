@@ -76,7 +76,7 @@ $(function(){
 //덧글 불러오기
 function getComment(){
 	$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
-			$('div[id=comment] > ul > li').remove();
+			$('div[id=comment] > div[data-role=content] > ul > li').remove();
 			for(var i = 0 ; i < data.length ; i ++){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
@@ -87,7 +87,7 @@ function getComment(){
 				var $li = $('<li>',{
 					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span></p>"
 				});
-				$('ul').append($li);
+				$('div[id=comment] > div[data-role=content] > ul').append($li);
 			}
 			$('ul').listview();
 			$('ul').listview('refresh');

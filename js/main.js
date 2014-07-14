@@ -10,7 +10,7 @@ $(function(){
 		
 	});
 	
-	$('#insertBtn').on('touchstart',function(){
+	$('#insertBtn').on('touchstart',function(e){
 			
 		if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
 			CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
@@ -24,10 +24,12 @@ $(function(){
 				getComment();
 			});
 		}
+		
+		e.preventDefault();
 	});
 	
 	
-	$('#reBall').on('touchstart',function(){
+	$('#reBall').on('touchstart',function(e){
 		$('#randomTable').html('');
 		ballList = new Array(); 
 		for(var i = 1 ; i <= 5 ; i ++){
@@ -47,14 +49,14 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$('#randomSave').on('touchstart',function(){
+	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
 		$('#reBall').tap();
 		e.preventDefault();
 	});
 	
-	$('#holdSave').on('touchstart',function(){
+	$('#holdSave').on('touchstart',function(e){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");
 		}else{
@@ -64,17 +66,17 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$('#allClear').on('touchstart',function(){
+	$('#allClear').on('touchstart',function(e){
 		CallAndroid.clearNum();
 		e.preventDefault();
 	});
 	
-	$('#callCamera').on('touchstart',function(){
+	$('#callCamera').on('touchstart',function(e){
 		CallAndroid.callCamera();
 		e.preventDefault();
 	});
 	
-	//$('#reBall').touch();
+	$('#reBall').touchstart();
 	CallAndroid.getLastGameNum('');
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);

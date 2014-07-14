@@ -7,8 +7,9 @@ $(function(){
 		$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
 			$('ul > li').remove();
 			for(var i = 0 ; i < data.length ; i ++){
+				var date = new Date(data[i].regtime.time);
 				var $li = $('<li>',{
-					html : data[i].comment + "( "+ new Date(data[i].regtime.time) +" )",
+					html : data[i].comment + "( "+ date.getYear() + "년 " + (date.getMonth()+1)+"월 " date.getDate()+"일"+" )",
 					css : {"font-size" : "15px"}
 				});
 				$('ul').append($li);

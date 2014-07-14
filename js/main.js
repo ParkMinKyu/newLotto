@@ -85,7 +85,7 @@ function getComment(){
 				message = message.replace(new RegExp('\\<','g'),'&lt;');
 				message = message.replace(new RegExp('\\>','g'),'&gt;');
 				var $li = $('<li>',{
-					html : "<p style='white-space: initial;font-size:14px;'>"+message +"<br><span style='font-weight:bold;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span></p>"
+					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span></p>"
 				});
 				$('ul').append($li);
 			}

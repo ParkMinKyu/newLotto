@@ -8,11 +8,11 @@ $(function(){
 		getComment();
 		
 		$('#insertBtn').on('tap',function(){
-			if($('#comment').val() == '' || $('#comment').val().length > 100){
+			if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
 				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
-				$('#comment').focus();
+				$('input[id=comment]').focus();
 			}else{
-				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('#comment').val(),function(data){
+				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('input[id=comment]').val(),function(data){
 					getComment();
 				});
 			}

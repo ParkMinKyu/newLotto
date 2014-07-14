@@ -8,11 +8,13 @@ $(function(){
 			$('ul > li').remove();
 			for(var i = 0 ; i < data.length ; i ++){
 				var $li = $('<li>',{
-					html : data[i].comment + "( "+ new Date(data[i].regtime.time) +" )"
+					html : data[i].comment + "( "+ new Date(data[i].regtime.time) +" )",
+					css : {"font-size" : "15px"}
 				});
 				$('ul').append($li);
 			}
 			
+			$('ul').listview('refresh');
 		});
 	});
 	

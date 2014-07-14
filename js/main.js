@@ -2,6 +2,20 @@ var realNums = new Array();
 var ballList = new Array(); 
 var selectBall = new Array();
 $(function(){
+	
+	$.ajax(function(){
+	   url: "http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do",
+	   dataType: 'jsonp',
+	   jsonpCallback: "comment",
+	   success: function(data) {
+	     console.log("success : " , data);
+	   },
+	   error: function(data) {
+	     console.log('err : ', data);
+	   }
+		
+	});
+	
 	$('#reBall').on('tap',function(){
 		$('#randomTable').html('');
 		ballList = new Array(); 

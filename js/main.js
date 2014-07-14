@@ -76,7 +76,7 @@ $(function(){
 //덧글 불러오기
 function getComment(){
 	$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/getComment.do?callback=?",function(data){
-			$('ul > li').remove();
+			$('div[id=comment] > ul > li').remove();
 			for(var i = 0 ; i < data.length ; i ++){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);

@@ -85,21 +85,11 @@ function getComment(){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
 				var message = decodeURI(data[i].comment);
-				var dd = new Date().getTime() - date.getTime()
-				if(dd/1000 < 60 ){
-					dd = (dd/1000) +"초전";
-				}else if(dd/(1000*60) < 60){
-					dd = (dd/(1000*60)) +"분전";
-				}else if(dd/(1000*60*60) < 24){
-					dd = (dd/(1000*60*60)) +"시간 전";
-				}else{
-					dd = (dd/(1000*60*60*24)) +"일 전";
-				}
 				message = message.replace(new RegExp('\\+','g'),' ');
 				message = message.replace(new RegExp('\\<','g'),'&lt;');
 				message = message.replace(new RegExp('\\>','g'),'&gt;');
 				var $li = $('<li>',{
-					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;float:right;'>( "+dd+" )</span></p>"
+					html : "<p style='white-space: initial;font-size: 14px;text-overflow: initial;word-break: break-all;'>"+message +"<br><span style='font-weight:bold;float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span></p>"
 				});
 				$target.append($li);
 			}

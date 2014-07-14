@@ -9,8 +9,8 @@ $(function(){
 			for(var i = 0 ; i < data.length ; i ++){
 				var date = new Date(data[i].regtime.time);
 				var $li = $('<li>',{
-					html : data[i].comment + "( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )",
-					css : {"font-size" : "15px"}
+					html : data[i].comment + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
+					css : {"font-size" : "15px"} 
 				});
 				$('ul').append($li);
 			}

@@ -12,7 +12,7 @@ $(function(){
 				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
 				$('#comment').focus();
 			}else{
-				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('#comment').val()+,function(data){
+				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+$('#comment').val(),function(data){
 					getComment();
 				});
 			}

@@ -3,25 +3,25 @@ var ballList = new Array();
 var selectBall = new Array();
 $(function(){
 	
-	$(document).on("pagecreate","#comment",function(){
+	$(document).on("pagebeforeload","#comment",function(){
 		
 		getComment();
-		
-		$('#insertBtn').on('tap',function(){
+	});
+	
+	$('#insertBtn').on('tap',function(){
 			
-			if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
-				CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
-				$('input[id=comment]').focus();
-			}else{
-				$.base64.utf8encode = true;
-				//var message = $.base64.btoa($('input[id=comment]').val())
-				var message = encodeURI(encodeURIComponent($('input[id=comment]').val()));
-				$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+message,function(data){
-					$('input[id=comment]').val('');
-					getComment();
-				});
-			}
-		});
+		if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
+			CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
+			$('input[id=comment]').focus();
+		}else{
+			$.base64.utf8encode = true;
+			//var message = $.base64.btoa($('input[id=comment]').val())
+			var message = encodeURI(encodeURIComponent($('input[id=comment]').val()));
+			$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+message,function(data){
+				$('input[id=comment]').val('');
+				getComment();
+			});
+		}
 	});
 	
 	

@@ -3,9 +3,11 @@ var ballList = new Array();
 var selectBall = new Array();
 $(function(){
 	
-	$(document).on("pagebeforeload","#comment",function(){
+	$(document).on('pagechange',function(data,obj){
+		if(obj.absUrl == 'http://parkminkyu.github.io/newLotto/myLotto.html#comment '){
+			getComment();
+		}
 		
-		getComment();
 	});
 	
 	$('#insertBtn').on('tap',function(){

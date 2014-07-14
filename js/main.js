@@ -80,7 +80,7 @@ function getComment(){
 			for(var i = 0 ; i < data.length ; i ++){
 				$.base64.utf8encode = true;
 				var date = new Date(data[i].regtime.time);
-				var message = data[i].comment;
+				var message = decodeURI(data[i].comment);
 				var $li = $('<li>',{
 					html : message + "<span style='float:right;'>( "+ date.getFullYear() + "년 " + (date.getMonth()+1)+"월 "+ date.getDate()+"일"+" )</span>",
 					css : {"font-size" : "15px"} 

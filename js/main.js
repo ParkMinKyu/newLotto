@@ -242,7 +242,7 @@ function isNum(list,num){
 		if(list[i] == num){
 			return true;
 		}else{
-			if(!isSame){
+			if(isSame){
 				for(var k = 0 ; k < ballList.length ; k ++){
 					for(var j = 0 ; j < ballList[k].length ; j++){
 						if(ballList[k][j] == num){

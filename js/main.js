@@ -79,8 +79,8 @@ $(function(){
 	$('#reBall').touchstart();
 	//CallAndroid.getLastGameNum('');
 	setRealNums([4,6,11,22,35,44,33]);
-	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
-	//createSelectBall();
+	setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
+	createSelectBall();
 });
 
 //덧글 불러오기
@@ -107,15 +107,16 @@ function getComment(){
 
 //사용자 선택 볼 생성
 function createSelectBall(){
-	$('#ballList').find('tr').remove();
+	$('#ballList').find('div').remove();
 	selectBall = new Array();
 	var num = 1;
 	for(var i = 0 ; i < 9 ; i ++){
-		var $tr = $('<tr>');
+		//var $tr = $('<tr>');
 		for(var k = 0 ; k < 5 ; k ++){
 			var img = getBall(num);
-			var $td = $('<td>',{
+			var $div = $('<div>',{
 				html : img,
+				class : (k==0?'ui-block-a':'ui-block-b'),
 				touchstart : function(e){
 					var isNum = false;
 					var $obj = $(this).find('div');
@@ -143,10 +144,10 @@ function createSelectBall(){
 					e.preventDefault();
 				}
 			});
-			$tr.append($td);
+			$('#ballList').append($div);
 			num++;
 		}
-		$('#ballList').append($tr);
+		//$('#ballList').append($tr);
 	}
 }
 
@@ -202,24 +203,25 @@ function setRealNums(nums){
 //내 번호 당첨 확인
 function setMyNums(nums){
 	var length = nums.length;
-	$('#myNums').find('tr').remove();
+	$('#myNums').find('div').remove();
 	
 	if(length == 0){
-		var $tr = $('<tr>');
-		var $td = $('<td>',{
+		//var $tr = $('<tr>');
+		var $div = $('<div>',{
                                 css : {width:'240px'},
 				html : "자동 OR 고정번호를 생성 후 저장하세요."
 			});
-		$tr.append($td);
-		$('#myNums').append($tr);
+		//$tr.append($td);
+		$('#myNums').append($div);
 	}
 	
 	for(var i = 0 ; i < length ; i ++){
-		var $tr = $('<tr>');
+		//var $tr = $('<tr>');
 		for(var k = 0 ; k < nums[i].length ; k ++){
 			var img = getBall(nums[i][k]);
-			var $td = $('<td>',{
+			var $div = $('<div>',{
 				html : img
+				
 			});
 			$tr.append($td);
 			if(k == (nums[i].length-1)){

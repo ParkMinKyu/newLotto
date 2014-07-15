@@ -223,21 +223,24 @@ function setMyNums(nums){
 				html : img
 				
 			});
-			$tr.append($td);
+			$('#myNums').append($div);
+			//$tr.append($td);
 			if(k == (nums[i].length-1)){
 				var result = checkBall($tr);
-				var $td = $('<td>',{
+				var $div = $('<div>',{
 					html : "&nbsp;=&nbsp;"
 				});
-				$tr.append($td);
+				$('#myNums').append($div);
+				//$tr.append($td);
 				
-				var $td = $('<td>',{
+				var $div = $('<div>',{
 					html : result
 				});
-				$tr.append($td);
+				$('#myNums').append($div);
+				//$tr.append($td);
 			}
 		}
-		$('#myNums').append($tr);
+		//$('#myNums').append($tr);
 	}
 }
 

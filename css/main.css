@@ -80,3 +80,18 @@ tr:nth-child(even)
 .noMatch{
 	opacity: 0.1;
 }
+
+.ui-grid-h > .ui-block-a,.ui-grid-h > .ui-block-b,.ui-grid-h > .ui-block-c,.ui-grid-h > .ui-block-d,.ui-grid-h > .ui-block-e,.ui-grid-h > .ui-block-f,.ui-grid-h > .ui-block-g,.ui-grid-h > .ui-block-h{
+	width : 12%;
+}
+
+.ui-block-e, .ui-block-f, .ui-block-g, .ui-block-h{
+margin: 0;
+padding: 0;
+border: 0;
+float: left;
+min-height: 1px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}

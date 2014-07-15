@@ -152,24 +152,51 @@ function createSelectBall(){
 
 //당첨번호 셋팅
 function setRealNums(nums){
-	$('#realNums').find('tr').remove();
+	$('#realNums').find('div').remove();
 	realNums = new Array();
-	var $tr = $('<tr>');
+	//var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
 		var img = getBall(nums[i]);
 		if(i == 6){
-			var $th = $('<th>',{
-				html : "&nbsp;+&nbsp;"
+			var $div = $('<div>',{
+				html : "&nbsp;+&nbsp;",
+				class : "ui-block-g"
 			});
-			$tr.append($th);
+			$('#realNums').append($div);
 		}
-		var $th = $('<th>',{
+		var $div = $('<div>',{
 			html : $(img).removeClass('noMatch')
 		});
+		switch(i){
+			case 0:
+				$div.addClass("ui-block-a");
+				break;
+			case 1:
+				$div.addClass("ui-block-b");
+				break;
+			case 2:
+				$div.addClass("ui-block-c");
+				break;
+			case 3:
+				$div.addClass("ui-block-d");
+				break;
+			case 4:
+				$div.addClass("ui-block-e");
+				break;
+			case 5:
+				$div.addClass("ui-block-f");
+				break;
+			case 6:
+				$div.addClass("ui-block-h");
+				break;
+			
+				
+		}
 		realNums.push(nums[i]);
-		$tr.append($th);
+		//$tr.append($th);
+		$('#realNums').append($div);
 	}
-	$('#realNums').append($tr);
+	//$('#realNums').append($tr);
 }
 
 //내 번호 당첨 확인

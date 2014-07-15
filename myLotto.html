@@ -22,17 +22,19 @@
 				<li><a href="#comment" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">덧글</a></li>
 			</ul>
 		</div>
-		
+
 	</div>
 	<div data-role="main" class="ui-content">
 		<span id="gameyear">2014년 06월 21일 당첨 번호</span>
 		<select id="matchNums" style="z-index:0;"></select>
-		<div id="realNums" class="ui-grid-h"></div>
-		<div class="clear"></div>
+		<table>
+			<tbody id="realNums"></tbody>
+		</table>
 		<a href="#" data-role="button" data-mini="true" id="callCamera">QR코드로 당첨확인</a>
 		<span>내 번호 당첨 확인</span>
-		<div id="myNums" class="ui-grid-h"></div>
-		<div class="clear"></div>
+		<table>
+			<tbody id="myNums"></tbody>
+		</table>
 		<a href="#" data-role="button" data-mini="true" id="allClear">모든번호삭제</a>
 	</div>
 	<div data-role="footer" data-theme="b">
@@ -49,8 +51,10 @@
       </div>
       <div data-role="main" class="ui-content">
 		 <label for="isSame">체크시 중복 최소화</label><input type="checkbox" id="isSame">
-		 <div id="randomTable" class="ui-grid-f"></div>
-		<div class="clear"></div>
+		 <table>
+			<tbody id="randomTable">
+			</tbody>
+		</table>
 		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
 		  <a href="#" class="ui-btn" id="reBall">번호생성</a>
 		  <a href="#" class="ui-btn" id="randomSave">번호저장</a>
@@ -67,8 +71,11 @@
       
       <div data-role="main" class="ui-content" style="text-align:center;">
       	<h3>번호를 선택 하세요.</h3>
-		<div id="ballList" class="ui-grid-d"></div>
-		<div class="clear"></div>
+		<table>
+			<tbody id="ballList">
+
+			</tbody>
+		</table>
 		<a href="#" data-role="button" id="holdSave">저장</a>
       </div>
   </div>
@@ -83,9 +90,9 @@
 	<div data-role="content">
 		<input type="text" name="comment" id="comment" maxlength="100" data-clear-btn="true" placeholder="100자 이내 입력만 가능 합니다.">
 		<a href="#" data-role="button" data-mini="true" id="insertBtn" data-corners="true">입력</a>
-		
+
 		<h4>최근 100개 글만 보여집니다.</h4>
-		
+
 		<ul data-role="listview" data-inset="true">
 		   <li><a href="#">덧글1</a></li>
 		   <li><a href="#">덧글2</a></li>

@@ -77,9 +77,9 @@ $(function(){
 	});
 	
 	$('#reBall').touchstart();
-	//CallAndroid.getLastGameNum('');
-	setRealNums([4,6,11,22,35,44,33]);
-	setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
+	CallAndroid.getLastGameNum('');
+	//setRealNums([4,6,11,22,35,44,33]);
+	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
 	createSelectBall();
 });
 
@@ -107,16 +107,15 @@ function getComment(){
 
 //사용자 선택 볼 생성
 function createSelectBall(){
-	$('#ballList').find('div').remove();
+	$('#ballList').find('tr').remove();
 	selectBall = new Array();
 	var num = 1;
 	for(var i = 0 ; i < 9 ; i ++){
-		//var $tr = $('<tr>');
+		var $tr = $('<tr>');
 		for(var k = 0 ; k < 5 ; k ++){
 			var img = getBall(num);
-			var $div = $('<div>',{
+			var $td = $('<td>',{
 				html : img,
-				class : (k==0?'ui-block-a':'ui-block-b'),
 				touchstart : function(e){
 					var isNum = false;
 					var $obj = $(this).find('div');
@@ -144,103 +143,78 @@ function createSelectBall(){
 					e.preventDefault();
 				}
 			});
-			$('#ballList').append($div);
+			$tr.append($td);
 			num++;
 		}
-		//$('#ballList').append($tr);
+		$('#ballList').append($tr);
 	}
 }
 
 //당첨번호 셋팅
 function setRealNums(nums){
-	$('#realNums').find('div').remove();
+	$('#realNums').find('tr').remove();
 	realNums = new Array();
-	//var $tr = $('<tr>');
+	var $tr = $('<tr>');
 	for(var i = 0 ; i < nums.length ; i ++){
 		var img = getBall(nums[i]);
 		if(i == 6){
-			var $div = $('<div>',{
-				html : "&nbsp;+&nbsp;",
-				class : "ui-block-g"
+			var $th = $('<th>',{
+				html : "&nbsp;+&nbsp;"
 			});
-			$('#realNums').append($div);
+			$tr.append($th);
 		}
-		var $div = $('<div>',{
+		var $th = $('<th>',{
 			html : $(img).removeClass('noMatch')
 		});
-		switch(i){
-			case 0:
-				$div.addClass("ui-block-a");
-				break;
-			case 1:
-				$div.addClass("ui-block-b");
-				break;
-			case 2:
-				$div.addClass("ui-block-c");
-				break;
-			case 3:
-				$div.addClass("ui-block-d");
-				break;
-			case 4:
-				$div.addClass("ui-block-e");
-				break;
-			case 5:
-				$div.addClass("ui-block-f");
-				break;
-			case 6:
-				$div.addClass("ui-block-h");
-				break;
-			
-				
-		}
+		
 		realNums.push(nums[i]);
-		//$tr.append($th);
-		$('#realNums').append($div);
+		$tr.append($th);
+		//$('#realNums').append($div);
 	}
-	//$('#realNums').append($tr);
+	$('#realNums').append($tr);
 }
 
 //내 번호 당첨 확인
 function setMyNums(nums){
 	var length = nums.length;
-	$('#myNums').find('div').remove();
+	$('#myNums').find('tr').remove();
 	
 	if(length == 0){
-		//var $tr = $('<tr>');
-		var $div = $('<div>',{
+		var $tr = $('<tr>');
+		var $td = $('<td>',{
                                 css : {width:'240px'},
 				html : "자동 OR 고정번호를 생성 후 저장하세요."
 			});
-		//$tr.append($td);
-		$('#myNums').append($div);
+		$tr.append($td);
+		//$('#myNums').append($div);
 	}
 	
 	for(var i = 0 ; i < length ; i ++){
-		//var $tr = $('<tr>');
+		var $tr = $('<tr>');
 		for(var k = 0 ; k < nums[i].length ; k ++){
 			var img = getBall(nums[i][k]);
-			var $div = $('<div>',{
+			var $td = $('<td>',{
 				html : img
 				
 			});
-			$('#myNums').append($div);
-			//$tr.append($td);
+			//$('#myNums').append($div);
+			$tr.append($td);
 			if(k == (nums[i].length-1)){
 				var result = checkBall($tr);
-				var $div = $('<div>',{
+				var $td = $('<td>',{
 					html : "&nbsp;=&nbsp;"
 				});
-				$('#myNums').append($div);
-				//$tr.append($td);
+				//$('#myNums').append($div);
+				$tr.append($td);
 				
-				var $div = $('<div>',{
+				var $td = $('<td>',{
 					html : result
 				});
-				$('#myNums').append($div);
-				//$tr.append($td);
+				//$('#myNums').append($div);
+				$tr.append($td);
 			}
 		}
-		//$('#myNums').append($tr);
+		$('#myNums').append($tr);
 	}
 }
 

@@ -81,6 +81,10 @@ tr:nth-child(even)
 	opacity: 0.1;
 }
 
+.ui-grid-f > .ui-block-a,.ui-grid-f > .ui-block-b,.ui-grid-f > .ui-block-c,.ui-grid-f > .ui-block-d,.ui-grid-f > .ui-block-e,.ui-grid-f > .ui-block-f{
+	width : 16%;
+}
+
 .ui-grid-h > .ui-block-a,.ui-grid-h > .ui-block-b,.ui-grid-h > .ui-block-c,.ui-grid-h > .ui-block-d,.ui-grid-h > .ui-block-e,.ui-grid-h > .ui-block-f,.ui-grid-h > .ui-block-g,.ui-grid-h > .ui-block-h{
 	width : 12%;
 }
@@ -96,6 +100,6 @@ min-height: 1px;
 box-sizing: border-box;
 }
 
-.ui-block-h{
+.clear{
 	clear : left;
 }

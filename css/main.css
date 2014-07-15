@@ -95,3 +95,7 @@ min-height: 1px;
 -moz-box-sizing: border-box;
 box-sizing: border-box;
 }
+
+.ui-block-h{
+	clear : left;
+}

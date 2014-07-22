@@ -71,7 +71,7 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$('#callCamera').on('touchstart',function(e){
+	$('#callCamera').on('tap',function(e){
 		CallAndroid.callCamera();
 		e.preventDefault();
 	});

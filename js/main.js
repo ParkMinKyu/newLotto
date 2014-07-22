@@ -66,7 +66,7 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$('#allClear').on('touchstart',function(e){
+	$('#allClear').on('tap',function(e){
 		CallAndroid.clearNum();
 		e.preventDefault();
 	});

@@ -4,10 +4,7 @@ var selectBall = new Array();
 $(function(){
 	
 	$(document).on('pagechange',function(data,obj){
-		if(obj.absUrl == 'http://parkminkyu.github.io/newLotto/myLotto.html#comment'){
-			getComment();
-		}
-		
+	
 	});
 	
 	$('#insertBtn').on('touchstart',function(e){

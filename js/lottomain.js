@@ -10,7 +10,8 @@ $(function(){
 	});
 	
 	$('#reBall').on('touchstart',function(){
-		CallAndroid.createRandomBall();
+		var checked = $('#isSame').is(':checked');
+		CallAndroid.createRandomBall(checked);
 		e.preventDefault();
 	});
 	

@@ -11,7 +11,7 @@ $(function(){
 	
 	$('#ballList').find('div').on('touchstart',function(e){
 		var isNum = false;
-		var $obj = $(this).find('div');
+		var $obj = $(this);
 		var num = parseInt($obj.attr('num'));
 		for(var i = 0 ; i < selectBall.length ; i++){
 			if(selectBall[i] == num){

@@ -10,6 +10,11 @@ $(function(){
 		e.preventDefault();
 	});
 	
+	$('#allClear').on('tap',function(e){
+		CallAndroid.clearNum();
+		e.preventDefault();
+	});
+	
 	$('#delSave').on('touchstart',function(e){
 		if(delBall.length==0){
 			CallAndroid.Alert('제외할 번호를 선택 하세요.');

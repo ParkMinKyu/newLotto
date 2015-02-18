@@ -15,16 +15,16 @@ $(function(){
 		var num = parseInt($obj.attr('num'));
 		for(var i = 0 ; i < selectBall.length ; i++){
 			if(selectBall[i] == num){
-			isNum = true;
-			break;
-		}
+				isNum = true;
+				break;
+			}
 		}
 		if(isNum){
-		var index = selectBall.indexOf(num);
-		if (index > -1) {
-			selectBall.splice(index, 1);
-		}
-		$obj.addClass('noMatch');
+			var index = selectBall.indexOf(num);
+			if (index > -1) {
+				selectBall.splice(index, 1);
+			}
+			$obj.addClass('noMatch');
 		}else{
 			if(selectBall.length == 6){
 				CallAndroid.Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');

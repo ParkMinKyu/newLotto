@@ -99,12 +99,8 @@ function showPop(type){
 		$('#ballList').find('div').addClass('noMatch');
 		$('#holdHref').click();
 	}
-	else if (type == 2 )$('#randHref').click();
-	else if (type == 3 ){
-		delBall = new Array();
-		$('#delballList').find('div').addClass('noMatch');
-		$('#delHref').click();
-	}
+	else if (type == 2 ) $('#randHref').click();
+	else if (type == 3 ) $('#delHref').click();
 }
 
 function createRandTable(nums){

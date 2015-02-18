@@ -9,7 +9,7 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$('#reBall').on('touchstart',function(){
+	$('#reBall').on('touchstart',function(e){
 		var checked = $('#isSame').is(':checked');
 		CallAndroid.createRandomBall(checked);
 		e.preventDefault();

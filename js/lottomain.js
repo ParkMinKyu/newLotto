@@ -101,18 +101,8 @@ function showPop(type){
 	}
 	else if (type == 2 )$('#randHref').click();
 	else if (type == 3 ){
-		if(delBall.length > 0){
-			var $objs = $('#delballList').find('div');
- 			for(var i = 0 ; i < $objs.length ; i++){
- 				if(delBall.indexOf((i+1)) != -1){
- 					CallAndroid.Alert($($objs[i]).attr('class'));
- 					$($objs[i]).removeClass('noMatch');
- 				}
- 				else {
- 					$($objs[i]).addClass('noMatch');
- 				}
- 			}
-		}
+		delBall = new Array();
+		$('#delballList').find('div').addClass('noMatch');
 		$('#delHref').click();
 	}
 }

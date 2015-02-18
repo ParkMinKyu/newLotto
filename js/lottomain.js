@@ -24,11 +24,8 @@ $(function(){
 		}
 		e.preventDefault();
 	});
-	
-	$('#reBall').touchstart();
+
 	CallAndroid.getLastGameNum('');
-	createSelectBall('selectBall');
-	createSelectBall('deleteBall');
 });
 
 function showPop(type){
@@ -38,14 +35,12 @@ function showPop(type){
 }
 
 function createRandTable(nums){
-	ballList = new Array();
 	$('#randomTable').html('');
 	
 	for(var i = 0 ; i < nums.length ; i ++){
 		var $tr = $('<tr>');
 		for(var k = 0 ; k < nums[i].length ; k ++){
 			var img = getBall(nums[i][k]);
-			ballList.push(nums[i][k]);
 			var $td = $('<td>',{
 				html : $(img).removeClass('noMatch')
 			});
@@ -56,48 +51,8 @@ function createRandTable(nums){
 }
 
 //사용자 선택 볼 생성
-function createSelectBall(id){
-	$('#'+id).find('tr').remove();
-	selectBall = new Array();
-	var num = 1;
-	for(var i = 0 ; i < 9 ; i ++){
-		var $tr = $('<tr>');
-		for(var k = 0 ; k < 5 ; k ++){
-			var img = getBall(num);
-			var $td = $('<td>',{
-				html : img,
-				touchstart : function(e){
-					var isNum = false;
-					var $obj = $(this).find('div');
-					var num = parseInt($obj.attr('num'));
-					for(var i = 0 ; i < selectBall.length ; i++){
-						if(selectBall[i] == num){
-							isNum = true;
-							break;
-						}
-					}
-					if(isNum){
-						var index = selectBall.indexOf(num);
-						if (index > -1) {
-							selectBall.splice(index, 1);
-						}
-						$obj.addClass('noMatch');
-					}else{
-						if(selectBall.length == 6){
-							CallAndroid.Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
-							return;
-						}
-						selectBall.push(num);
-						$obj.removeClass('noMatch');
-					}
-					e.preventDefault();
-				}
-			});
-			$tr.append($td);
-			num++;
-		}
-		$('#'+id).append($tr);
-	}
+function createSelectBall(num){
+	
 }
 
 //당첨번호 셋팅

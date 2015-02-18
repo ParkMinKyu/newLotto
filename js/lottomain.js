@@ -25,6 +25,11 @@ $(function(){
 	createSelectBall();
 });
 
+function showPop(type){
+	if(type == 1)$('#holdHref').click();
+	else if (type == 2 )$('#randHref').click();
+}
+
 //사용자 선택 볼 생성
 function createSelectBall(){
 	$('#ballList').find('tr').remove();

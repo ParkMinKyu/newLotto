@@ -27,12 +27,14 @@ $(function(){
 	
 	$('#reBall').touchstart();
 	CallAndroid.getLastGameNum('');
-	createSelectBall();
+	createSelectBall('selectBall');
+	createSelectBall('deleteBall');
 });
 
 function showPop(type){
 	if(type == 1)$('#holdHref').click();
 	else if (type == 2 )$('#randHref').click();
+	else if (type == 3 )$('#delHref').click();
 }
 
 function createRandTable(nums){
@@ -52,8 +54,8 @@ function createRandTable(nums){
 }
 
 //사용자 선택 볼 생성
-function createSelectBall(){
-	$('#ballList').find('tr').remove();
+function createSelectBall(id){
+	$('#'+id).find('tr').remove();
 	selectBall = new Array();
 	var num = 1;
 	for(var i = 0 ; i < 9 ; i ++){
@@ -92,7 +94,7 @@ function createSelectBall(){
 			$tr.append($td);
 			num++;
 		}
-		$('#ballList').append($tr);
+		$('#'+id).append($tr);
 	}
 }
 

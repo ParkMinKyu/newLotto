@@ -12,6 +12,16 @@
 </head>
 <body>
 <div data-role="page" id="home">
+	<div data-role="header" data-theme="b" style="display:none;">
+		<h3>Lotto 당첨 확인</h3>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#random" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">자동번호</a></li>
+				<li><a href="#selectBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">고정번호</a></li>
+			</ul>
+		</div>
+
+	</div>
 	<div data-role="main" class="ui-content">
 		<span id="gameyear"></span>
 		<select id="matchNums" style="z-index:0;"></select>

@@ -9,6 +9,11 @@ $(function(){
 		e.preventDefault();
 	});
 	
+	$('#reBall').on('touchstart',function(){
+		CallAndroid.createRandomBall();
+		e.preventDefault();
+	});
+	
 	$('#holdSave').on('touchstart',function(e){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");

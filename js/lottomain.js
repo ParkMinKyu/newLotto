@@ -2,27 +2,6 @@ var realNums = new Array();
 var ballList = new Array(); 
 var selectBall = new Array();
 $(function(){
-
-	$('#reBall').on('touchstart',function(e){
-		$('#randomTable').html('');
-		ballList = new Array(); 
-		for(var i = 1 ; i <= 5 ; i ++){
-			ballList.push(randomBall());
-		}
-		for(var i = 0 ; i < ballList.length ; i ++){
-			var $tr = $('<tr>');
-			for(var k = 0 ; k < ballList[i].length ; k ++){
-				var img = getBall(ballList[i][k]);
-				var $td = $('<td>',{
-					html : $(img).removeClass('noMatch')
-				});
-				$tr.append($td);
-			}
-			$('#randomTable').append($tr);
-		}
-		e.preventDefault();
-	});
-
 	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
@@ -48,6 +27,22 @@ $(function(){
 function showPop(type){
 	if(type == 1)$('#holdHref').click();
 	else if (type == 2 )$('#randHref').click();
+}
+
+function createRandTable(nums){
+	$('#randomTable').html('');
+	
+	for(var i = 0 ; i < nums.length ; i ++){
+		var $tr = $('<tr>');
+		for(var k = 0 ; k < nums[i].length ; k ++){
+			var img = getBall(nums[i][k]);
+			var $td = $('<td>',{
+				html : $(img).removeClass('noMatch')
+			});
+			$tr.append($td);
+		}
+		$('#randomTable').append($tr);
+	}
 }
 
 //사용자 선택 볼 생성

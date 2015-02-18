@@ -102,9 +102,12 @@ function showPop(type){
 	else if (type == 2 )$('#randHref').click();
 	else if (type == 3 ){
 		var $objs = $('#delballList').find('div');
-		for(var i = 0 ; i < delBall.length ; i ++){
-			$($objs[parseInt(delBall[i])-1]).addClass('noMatch');
+		for(var i = 0 ; i < $objs.length ; i++){
+			if(selectBall.indexOf($($objs[i]).text())){
+				$($objs[i]).addClass('noMatch');
+			}
 		}
+		
 		$('#delHref').click();
 	}
 }

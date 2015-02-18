@@ -10,6 +10,12 @@ $(function(){
 		e.preventDefault();
 	});
 	
+	$('#delSave').on('touchstart',function(e){
+		CallAndroid.createDelNums(delBall.toString());
+		location.href="#home";
+		e.preventDefault();
+	});
+	
 	$('#ballList').find('div').on('touchstart',function(e){
 		var isNum = false;
 		var $obj = $(this);

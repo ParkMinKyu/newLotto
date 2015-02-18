@@ -104,7 +104,7 @@ function showPop(type){
 		var $objs = $('#delballList').find('div');
 		for(var i = 0 ; i < $objs.length ; i++){
 			if(selectBall.indexOf($($objs[i]).text())){
-				$($objs[i]).addClass('noMatch');
+				$($objs[i]).removeClass('noMatch').addClass('noMatch');
 			}
 		}
 		

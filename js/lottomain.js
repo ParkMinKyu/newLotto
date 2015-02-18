@@ -106,6 +106,8 @@ function showPop(type){
  			for(var i = 0 ; i < $objs.length ; i++){
  				if(delBall.indexOf((i+1)) != -1)
  					$($objs[i]).removeClass('noMatch');
+ 				else 
+ 					$($objs[i]).addClass('noMatch');
  			}
 		}
 		$('#delHref').click();

@@ -1,6 +1,7 @@
 var realNums = new Array();
 var ballList = new Array(); 
 var selectBall = new Array();
+var delBall = new Array();
 $(function(){
 	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
@@ -35,6 +36,33 @@ $(function(){
 		}
 		e.preventDefault();
 	});
+	
+	$('#delballList').find('div').on('touchstart',function(e){
+		var isNum = false;
+		var $obj = $(this);
+		var num = parseInt($obj.attr('num'));
+		for(var i = 0 ; i < delBall.length ; i++){
+			if(delBall[i] == num){
+				isNum = true;
+				break;
+			}
+		}
+		if(isNum){
+			var index = delBall.indexOf(num);
+			if (index > -1) {
+				delBall.splice(index, 1);
+			}
+			$obj.addClass('noMatch');
+		}else{
+			if(delBall.length == 15){
+				CallAndroid.Alert('제외 수는 15개 까지 지정 가능 합니다.');
+				return;
+			}
+			delBall.push(num);
+			$obj.removeClass('noMatch');
+		}
+		e.preventDefault();
+	});	
 	
 	$('#reBall').on('touchstart',function(e){
 		var checked = $('#isSame').is(':checked');

@@ -9,6 +9,33 @@ $(function(){
 		e.preventDefault();
 	});
 	
+	$('#ballList').find('div').on('touchstart',function(e){
+		var isNum = false;
+		var $obj = $(this).find('div');
+		var num = parseInt($obj.attr('num'));
+		for(var i = 0 ; i < selectBall.length ; i++){
+			if(selectBall[i] == num){
+			isNum = true;
+			break;
+		}
+		}
+		if(isNum){
+		var index = selectBall.indexOf(num);
+		if (index > -1) {
+			selectBall.splice(index, 1);
+		}
+		$obj.addClass('noMatch');
+		}else{
+			if(selectBall.length == 6){
+				CallAndroid.Alert('6 개의 번호를 선택 하셨습니다. 저장버튼을 눌러 번호를 저장하세요.');
+				return;
+			}
+			selectBall.push(num);
+			$obj.removeClass('noMatch');
+		}
+		e.preventDefault();
+	});
+	
 	$('#reBall').on('touchstart',function(e){
 		var checked = $('#isSame').is(':checked');
 		CallAndroid.createRandomBall(checked);

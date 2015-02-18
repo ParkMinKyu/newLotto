@@ -11,8 +11,12 @@ $(function(){
 	});
 	
 	$('#delSave').on('touchstart',function(e){
-		CallAndroid.createDelNums(delBall.toString());
-		location.href="#home";
+		if(delBall.length==0){
+			CallAndroid.Alert('제외할 번호를 선택 하세요.');
+		}else{
+			CallAndroid.createDelNums(delBall.toString());
+			location.href="#home";
+		}
 		e.preventDefault();
 	});
 	

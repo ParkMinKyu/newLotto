@@ -103,7 +103,7 @@ function showPop(type){
 	else if (type == 3 ){
 		var $objs = $('#delballList').find('div');
 		for(var i = 0 ; i < delBall.length ; i ++){
-			$($objs[parseInt(delBall[i]-1)]).addClass('noMatch');
+			$($objs[parseInt(delBall[i])-1]).addClass('noMatch');
 		}
 		$('#delHref').click();
 	}

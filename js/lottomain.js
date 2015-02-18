@@ -100,7 +100,13 @@ function showPop(type){
 		$('#holdHref').click();
 	}
 	else if (type == 2 )$('#randHref').click();
-	else if (type == 3 )$('#delHref').click();
+	else if (type == 3 ){
+		var $objs = $('#delballList').find('div');
+		for(var i = 0 ; i < delBall.length ; i ++){
+			$($objs[delBall[i]]).addClass('noMatch');
+		}
+		$('#delHref').click();
+	}
 }
 
 function createRandTable(nums){

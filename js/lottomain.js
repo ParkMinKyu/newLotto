@@ -101,10 +101,13 @@ function showPop(type){
 	}
 	else if (type == 2 )$('#randHref').click();
 	else if (type == 3 ){
-		var $objs = $('#delballList').find('div');
-		for(var i = 0 ; i < delBall.length ; i++){
-			var idx = parseInt(delBall[i])-1;
-			$objs[idx].removeClass('noMatch');	
+		if(delBall.length > 0){
+			var $objs = $('#delballList').find('div');
+			for(var i = 0 ; i < delBall.length ; i++){
+				var idx = parseInt(delBall[i])-1;
+				var $obj = $($objs[idx]);
+				$obj.removeClass('noMatch');	
+			}
 		}
 		$('#delHref').click();
 	}

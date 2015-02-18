@@ -3,6 +3,26 @@ var ballList = new Array();
 var selectBall = new Array();
 $(function(){
 
+	$('#reBall').on('touchstart',function(e){
+		$('#randomTable').html('');
+		ballList = new Array(); 
+		for(var i = 1 ; i <= 5 ; i ++){
+			ballList.push(randomBall());
+		}
+		for(var i = 0 ; i < ballList.length ; i ++){
+			var $tr = $('<tr>');
+			for(var k = 0 ; k < ballList[i].length ; k ++){
+				var img = getBall(ballList[i][k]);
+				var $td = $('<td>',{
+					html : $(img).removeClass('noMatch')
+				});
+				$tr.append($td);
+			}
+			$('#randomTable').append($tr);
+		}
+		e.preventDefault();
+	});
+
 	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";

@@ -104,7 +104,7 @@ function showPop(type){
 		var $objs = $('#delballList').find('div');
 		for(var i = 0 ; i < delBall.length ; i++){
 			var idx = parseInt(delBall[i])-1;
-			$($objs[idx]).removeClass('noMatch');	
+			$objs[idx].removeClass('noMatch');	
 		}
 		$('#delHref').click();
 	}

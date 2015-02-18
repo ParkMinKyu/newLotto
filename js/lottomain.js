@@ -36,11 +36,12 @@ function showPop(type){
 
 function createRandTable(nums){
 	$('#randomTable').html('');
-	
+	 ballList = new Array(); 
 	for(var i = 0 ; i < nums.length ; i ++){
 		var $tr = $('<tr>');
 		for(var k = 0 ; k < nums[i].length ; k ++){
 			var img = getBall(nums[i][k]);
+			 ballList.push(nums[i][k]); 
 			var $td = $('<td>',{
 				html : $(img).removeClass('noMatch')
 			});

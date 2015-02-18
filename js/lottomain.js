@@ -46,7 +46,7 @@ $(function(){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");
 		}else{
-			CallAndroid.holdRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
+			CallAndroid.saveRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
 			location.href="#home";
 		}
 		e.preventDefault();

@@ -56,8 +56,11 @@ $(function(){
 });
 
 function showPop(type){
-	selectBall = new Array();
-	if(type == 1)$('#holdHref').click();
+	if(type == 1){
+		selectBall = new Array();
+		$('#ballList').find('div').addClass('noMatch');
+		$('#holdHref').click();
+	}
 	else if (type == 2 )$('#randHref').click();
 	else if (type == 3 )$('#delHref').click();
 }

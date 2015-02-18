@@ -29,6 +29,7 @@ $(function(){
 });
 
 function showPop(type){
+	selectBall = new Array();
 	if(type == 1)$('#holdHref').click();
 	else if (type == 2 )$('#randHref').click();
 	else if (type == 3 )$('#delHref').click();

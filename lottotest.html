@@ -28,16 +28,9 @@ $(function(){
 </head>
 <body>
 <div data-role="page" id="home">
-	<div data-role="header" data-theme="b">
-		<div data-role="navbar">
-			<ul>
-				<li>카톡으로 당첨번호 알리기<a href="#" id="kakaobtn"><img src="kakaolink_btn_small.png"/></a></li>
-			</ul>
-		</div>
-
-	</div>
 	<div data-role="main" class="ui-content">
-		<li><a href="http://niee.kr/taiji/taiji/view/article/list" data-ajax="false" data-role="button" data-mini="true">커뮤니티 이동</a></li>
+		<a href="#" id="kakaobtn">카톡으로 당첨번호 알리기  <img src="kakaolink_btn_small.png"/></a>
+		<a href="http://niee.kr/taiji/taiji/view/article/list" data-ajax="false" data-role="button" data-mini="true">커뮤니티 이동</a>
 		<span id="gameyear"></span>
 		<select id="matchNums" style="z-index:0;"></select>
 		<table>

@@ -16,7 +16,7 @@ $(function(){
 		var matchNum = $('#matchNums').val();
 		var matchYear = $('#gameyear').text();
 		var realNums ="";
-		CallAndroid.Alert($('#realNums').text());
+		CallAndroid.Alert($($('#realNums img')[0]).text());
 		$('#realNums img').each(function(){
 			CallAndroid.Alert($(this).text());
 			CallAndroid.Alert($(this).prop("nums"));

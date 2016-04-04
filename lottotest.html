@@ -15,10 +15,13 @@ $(function(){
 	$('#kakaobtn').click(function(){
 		var matchNum = $('#matchNums').val();
 		var matchYear = $('#gameyear').text();
-		var realNums ="| ";
-		$('#realNums div').each(function(){
-			realNums += $(this).text() + " | ";
-		});
+		var realNums ="";
+		for(var i = 0 ; i <= 6 i ++){
+		if(i == 6 ) realNums += " 보너스번호 : ";
+		realNums += $($('#realNums div')[i]).text();
+		if(i < 6) realNums += ", ";
+		}
+		
 		CallAndroid.CallKaKaoTalk(matchNum,matchYear,realNums);
 	});
 });

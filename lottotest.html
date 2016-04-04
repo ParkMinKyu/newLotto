@@ -10,7 +10,6 @@
 <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="./lib/jquery.mobile-1.4.2.min.js"></script>
 <script type="text/javascript" src="./js/lottomain.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
 <div data-role="page" id="home">
@@ -29,32 +28,12 @@
 		<a href="http://niee.kr/taiji/taiji/view/article/list" data-ajax="false" data-role="button" data-mini="true">커뮤니티가 추가 되었습니다.</a>
 		<span id="gameyear"></span>
 		<select id="matchNums" style="z-index:0;"></select>
-		<a id="kakao-link-btn" href="javascript:;">
-<img src="http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg"/>
-</a>
-<script type='text/javascript'>
-  //<![CDATA[
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init('4f4856cda3a7cc00491c43dd5f04ad24');
-    // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-    Kakao.Link.createTalkLinkButton({
-      container: '#kakao-link-btn',
-      label: '당첨 번호 공유 하기',
-      image: {
-        src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
-        width: '50',
-        height: '50'
-      },
-      appButton: {
-        text: '공유하기'
-      }
-    });
-  //]]>
-</script>
 		<table>
 			<tbody id="realNums"></tbody>
 		</table>
-		
+		<a href="#" id="kakaobtn">
+		<img src="http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg"/>
+		</a>
 		<span>내 번호 당첨 확인</span>
 		<table>
 			<tbody id="myNums"></tbody>

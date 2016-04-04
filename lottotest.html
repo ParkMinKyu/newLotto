@@ -15,12 +15,9 @@ $(function(){
 	$('#kakaobtn').click(function(){
 		var matchNum = $('#matchNums').val();
 		var matchYear = $('#gameyear').text();
-		var realNums ="";
-		CallAndroid.Alert($($('#realNums img')[0]).text());
-		$('#realNums img').each(function(){
-			CallAndroid.Alert($(this).text());
-			CallAndroid.Alert($(this).prop("nums"));
-			realNums += $(this).text();
+		var realNums ="| ";
+		$('#realNums div').each(function(){
+			realNums += $(this).text() + " | ";
 		});
 		CallAndroid.CallKaKaoTalk(matchNum,matchYear,realNums);
 	});

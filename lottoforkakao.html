@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./lib/jquery.mobile-1.4.2.min.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="./lib/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="./js/lottomain.js"></script>
+<script>
+$(function(){
+	$('#kakaobtn').click(function(){
+		var matchNum = $('#matchNums').val();
+		var matchYear = $('#gameyear').text();
+		var realNums ="";
+		for(var i = 0 ; i <= 5 ; i ++){
+		realNums += $($('#realNums div')[i]).text();
+		if(i < 5) realNums += ", ";
+		}
+		
+		CallAndroid.CallKaKaoTalk(matchNum,matchYear,realNums);
+	});
+});
+</script>
+</head>
+<body>
+<div data-role="page" id="home">
+	<div data-role="header" data-theme="b" style="display:none;">
+		<h3>Lotto 당첨 확인</h3>
+		<div data-role="navbar">
+			<ul>
+				<li><a id="randHref" href="#random" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">자동번호</a></li>
+				<li><a id="holdHref" href="#selectBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">고정번호</a></li>
+				<li><a id="delHref" href="#deleteBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">제외번호</a></li>
+			</ul>
+		</div>
+
+	</div>
+	<div data-role="main" class="ui-content">
+		<a href="http://niee.kr/taiji/taiji/view/article/list" data-ajax="false" data-role="button" >커뮤니티 이동</a>
+		<span id="gameyear"></span>
+		<select id="matchNums" style="z-index:0;"></select>
+		<table>
+			<tbody id="realNums"></tbody>
+		</table>
+		<a href="#" data-role="button" id="kakaobtn">카톡으로 당첨번호 알리기  <img style="vertical-align: middle;" src="kakaolink_btn_small.png"/></a>
+		
+		<span>내 번호 당첨 확인</span>
+		<table>
+			<tbody id="myNums"></tbody>
+		</table>
+		<a href="#" data-role="button" data-mini="true" id="allClear">모든번호삭제</a>
+	</div>
+	<div data-role="footer" data-theme="b">
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+			<a href="http://niee.kr/taiji/taiji/view/article/list" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-icon-home ui-btn-icon-left">커뮤니티</a>
+			<a href="mailto:niee@naver.com" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-icon-mail ui-btn-icon-left">메일 보내기</a>
+		</div>
+	</div>
+
+	<div data-role="popup" id="random" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>자동번호</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      <div data-role="main" class="ui-content">
+		 <label for="isSame">체크시 중복 최소화</label><input type="checkbox" id="isSame">
+		 <table>
+			<tbody id="randomTable">
+			</tbody>
+		</table>
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+		  <a href="#" class="ui-btn" id="reBall">번호생성</a>
+		  <a href="#" class="ui-btn" id="randomSave">번호저장</a>
+		</div>
+      </div>
+  </div>
+  
+  
+  <div data-role="popup" id="selectBall" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>공 선택</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      
+      <div data-role="main" class="ui-content" style="text-align:center;">
+      	<h3>번호를 선택 하세요.</h3>
+		<table>
+			<tbody id="ballList">
+				<tr>
+					<td><div class='ball5 noMatch' num='1'>1</div></td>
+					<td><div class='ball5 noMatch' num='2'>2</div></td>
+					<td><div class='ball5 noMatch' num='3'>3</div></td>
+					<td><div class='ball5 noMatch' num='4'>4</div></td>
+					<td><div class='ball5 noMatch' num='5'>5</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball5 noMatch' num='6'>6</div></td>
+					<td><div class='ball5 noMatch' num='7'>7</div></td>
+					<td><div class='ball5 noMatch' num='8'>8</div></td>
+					<td><div class='ball5 noMatch' num='9'>9</div></td>
+					<td><div class='ball5 noMatch' num='10'>10</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball4 noMatch' num='11'>11</div></td>
+					<td><div class='ball4 noMatch' num='12'>12</div></td>
+					<td><div class='ball4 noMatch' num='13'>13</div></td>
+					<td><div class='ball4 noMatch' num='14'>14</div></td>
+					<td><div class='ball4 noMatch' num='15'>15</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball4 noMatch' num='16'>16</div></td>
+					<td><div class='ball4 noMatch' num='17'>17</div></td>
+					<td><div class='ball4 noMatch' num='18'>18</div></td>
+					<td><div class='ball4 noMatch' num='19'>19</div></td>
+					<td><div class='ball4 noMatch' num='20'>20</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball3 noMatch' num='21'>21</div></td>
+					<td><div class='ball3 noMatch' num='22'>22</div></td>
+					<td><div class='ball3 noMatch' num='23'>23</div></td>
+					<td><div class='ball3 noMatch' num='24'>24</div></td>
+					<td><div class='ball3 noMatch' num='25'>25</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball3 noMatch' num='26'>26</div></td>
+					<td><div class='ball3 noMatch' num='27'>27</div></td>
+					<td><div class='ball3 noMatch' num='28'>28</div></td>
+					<td><div class='ball3 noMatch' num='29'>29</div></td>
+					<td><div class='ball3 noMatch' num='30'>30</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball2 noMatch' num='31'>31</div></td>
+					<td><div class='ball2 noMatch' num='32'>32</div></td>
+					<td><div class='ball2 noMatch' num='33'>33</div></td>
+					<td><div class='ball2 noMatch' num='34'>34</div></td>
+					<td><div class='ball2 noMatch' num='35'>35</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball2 noMatch' num='36'>36</div></td>
+					<td><div class='ball2 noMatch' num='37'>37</div></td>
+					<td><div class='ball2 noMatch' num='38'>38</div></td>
+					<td><div class='ball2 noMatch' num='39'>39</div></td>
+					<td><div class='ball2 noMatch' num='40'>40</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball1 noMatch' num='41'>41</div></td>
+					<td><div class='ball1 noMatch' num='42'>42</div></td>
+					<td><div class='ball1 noMatch' num='43'>43</div></td>
+					<td><div class='ball1 noMatch' num='44'>44</div></td>
+					<td><div class='ball1 noMatch' num='45'>45</div></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#" data-role="button" id="holdSave">저장</a>
+      </div>
+  </div>
+  
+  <div data-role="popup" id="deleteBall" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>자동 생성 제외번호 선택</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      
+      <div data-role="main" class="ui-content" style="text-align:center;">
+      	<h3>번호를 선택 하세요.</h3>
+		<table>
+			<tbody id="delballList">
+				<tr>
+					<td><div class='ball5 noMatch' num='1'>1</div></td>
+					<td><div class='ball5 noMatch' num='2'>2</div></td>
+					<td><div class='ball5 noMatch' num='3'>3</div></td>
+					<td><div class='ball5 noMatch' num='4'>4</div></td>
+					<td><div class='ball5 noMatch' num='5'>5</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball5 noMatch' num='6'>6</div></td>
+					<td><div class='ball5 noMatch' num='7'>7</div></td>
+					<td><div class='ball5 noMatch' num='8'>8</div></td>
+					<td><div class='ball5 noMatch' num='9'>9</div></td>
+					<td><div class='ball5 noMatch' num='10'>10</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball4 noMatch' num='11'>11</div></td>
+					<td><div class='ball4 noMatch' num='12'>12</div></td>
+					<td><div class='ball4 noMatch' num='13'>13</div></td>
+					<td><div class='ball4 noMatch' num='14'>14</div></td>
+					<td><div class='ball4 noMatch' num='15'>15</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball4 noMatch' num='16'>16</div></td>
+					<td><div class='ball4 noMatch' num='17'>17</div></td>
+					<td><div class='ball4 noMatch' num='18'>18</div></td>
+					<td><div class='ball4 noMatch' num='19'>19</div></td>
+					<td><div class='ball4 noMatch' num='20'>20</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball3 noMatch' num='21'>21</div></td>
+					<td><div class='ball3 noMatch' num='22'>22</div></td>
+					<td><div class='ball3 noMatch' num='23'>23</div></td>
+					<td><div class='ball3 noMatch' num='24'>24</div></td>
+					<td><div class='ball3 noMatch' num='25'>25</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball3 noMatch' num='26'>26</div></td>
+					<td><div class='ball3 noMatch' num='27'>27</div></td>
+					<td><div class='ball3 noMatch' num='28'>28</div></td>
+					<td><div class='ball3 noMatch' num='29'>29</div></td>
+					<td><div class='ball3 noMatch' num='30'>30</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball2 noMatch' num='31'>31</div></td>
+					<td><div class='ball2 noMatch' num='32'>32</div></td>
+					<td><div class='ball2 noMatch' num='33'>33</div></td>
+					<td><div class='ball2 noMatch' num='34'>34</div></td>
+					<td><div class='ball2 noMatch' num='35'>35</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball2 noMatch' num='36'>36</div></td>
+					<td><div class='ball2 noMatch' num='37'>37</div></td>
+					<td><div class='ball2 noMatch' num='38'>38</div></td>
+					<td><div class='ball2 noMatch' num='39'>39</div></td>
+					<td><div class='ball2 noMatch' num='40'>40</div></td>
+				</tr>
+				<tr>
+					<td><div class='ball1 noMatch' num='41'>41</div></td>
+					<td><div class='ball1 noMatch' num='42'>42</div></td>
+					<td><div class='ball1 noMatch' num='43'>43</div></td>
+					<td><div class='ball1 noMatch' num='44'>44</div></td>
+					<td><div class='ball1 noMatch' num='45'>45</div></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#" data-role="button" id="delSave">제외 수 확정</a>
+      </div>
+  </div>
+  
+</div>
+</body>
+</html>

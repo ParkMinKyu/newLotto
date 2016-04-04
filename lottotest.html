@@ -17,9 +17,9 @@ $(function(){
 		var matchYear = $('#gameyear').text();
 		var realNums ="";
 		for(var i = 0 ; i <= 6 ; i ++){
-		if(i == 6 ) realNums += " 보너스번호 : ";
+		if(i == 6 ) realNums += "\n 보너스번호 : ";
 		realNums += $($('#realNums div')[i]).text();
-		if(i < 6) realNums += ", ";
+		if(i < 5) realNums += ", ";
 		}
 		
 		CallAndroid.CallKaKaoTalk(matchNum,matchYear,realNums);

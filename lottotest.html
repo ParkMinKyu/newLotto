@@ -16,7 +16,7 @@ $(function(){
 		var matchNum = $('#matchNums').val();
 		var matchYear = $('#gameyear').text();
 		var realNums ="";
-		$('#myNums img').each(function(){
+		$('#realNums img').each(function(){
 			realNums += $(this).text();
 		});
 		CallAndroid.CallKaKaoTalk(matchNum,matchYear,realNums);

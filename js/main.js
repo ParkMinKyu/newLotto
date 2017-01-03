@@ -314,7 +314,7 @@ function setMatchNums(num){
 	var year = num.split(";")[0];
 	var num = parseInt(num.split(";")[1]);
 	
-	$('#gameyear').text(year);
+	$('#gameyear').html(year);
 
 	var onum = parseInt($($('#matchNums').find('option')[0]).attr('value'));
 	

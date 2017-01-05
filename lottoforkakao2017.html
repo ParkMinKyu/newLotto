@@ -35,11 +35,13 @@ $(function(){
 				<li><a id="randHref" href="#random" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">자동번호</a></li>
 				<li><a id="holdHref" href="#selectBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">고정번호</a></li>
 				<li><a id="delHref" href="#deleteBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">제외번호</a></li>
+				<li><a id="choiceHref" href="#choiceBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">범위번호</a></li>
 			</ul>
 		</div>
 
 	</div>
 	<div data-role="main" class="ui-content">
+		<a id="choiceHref" href="#choiceBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">범위번호</a>
 		<span id="gameyear"></span>
 		<select id="matchNums" style="z-index:0;"></select>
 		<table>
@@ -234,7 +236,82 @@ $(function(){
 		<a href="#" data-role="button" id="delSave">제외 수 확정</a>
       </div>
   </div>
-  
+
+  <div data-role="popup" id="choiceCount" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>범위별 개수 선택</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      
+      <div data-role="main" class="ui-content" style="text-align:center;">
+      	<h3>각 범위별 뽑을 갯수를 선택하세요.</h3>
+		<table>
+			<tbody id="delballList">
+				<tr>
+					<td>
+						<div class='ball5'>1</div> ~ <div class='ball5'>10</div>
+					</td>
+					<td><input type="radio" name="one" value="0">0</td>
+					<td><input type="radio" name="one" value="1">1</td>
+					<td><input type="radio" name="one" value="2">2</td>
+					<td><input type="radio" name="one" value="3">3</td>
+					<td><input type="radio" name="one" value="4">4</td>
+					<td><input type="radio" name="one" value="5">5</td>
+					<td><input type="radio" name="one" value="6">6</td>
+				</tr>
+				<tr>
+					<td>
+						<div class='ball4'>11</div> ~ <div class='ball4'>20</div>
+					</td>
+					<td><input type="radio" name="two" value="0">0</td>
+					<td><input type="radio" name="two" value="1">1</td>
+					<td><input type="radio" name="two" value="2">2</td>
+					<td><input type="radio" name="two" value="3">3</td>
+					<td><input type="radio" name="two" value="4">4</td>
+					<td><input type="radio" name="two" value="5">5</td>
+					<td><input type="radio" name="two" value="6">6</td>
+				</tr>
+				<tr>
+					<td>
+						<div class='ball3'>21</div> ~ <div class='ball3'>30</div>
+					</td>
+					<td><input type="radio" name="three" value="0">0</td>
+					<td><input type="radio" name="three" value="1">1</td>
+					<td><input type="radio" name="three" value="2">2</td>
+					<td><input type="radio" name="three" value="3">3</td>
+					<td><input type="radio" name="three" value="4">4</td>
+					<td><input type="radio" name="three" value="5">5</td>
+					<td><input type="radio" name="three" value="6">6</td>
+				</tr>
+				<tr>
+					<td>
+						<div class='ball2'>31</div> ~ <div class='ball2'>40</div>
+					</td>
+					<td><input type="radio" name="four" value="0">0</td>
+					<td><input type="radio" name="four" value="1">1</td>
+					<td><input type="radio" name="four" value="2">2</td>
+					<td><input type="radio" name="four" value="3">3</td>
+					<td><input type="radio" name="four" value="4">4</td>
+					<td><input type="radio" name="four" value="5">5</td>
+					<td><input type="radio" name="four" value="6">6</td>
+				</tr>
+				<tr>
+					<td>
+						<div class='ball1'>41</div> ~ <div class='ball1'>45</div>
+					</td>
+					<td><input type="radio" name="five" value="0">0</td>
+					<td><input type="radio" name="five" value="1">1</td>
+					<td><input type="radio" name="five" value="2">2</td>
+					<td><input type="radio" name="five" value="3">3</td>
+					<td><input type="radio" name="five" value="4">4</td>
+					<td><input type="radio" name="five" value="5">5</td>
+					<td><input type="radio" name="five" value="6">6</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#" data-role="button" id="choiceSave">범위 확정</a>
+      </div>
+  </div>
 </div>
 </body>
 </html>

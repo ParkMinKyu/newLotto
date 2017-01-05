@@ -12,7 +12,12 @@ $(function(){
 	});
 	
 	$('#choiceSave').on('click',function(){
-		createChoiceBall();
+		var count = parseInt($('select[name=one]').val())+parseInt($('select[name=two]').val())+parseInt($('select[name=three]').val())+parseInt($('select[name=four]').val())+parseInt($('select[name=five]').val());
+		if(count < 6){
+			CallAndroid.Alert('각 범위 총 합을 6으로 맞춰 주세요.');
+		}else{
+			createChoiceBall();
+		}
 	});
 	
 	$('#randomSave').on('touchstart',function(e){

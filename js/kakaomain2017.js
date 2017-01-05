@@ -4,7 +4,11 @@ var selectBall = new Array();
 var delBall = new Array();
 $(function(){
 	$('select[name=one], select[name=two], select[name=three], select[name=four], select[name=five]').on("change",function(){
-		alert(this.val);
+		var count = parseInt($('select[name=one]').val())+parseInt($('select[name=two]').val())+parseInt($('select[name=three]').val())+parseInt($('select[name=four]').val())+parseInt($('select[name=five]').val());
+		if(count > 6){
+			CallAndroid.Alert('각 범위의 총 합이6을 넘을 수 없습니다.');
+			$(this).val(0);
+		}
 	});
 	
 	$('#randomSave').on('touchstart',function(e){

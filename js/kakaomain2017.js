@@ -16,6 +16,7 @@ $(function(){
 		if(count < 6){
 			CallAndroid.Alert('각 범위 총 합을 6으로 맞춰 주세요.');
 		}else{
+			location.href="#home";
 			createChoiceBall();
 		}
 	});

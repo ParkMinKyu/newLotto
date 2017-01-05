@@ -68,18 +68,27 @@ $(function(){
         <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
       </div>
       <div data-role="main" class="ui-content">
+		<div class="randShowDiv">
 		 <label for="isSame">체크시 중복 최소화</label><input type="checkbox" id="isSame">
+		 </div>
 		 <table>
 			<tbody id="randomTable">
 			</tbody>
 		</table>
+		<div class="randShowDiv">
 		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
-		  <a href="#" class="ui-btn" id="reBall">번호생성</a>
+		  <a href="#" class="ui-btn" id="reBall">재 조합</a>
 		  <a href="#" class="ui-btn" id="randomSave">번호저장</a>
+		</div>
+		</div>
+		<div class="choiceShowDiv">
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+		  <a href="#" onclick="createChoiceBall();" class="ui-btn" id="reBall">재 조합</a>
+		  <a href="#" class="ui-btn" id="choiceSave">번호저장</a>
+		</div>
 		</div>
       </div>
   </div>
-  
   
   <div data-role="popup" id="selectBall" style="z-index:9999;">
       <div data-role="header" data-theme="b">

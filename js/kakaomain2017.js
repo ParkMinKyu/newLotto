@@ -3,6 +3,10 @@ var ballList = new Array();
 var selectBall = new Array();
 var delBall = new Array();
 $(function(){
+	$('select[name=one], select[name=two], select[name=three], select[name=four], select[name=five]').on("change",function(){
+		alert(this.val);
+	});
+	
 	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";

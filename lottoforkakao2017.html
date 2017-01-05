@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="./css/main.css">
 <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="./lib/jquery.mobile-1.4.2.min.js"></script>
-<script type="text/javascript" src="./js/lottomain.js"></script>
+<script type="text/javascript" src="./js/kakaomain2017.js"></script>
 <script>
 $(function(){
 	$('#kakaobtn').click(function(){
 		var matchNum = $('#matchNums').val();
-		var matchYear = $('#gameyear').text();
+		var matchYear = $('#gameyear').html().replace(/<br>/g,"\n");
 		var realNums ="";
 		for(var i = 0 ; i <= 5 ; i ++){
 		realNums += $($('#realNums div')[i]).text();

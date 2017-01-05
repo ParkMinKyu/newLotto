@@ -11,6 +11,10 @@ $(function(){
 		}
 	});
 	
+	$('#choiceSave').on('click',function(){
+		createChoiceBall();
+	});
+	
 	$('#randomSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
@@ -289,4 +293,103 @@ function setMatchNums(num){
 		CallAndroid.getLastGameNum($(this).val());
 	});
 
+}
+
+//ChoiceBall
+function createChoiceBall(){
+$('#randHref').click();
+
+var choiceBall = new Array();
+
+for(var i = 0 ; i < 5 ; i ++){
+	choiceBall[i] = new Array();
+	choiceBall[i].contains = function(element) {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	var oneCount = parseInt($('select[name=one]').val());
+	var twoCount = parseInt($('select[name=two]').val());
+	var threeCount = parseInt($('select[name=three]').val());
+	var fourCount = parseInt($('select[name=four]').val());
+	var fiveCount = parseInt($('select[name=five]').val());
+
+	var isOneCreate = oneCount > 0;
+	var istwoCreate = twoCount > 0;
+	var isthreeCreate = threeCount > 0;
+	var isfourCreate = fourCount > 0;
+	var isfiveCreate = fiveCount > 0;	
+
+	var ranNum = Math.floor(Math.random() * 45) +1;
+	if(isOneCreate){	
+		while(isOneCreate){
+			while( choiceBall[i].contains(ranNum) || ranNum > 9 || ranNum < 1){
+				ranNum = Math.floor(Math.random() * 9) +1;
+			}
+			choiceBall[i].push(ranNum);
+			if(--oneCount == 0)
+				isOneCreate = false;
+		}
+	}else{
+		isOneCreate = !isOneCreate;
+	}
+
+	if(istwoCreate){
+		while(istwoCreate){
+			while( choiceBall[i].contains(ranNum) || ranNum > 19 || ranNum < 10){
+				ranNum = Math.floor(Math.random() * 10) + 10;
+			}
+			choiceBall[i].push(ranNum);
+			if(--twoCount == 0)
+				istwoCreate = false;
+		}
+	}else{
+		istwoCreate = !istwoCreate;
+	}
+
+	if(isthreeCreate){
+		while(isthreeCreate){
+			while( choiceBall[i].contains(ranNum) || ranNum > 29 || ranNum < 20){
+				ranNum = Math.floor(Math.random() * 10) + 20;
+			}
+			choiceBall[i].push(ranNum);
+			if(--threeCount == 0)
+				isthreeCreate = false;
+		}
+	}else{
+		isthreeCreate = !isthreeCreate;
+	}
+
+	if(isfourCreate){
+		while(isfourCreate){
+			while( choiceBall[i].contains(ranNum) || ranNum > 39 || ranNum < 30){
+				ranNum = Math.floor(Math.random() * 10) + 30;
+			}
+			choiceBall[i].push(ranNum);
+			if(--fourCount == 0)
+				isfourCreate = false;
+		}
+	}else{
+		isfourCreate = !isfourCreate;
+	}
+	if(isfiveCreate){
+		while(isfiveCreate){
+			while( choiceBall[i].contains(ranNum) || ranNum > 45 || ranNum < 40){
+				ranNum = Math.floor(Math.random() * 6) + 40;
+			}
+			choiceBall[i].push(ranNum);
+			if(--fiveCount == 0)
+				isfiveCreate = false;
+		}
+	}else{
+		isfiveCreate = !isfiveCreate;
+	}
+	choiceBall[i].sort(function(a,b){return a - b;});
+}
+
+createRandTable(choiceBall);
 }

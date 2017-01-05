@@ -21,10 +21,12 @@ $(function(){
 	});
 	
 	$('#choiceCreate').on("click",function(){
+		$('.randShowDiv').hide();
+		$('.choiceShowDiv').show();
 		createChoiceBall();
 	});
 	
-	$('#randomSave').on('touchstart',function(e){
+	$('#randomSave, #choiceSave').on('touchstart',function(e){
 		CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
 		$('#reBall').tap();
@@ -120,6 +122,8 @@ $(function(){
 });
 
 function showPop(type){
+	$('.randShowDiv').show();
+	$('.choiceShowDiv').hide();
 	if(type == 1){
 		selectBall = new Array();
 		$('#ballList').find('div').addClass('noMatch');

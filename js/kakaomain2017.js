@@ -6,9 +6,13 @@ $(function(){
 	$('select[name=one], select[name=two], select[name=three], select[name=four], select[name=five]').on("change",function(){
 		var count = parseInt($('select[name=one]').val())+parseInt($('select[name=two]').val())+parseInt($('select[name=three]').val())+parseInt($('select[name=four]').val())+parseInt($('select[name=five]').val());
 		if(count > 6){
-			$(this).val(0).selectmenu( "refresh" );;
+			$(this).val(0).selectmenu( "refresh" );
 			CallAndroid.Alert('각 범위의 총 합이6을 넘을 수 없습니다.');
 		}
+	});
+	
+	$('#choiceReset').on('click',function(){
+		$('select[name=one], select[name=two], select[name=three], select[name=four], select[name=five]').val(0).selectmenu( "refresh" );
 	});
 	
 	$('#choiceSelected').on('click',function(){

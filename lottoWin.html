@@ -111,12 +111,12 @@
                     break;
             }
 
-            $('#fivePer').text((five/count * 100).toFixed(3) + ' %');
-            $('#fourPer').text((four/count * 100).toFixed(3) + ' %');
-            $('#threePer').text((three/count * 100).toFixed(3) + ' %');
-            $('#twoPer').text((two/count * 100).toFixed(3) + ' %');
-            $('#onePer').text((one/count * 100).toFixed(3) + ' %');
-            $('#nonePer').text((none/count * 100).toFixed(3) + ' %');
+            $('#fivePer').text((five/count * 100).toFixed(6) + ' %');
+            $('#fourPer').text((four/count * 100).toFixed(6) + ' %');
+            $('#threePer').text((three/count * 100).toFixed(6) + ' %');
+            $('#twoPer').text((two/count * 100).toFixed(6) + ' %');
+            $('#onePer').text((one/count * 100).toFixed(6) + ' %');
+            $('#nonePer').text((none/count * 100).toFixed(6) + ' %');
 
             for(var i = 0 ; i < 6 ; i ++){
                 if(!realNums.contains(randNums[i])){

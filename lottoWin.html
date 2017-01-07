@@ -96,12 +96,12 @@
                     break;
             }
 
-            $('#fivePer').text((five/count * 100).toFixed(3) + ' %');
-            $('#fourPer').text((four/count * 100).toFixed(3) + ' %');
-            $('#threePer').text((three/count * 100).toFixed(3) + ' %');
-            $('#twoPer').text((two/count * 100).toFixed(3) + ' %');
-            $('#onePer').text((one/count * 100).toFixed(3) + ' %');
-            $('#nonePer').text((none/count * 100).toFixed(3) + ' %');
+            $('#fivePer').text((five/count * 100).toFixed(6) + ' %');
+            $('#fourPer').text((four/count * 100).toFixed(6) + ' %');
+            $('#threePer').text((three/count * 100).toFixed(6) + ' %');
+            $('#twoPer').text((two/count * 100).toFixed(6) + ' %');
+            $('#onePer').text((one/count * 100).toFixed(6) + ' %');
+            $('#nonePer').text((none/count * 100).toFixed(6) + ' %');
 
             for(var i = 0 ; i < 6 ; i ++){
                 if(!realNums.contains(randNums[i])){
@@ -151,7 +151,7 @@
 <button id="stopBtn" style="width: 40%">정지</button>
 <table border="1" cellpadding="0" style="width: 100%">
     <tr>
-        <td colspan="3">현재 번호 : <div id="realNums"></div></td>
+        <td colspan="3">1st 번호 : <div id="realNums"></div></td>
     </tr>
     <tr>
         <td colspan="3">카운트 : <div id="count"></div></td>

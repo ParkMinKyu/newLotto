@@ -51,6 +51,8 @@
                     randNums.push(parseInt($("#hold"+i).val()));
                 }
             }
+            if(randNums.length == 6)
+                return  randNums.sort(function(a,b){return a - b;});
             while(true){
                 var num = createRandomNum();
                 while(randNums.contains(num)){

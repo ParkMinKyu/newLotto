@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+           $('#startBtn').on('click',function(){
+               if(lottoInterval != null){
+                   return;
+               }
+               else{
+                   lottoInterval = setInterval(function(){
+                       var randNums = createRandomNums();
+                       displayNums('realNums',realNums);
+                       displayNums('nowNums',randNums);
+                       if(checkNums(randNums)){
+                           $('#stopBtn').click();
+                       }
+                       displayWinMoney();
+                       displayLoseMoney();
+                   },5);
+               }
+           });
+           $('#stopBtn').on('click',function(){
+               if(lottoInterval != null){
+                   clearInterval(lottoInterval);
+                   lottoInterval = null;
+               }
+            });
+        });
+
+        var realNums = [5,10,13,27,37,41];
+        var bonus = 4;
+        var count = 0;
+        var lottoInterval = null;
+
+        function createRandomNums(){
+            var randNums = new Array();
+            while(true){
+                var num = createRandomNum();
+                while(randNums.contains(num)){
+                    num = createRandomNum();
+                }
+                randNums.push(num);
+                if(randNums.length == 6)
+                    return  randNums.sort(function(a,b){return a - b;});
+            }
+        }
+
+        function createRandomNum(){
+            return parseInt((Math.random() *45)+1);
+        }
+
+        function checkNums(randNums){
+            $('#count').text(++count);
+            $('#money').text((count * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원');
+            var ranking = 0;
+            for(var i = 0 ; i < 6 ; i ++){
+                if(realNums.contains(randNums[i])){
+                    ranking++;
+                }
+            }
+
+            var five = parseInt($('#five').text());
+            var four = parseInt($('#four').text());
+            var three = parseInt($('#three').text());
+            var two = parseInt($('#two').text());
+            var one = parseInt($('#one').text());
+            var none = parseInt($('#none').text());
+
+            switch (ranking){
+                case 3:
+                    $('#five').text(++five);
+                    break;
+                case 4:
+                    $('#four').text(++four);
+                    break;
+                case 5:
+                    if(randNums.contains(bonus)){
+                        $('#two').text(++two);
+                    }
+                    else{
+                        $('#three').text(++three);
+                    }
+                    break;
+                case 6:
+                    $('#one').text(++one);
+                    break;
+                default :
+                    $('#none').text(++none);
+                    break;
+            }
+
+            $('#fivePer').text((five/count * 100).toFixed(3) + ' %');
+            $('#fourPer').text((four/count * 100).toFixed(3) + ' %');
+            $('#threePer').text((three/count * 100).toFixed(3) + ' %');
+            $('#twoPer').text((two/count * 100).toFixed(3) + ' %');
+            $('#onePer').text((one/count * 100).toFixed(3) + ' %');
+            $('#nonePer').text((none/count * 100).toFixed(3) + ' %');
+
+            for(var i = 0 ; i < 6 ; i ++){
+                if(!realNums.contains(randNums[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function displayNums(id,nums){
+            var text = "";
+            for(var i = 0 ; i < 6 ; i ++){
+                text += nums[i];
+                text += ",";
+            }
+            $('#'+id).text(text);
+        }
+
+        function displayWinMoney(){
+            var five = parseInt($('#five').text())* 5000;
+            var four = parseInt($('#four').text())* 50000;
+            var three = parseInt($('#three').text())* 1000000;
+            var two = parseInt($('#two').text())* 50000000;
+            var one = parseInt($('#one').text())* 2000000000;
+
+            $('#winMoney').text((five + four + three + two + one).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
+
+        function displayLoseMoney(){
+            var totalMoney = parseInt($('#money').text().replace(/[^0-9]/g,''));
+            var winMoney = parseInt($('#winMoney').text().replace(/[^0-9]/g,''));
+            $('#loseMoney').text((totalMoney - winMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
+
+        Array.prototype.contains = function(element) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == element) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+<button id="startBtn">시작</button>
+<button id="stopBtn">정지</button>
+<table border="1" cellpadding="0">
+    <tr>
+        <td colspan="3">현재 번호 : <div id="realNums"></div></td>
+    </tr>
+    <tr>
+        <td colspan="3">카운트 : <div id="count"></div></td>
+    </tr>
+    <tr>
+        <td colspan="3">생성 번호 : <div id="nowNums"></div></td>
+    </tr>
+    <tr>
+        <td colspan="3">사용 금액 : <div id="money"></div></td>
+    </tr>
+    <tr>
+        <td colspan="3">번 금액 : <div id="winMoney">0</div> 원</td>
+    </tr>
+    <tr>
+        <td colspan="3">피해 금액 : <div id="loseMoney">0</div> 원</td>
+    </tr>
+    <tr>
+        <td>등수</td>
+        <td>당첨수</td>
+        <td>확률</td>
+    </tr>
+    <tr>
+        <td>1등</td>
+        <td><div id="one">0</div></td>
+        <td><div id="onePer">0%</div></td>
+    </tr>
+    <tr>
+        <td>2등</td>
+        <td><div id="two">0</div></td>
+        <td><div id="twoPer">0%</div></td>
+    </tr>
+    <tr>
+        <td>3등</td>
+        <td><div id="three">0</div></td>
+        <td><div id="threePer">0%</div></td>
+    </tr>
+    <tr>
+        <td>4등</td>
+        <td><div id="four">0</div></td>
+        <td><div id="fourPer">0%</div></td>
+    </tr>
+    <tr>
+        <td>5등</td>
+        <td><div id="five">0</div></td>
+        <td><div id="fivePer">0%</div></td>
+    </tr>
+    <tr>
+        <td>꽝</td>
+        <td><div id="none">0</div></td>
+        <td><div id="nonePer">0%</div></td>
+    </tr>
+</table>
+</body>
+</html>

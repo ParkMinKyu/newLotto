@@ -26,6 +26,17 @@
 
             $('#saveWinBtn').on('click',function(){
                 createWinNums();
+            })
+
+            $('#goMarketBtn').on('click',function(){
+                var filter = "win16|win32|win64|mac";
+                if(navigator.platform){
+                    if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+                        location.href="market://details?id=com.min.lotto";
+                    }else{
+                        location.href="https://play.google.com/store/apps/details?id=com.min.lotto";
+                    }
+                }
             });
 
             $('#reloadWinBtn').on('click',function(){
@@ -235,6 +246,7 @@
     <button id="startBtn" class="btn btn-primary btn-sm">시작</button>
     <button id="stopBtn" class="btn btn-default btn-sm">정지</button>
     <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
+    <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>
 </div>
 <table class="table table-bordered">
     <colgroup>

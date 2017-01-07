@@ -9,6 +9,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript">
         $(function(){
+            for(var i =1 ; i <= 6 ; i ++){
+                for(var k = 1 ; k <= 45 ; k ++){
+                    $("#hold"+i).append("<option value='"+k+"'>"+k);
+                }
+            }
            $('#startBtn').on('click',function(){
                if(lottoInterval != null){
                    return;
@@ -41,6 +46,11 @@
 
         function createRandomNums(){
             var randNums = new Array();
+            for(var i =1 ; i <= 6 ; i ++){
+                if($("#hold"+i).val() != ""){
+                    randNums.push(parseInt($("#hold"+i).val()));
+                }
+            }
             while(true){
                 var num = createRandomNum();
                 while(randNums.contains(num)){
@@ -76,32 +86,37 @@
             switch (ranking){
                 case 3:
                     $('#five').text(++five);
+                    displayNums('fiveMatch',randNums);
                     break;
                 case 4:
                     $('#four').text(++four);
+                    displayNums('fourMatch',randNums);
                     break;
                 case 5:
                     if(randNums.contains(bonus)){
                         $('#two').text(++two);
+                        displayNums('twoMatch',randNums);
                     }
                     else{
                         $('#three').text(++three);
+                        displayNums('threeMatch',randNums);
                     }
                     break;
                 case 6:
                     $('#one').text(++one);
+                    displayNums('oneMatch',randNums);
                     break;
                 default :
                     $('#none').text(++none);
                     break;
             }
 
-            $('#fivePer').text((five/count * 100).toFixed(6) + ' %');
-            $('#fourPer').text((four/count * 100).toFixed(6) + ' %');
-            $('#threePer').text((three/count * 100).toFixed(6) + ' %');
-            $('#twoPer').text((two/count * 100).toFixed(6) + ' %');
-            $('#onePer').text((one/count * 100).toFixed(6) + ' %');
-            $('#nonePer').text((none/count * 100).toFixed(6) + ' %');
+            $('#fivePer').text((five/count * 100).toFixed(3) + ' %');
+            $('#fourPer').text((four/count * 100).toFixed(3) + ' %');
+            $('#threePer').text((three/count * 100).toFixed(3) + ' %');
+            $('#twoPer').text((two/count * 100).toFixed(3) + ' %');
+            $('#onePer').text((one/count * 100).toFixed(3) + ' %');
+            $('#nonePer').text((none/count * 100).toFixed(3) + ' %');
 
             for(var i = 0 ; i < 6 ; i ++){
                 if(!realNums.contains(randNums[i])){
@@ -150,58 +165,96 @@
 <button id="startBtn" style="width: 40%">시작</button>
 <button id="stopBtn" style="width: 40%">정지</button>
 <table border="1" cellpadding="0" style="width: 100%">
+    <colgroup>
+        <col width="10%">
+        <col width="15%">
+        <col width="15%">
+        <col width="60%">
+    </colgroup>
     <tr>
-        <td colspan="3">1st 번호 : <div id="realNums"></div></td>
+        <td colspan="4">1등 번호 : <div id="realNums"></div></td>
     </tr>
     <tr>
-        <td colspan="3">카운트 : <div id="count"></div></td>
+        <td colspan="4">카운트 : <div id="count"></div></td>
     </tr>
     <tr>
-        <td colspan="3">생성 번호 : <div id="nowNums"></div></td>
+        <td colspan="4">생성 번호 : <div id="nowNums"></div></td>
     </tr>
     <tr>
-        <td colspan="3">사용 금액 : <div id="money"></div></td>
+        <td>
+            번호 생성시 고정번호
+        </td>
+        <td colspan="3">
+            <select id="hold1">
+                <option value="">고정 번호1</option>
+            </select>
+            <select id="hold2">
+                <option value="">고정 번호2</option>
+            </select>
+            <select id="hold3">
+                <option value="">고정 번호3</option>
+            </select>
+            <select id="hold4">
+                <option value="">고정 번호4</option>
+            </select>
+            <select id="hold5">
+                <option value="">고정 번호5</option>
+            </select>
+            <select id="hold6">
+                <option value="">고정 번호6</option>
+            </select>
+        </td>
     </tr>
     <tr>
-        <td colspan="3">번 금액 : <div id="winMoney">0</div> 원</td>
+        <td colspan="4">사용 금액 : <div id="money"></div></td>
     </tr>
     <tr>
-        <td colspan="3">피해 금액 : <div id="loseMoney">0</div> 원</td>
+        <td colspan="4">번 금액 : <div id="winMoney">0</div> 원</td>
+    </tr>
+    <tr>
+        <td colspan="4">피해 금액 : <div id="loseMoney">0</div> 원</td>
     </tr>
     <tr>
         <td>등수</td>
         <td>당첨수</td>
         <td>확률</td>
+        <td>최근당첨번호</td>
     </tr>
     <tr>
         <td>1등</td>
         <td><div id="one">0</div></td>
         <td><div id="onePer">0%</div></td>
+        <td><div id="oneMatch"></div></td>
     </tr>
     <tr>
         <td>2등</td>
         <td><div id="two">0</div></td>
         <td><div id="twoPer">0%</div></td>
+        <td><div id="twoMatch"></div></td>
     </tr>
     <tr>
         <td>3등</td>
         <td><div id="three">0</div></td>
         <td><div id="threePer">0%</div></td>
+        <td><div id="threeMatch"></div></td>
     </tr>
     <tr>
         <td>4등</td>
         <td><div id="four">0</div></td>
         <td><div id="fourPer">0%</div></td>
+        <td><div id="fourMatch"></div></td>
     </tr>
     <tr>
         <td>5등</td>
         <td><div id="five">0</div></td>
         <td><div id="fivePer">0%</div></td>
+        <td><div id="fiveMatch"></div></td>
     </tr>
     <tr>
         <td>꽝</td>
         <td><div id="none">0</div></td>
         <td><div id="nonePer">0%</div></td>
+        <td></td>
     </tr>
 </table>
 </body>

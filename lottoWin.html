@@ -16,7 +16,6 @@
     <script type="text/javascript">
         $(function(){
             $('select').addClass("form-control");
-            $('.label').css('font-size','82%');
 
             for(var i =1 ; i <= 7 ; i ++){
                 for(var k = 1 ; k <= 45 ; k ++){
@@ -238,16 +237,15 @@
 </div>
 <table class="table table-bordered">
     <colgroup>
-        <col width="13%">
-        <col width="17%">
-        <col width="*">
-        <col width="*">
+        <col width="20%">
+        <col width="30%">
+        <col width="40%">
     </colgroup>
     <tr>
-        <td colspan="4">1등 번호 : <span id="realNums" class="label label-primary"></span></td>
+        <td colspan="3">1등 번호 : <span id="realNums"></span></td>
     </tr>
     <tr id="winHold">
-        <td colspan="2">
+        <td>
             1등 번호 선택
         </td>
         <td colspan="2">
@@ -284,13 +282,13 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4">
-            게임수 : <span id="count" class="label label-info"></span><br>
-            생성 번호 : <span id="nowNums" class="label label-primary"></span>
+        <td colspan="3">
+            게임수 : <span id="count"></span><br>
+            생성 번호 : <span id="nowNums"></span>
         </td>
     </tr>
     <tr id="randHold">
-        <td colspan="2">
+        <td>
             고정번호 선택
         </td>
         <td colspan="2">
@@ -319,52 +317,45 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4">
-            총 사용 금액 : <span id="money" class="label label-default"></span><br>
-            총 당첨 금액 : <span id="winMoney" class="label label-primary">0</span> <br>
-            총 피해 금액 : <span id="loseMoney" class="label label-danger">0</span>
+        <td colspan="3">
+            총 사용 금액 : <span id="money"></span><br>
+            총 당첨 금액 : <span id="winMoney">0</span> <br>
+            총 피해 금액 : <span id="loseMoney">0</span>
         </td>
     </tr>
     <tr>
-        <td>등수</td>
-        <td>당첨수</td>
+        <td>등수<br>(당첨수)</td>
         <td>확률</td>
         <td>최근당첨번호</td>
     </tr>
     <tr>
-        <td>1등</td>
-        <td><span id="one" class="label label-info">0</span></td>
-        <td><span id="onePer" class="label label-success">0%</span></td>
-        <td><span id="oneMatch" class="label label-primary"></span></td>
+        <td>1등<br>(<span id="one">0</span>)</td>
+        <td><span id="onePer" class=" -success">0%</span></td>
+        <td><span id="oneMatch"></span></td>
     </tr>
     <tr>
-        <td>2등</td>
-        <td><span id="two" class="label label-info">0</span></td>
-        <td><span id="twoPer" class="label label-success">0%</span></td>
-        <td><span id="twoMatch" class="label label-primary"></span></td>
+        <td>2등<br>(<span id="two">0</span>)</td>
+        <td><span id="twoPer" class=" -success">0%</span></td>
+        <td><span id="twoMatch"></span></td>
     </tr>
     <tr>
-        <td>3등</td>
-        <td><span id="three" class="label label-info">0</span></td>
-        <td><span id="threePer" class="label label-success">0%</span></td>
-        <td><span id="threeMatch" class="label label-primary"></span></td>
+        <td>3등<br>(<span id="three">0</span>)</td>
+        <td><span id="threePer" class=" -success">0%</span></td>
+        <td><span id="threeMatch"></span></td>
     </tr>
     <tr>
-        <td>4등</td>
-        <td><span id="four" class="label label-info">0</span></td>
-        <td><span id="fourPer" class="label label-success">0%</span></td>
-        <td><span id="fourMatch" class="label label-primary"></span></td>
+        <td>4등<br>(<span id="four">0</span>)</td>
+        <td><span id="fourPer" class=" -success">0%</span></td>
+        <td><span id="fourMatch"></span></td>
     </tr>
     <tr>
-        <td>5등</td>
-        <td><span id="five" class="label label-info">0</span></td>
-        <td><span id="fivePer" class="label label-success">0%</span></td>
-        <td><span id="fiveMatch" class="label label-primary"></span></td>
+        <td>5등<br>(<span id="five">0</span>)</td>
+        <td><span id="fivePer" class=" -success">0%</span></td>
+        <td><span id="fiveMatch"></span></td>
     </tr>
     <tr>
-        <td>꽝</td>
-        <td><span id="none" class="label label-info">0</span></td>
-        <td><span id="nonePer" class="label label-success">0%</span></td>
+        <td>꽝<br>(<span id="none">0</span>)</td>
+        <td><span id="nonePer" class=" -success">0%</span></td>
         <td></td>
     </tr>
 </table>

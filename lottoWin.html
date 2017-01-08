@@ -52,6 +52,7 @@
 
            $('#startBtn').on('click',function(){
                $('#winHold').hide();
+               $('#randHold').hide();
                if(lottoInterval != null){
                    return;
                }
@@ -69,6 +70,7 @@
            });
            $('#stopBtn').on('click',function(){
                $('#winHold').show();
+               $('#randHold').show();
                if(lottoInterval != null){
                    clearInterval(lottoInterval);
                    lottoInterval = null;

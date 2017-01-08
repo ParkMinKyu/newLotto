@@ -52,7 +52,6 @@
 
            $('#startBtn').on('click',function(){
                $('#winHold').hide();
-               $('#randHold').hide();
                if(lottoInterval != null){
                    return;
                }
@@ -70,7 +69,6 @@
            });
            $('#stopBtn').on('click',function(){
                $('#winHold').show();
-               $('#randHold').show();
                if(lottoInterval != null){
                    clearInterval(lottoInterval);
                    lottoInterval = null;
@@ -340,37 +338,52 @@
     </tr>
     <tr>
         <td>등수<br>(당첨수)</td>
-        <td>확률</td>
+        <td>현재 확률<br>(공식 확률)</td>
         <td>최근당첨번호</td>
     </tr>
     <tr>
         <td>1등<br>(<span id="one">0</span>)</td>
-        <td><span id="onePer" class=" -success">0%</span></td>
+        <td>
+            <span id="onePer">0%</span><br>
+            <span>(1/8,145,060 = 0.000012 %)</span>
+        </td>
         <td><span id="oneMatch"></span></td>
     </tr>
     <tr>
         <td>2등<br>(<span id="two">0</span>)</td>
-        <td><span id="twoPer" class=" -success">0%</span></td>
+        <td>
+            <span id="twoPer">0%</span><br>
+            <span>(1/1,357,510 = 0.000073 %)</span>
+        </td>
         <td><span id="twoMatch"></span></td>
     </tr>
     <tr>
         <td>3등<br>(<span id="three">0</span>)</td>
-        <td><span id="threePer" class=" -success">0%</span></td>
+        <td>
+            <span id="threePer">0%</span><br>
+            <span>(1/35,724 = 0.002799 %)</span>
+        </td>
         <td><span id="threeMatch"></span></td>
     </tr>
     <tr>
         <td>4등<br>(<span id="four">0</span>)</td>
-        <td><span id="fourPer" class=" -success">0%</span></td>
+        <td>
+            <span id="fourPer">0%</span><br>
+            <span>(1/733 = 0.136425 %)</span>
+        </td>
         <td><span id="fourMatch"></span></td>
     </tr>
     <tr>
         <td>5등<br>(<span id="five">0</span>)</td>
-        <td><span id="fivePer" class=" -success">0%</span></td>
+        <td>
+            <span id="fivePer">0%</span><br>
+            <span>(1/45 * 100 = 2.222222 %)</span>
+        </td>
         <td><span id="fiveMatch"></span></td>
     </tr>
     <tr>
         <td>꽝<br>(<span id="none">0</span>)</td>
-        <td><span id="nonePer" class=" -success">0%</span></td>
+        <td><span id="nonePer">0%</span></td>
         <td></td>
     </tr>
 </table>

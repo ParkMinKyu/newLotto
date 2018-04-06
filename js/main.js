@@ -23,7 +23,7 @@ $(function(){
 	});
 	
 	$('#randomSave').on('touchstart',function(e){
-		//alert('저장기능 점검중입니다');
+		CallAndroid.Alert('저장기능 점검중입니다');
 		//CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
 		$('#reBall').tap();
@@ -34,7 +34,7 @@ $(function(){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");
 		}else{
-			//alert('저장기능 점검중입니다');
+			CallAndroid.Alert('저장기능 점검중입니다');
 			//CallAndroid.holdRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
 			location.href="#home";
 		}
@@ -42,6 +42,7 @@ $(function(){
 	});
 	
 	$('#allClear').on('tap',function(e){
+		CallAndroid.Alert("삭제기능 점검중 입니다.");
 		//CallAndroid.clearNum();
 		e.preventDefault();
 	});

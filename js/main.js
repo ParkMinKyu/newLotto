@@ -42,7 +42,7 @@ $(function(){
 	});
 	
 	$('#allClear').on('tap',function(e){
-		CallAndroid.clearNum();
+		//CallAndroid.clearNum();
 		e.preventDefault();
 	});
 	

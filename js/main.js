@@ -52,13 +52,10 @@ $(function(){
 	});
 	
 	$('#reBall').touchstart();
-	//CallAndroid.getLastGameNum('');
+	CallAndroid.getLastGameNum('800');
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
-	createSelectBall();
-	
-	setMatchNums('추첨일 2018-03-31;800');
-        setRealNums([1,4,10,12,28,45,26]);
+	createSelectBall();		
 });
 
 //덧글 불러오기

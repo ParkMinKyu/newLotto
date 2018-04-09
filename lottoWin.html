@@ -65,6 +65,7 @@
                        }
                        displayWinMoney();
                        displayLoseMoney();
+                       checkEndGame();
                    },5);
                }
            });
@@ -85,6 +86,14 @@
         var count = 0;
         var lottoInterval = null;
 
+        function checkEndGame(){
+            if(count >= parseInt($('#endCount').val(),10)){
+                clearInterval(lottoInterval);
+                   lottoInterval = null;
+                alert('게임이 끝났습니다.');
+            }
+        }
+        
         function createWinNums(){
             realNums = new Array();
             for(var i =1 ; i <= 7 ; i ++){
@@ -304,7 +313,14 @@
         <td>
             투자: <span id="money"></span><br>
             수익: <span id="winMoney">0</span> <br>
-            손실: <span id="loseMoney">0</span>
+            손실: <span id="loseMoney">0</span><br>
+            <select id="endCount">
+                <option value="0">무제한</option>
+                <option value="1000">1000게임정지</option>
+                <option value="5000">5000게임정지</option>
+                <option value="10000">10000게임정지</option>
+                <option value="50000">50000게임정지</option>
+            </select>
         </td>
     </tr>
     <tr id="randHold">

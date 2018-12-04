@@ -1,6 +1,7 @@
 var realNums = new Array();
 var ballList = new Array(); 
 var selectBall = new Array();
+var allNums = new Array();
 $(function(){
 	$('#reBall').on('touchstart',function(e){
 		$('#randomTable').html('');
@@ -50,7 +51,15 @@ $(function(){
 	});
 	
 	$('#reBall').touchstart();
-	CallAndroid.getLastGameNum("");	
+	$.ajax({
+		url:'https://parkminkyu.github.io/bok/lottoHistory.json',
+		success:function(res){
+			allNums = res;
+			CallAndroid.getLastGameNum("");	
+			createSelectBall();		
+		}
+	});
+	//CallAndroid.getLastGameNum("");	
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
 	createSelectBall();		

@@ -301,25 +301,43 @@ function setMatchNums(num){
 	
 	$('#gameyear').html(year);
 
-	var onum = parseInt($($('#matchNums').find('option')[0]).attr('value'));
-	
-	$('#matchNums').find('option').remove();
+	if(num>0){
+		var onum = parseInt($($('#matchNums').find('option')[0]).attr('value'));	
+		
+		$('#matchNums').find('option').remove();
 
-	for(var i = (onum?onum:num) ; i > 0 ; i --){
-		var $option = $('<option>',{
-			value : i,
-			text : i + " 회"
-		});
-		$('#matchNums').append($option);
-		if(i == num){
-			$option.attr("selected",true);
+		for(var i = (onum?onum:num) ; i > 0 ; i --){
+			var $option = $('<option>',{
+				value : i,
+				text : i + " 회"
+			});
+			$('#matchNums').append($option);
+			if(i == num){
+				$option.attr("selected",true);
+			}
 		}
+		
+		$('#matchNums').selectmenu( "refresh" );
+		
+		$('#matchNums').die().live('change',function(){		
+			var selectObject = allNums[parseInt($(this).val())-1];
+			setRealNums([selectObject.drwtNo1,selectObject.drwtNo2,selectObject.drwtNo3,selectObject.drwtNo4,selectObject.drwtNo5,selectObject.drwtNo6,selectObject.bnusNo]);
+			setMatchNums('추첨일 : '+selectObject.drwNoDate+'<br>총 판매금 : '+numberWithCommas(selectObject.totSellamnt)+'원<br>1등 당첨금 : '+numberWithCommas(selectObject.firstWinamnt)+'원(당첨자 : '+selectObject.firstPrzwnerCo+'명);');
+			setMyNums(getMyNums());
+			//CallAndroid.getLastGameNum($(this).val());
+		});
 	}
-	
-	$('#matchNums').selectmenu( "refresh" );
-	
-	$('#matchNums').die().live('change',function(){
-		CallAndroid.getLastGameNum($(this).val());
-	});
+}
 
+function getMyNums(){
+	var myNums= new Array();
+	$('#myNums > tr').each(function(){
+		var tempNums = [parseInt($($(this).find('td')[0]).text()),parseInt($($(this).find('td')[1]).text()),parseInt($($(this).find('td')[2]).text()),parseInt($($(this).find('td')[3]).text()),parseInt($($(this).find('td')[4]).text()),parseInt($($(this).find('td')[5]).text())];		
+		myNums.push(tempNums);
+	});
+	return myNums;
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

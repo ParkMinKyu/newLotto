@@ -68,6 +68,8 @@
                }
                else{
                    lottoInterval = setInterval(function(){
+                      var gameSpeed = parseInt($('#gameSpeed').val(),10);
+                      for(var i = 0 ; i < gameSpeed ; i ++){
                        var randNums = createRandomNums();
                        displayNums('nowNums',randNums);
                        if(checkNums(randNums)){
@@ -76,6 +78,7 @@
                        displayWinMoney();
                        displayLoseMoney();
                        checkEndGame();
+                      }                       
                    },5);
                }
            });
@@ -323,8 +326,26 @@
         <td>
             투자: <span id="money"></span><br>
             수익: <span id="winMoney">0</span> <br>
-            손실: <span id="loseMoney">0</span><br>
-            <select id="endCount">
+            손실: <span id="loseMoney">0</span><br>          
+        </td>
+    </tr>
+    <tr>
+     <td colspan="2">           
+            <select id="gameSpeed" class="form-control">
+                <option value="1">게임속도*1</option>
+                <option value="2">게임속도*2</option>
+                <option value="3">게임속도*3</option>
+                <option value="4">게임속도*4</option>
+                <option value="5">게임속도*5</option>
+                <option value="6">게임속도*6</option>
+                <option value="7">게임속도*7</option>
+                <option value="8">게임속도*8</option>
+                <option value="9">게임속도*9</option>
+                <option value="10">게임속도*10</option>
+            </select>
+        </td>
+        <td>            
+            <select id="endCount" class="form-control">
                 <option value="0">무제한</option>
                 <option value="1000">1000게임정지</option>
                 <option value="5000">5000게임정지</option>
@@ -332,7 +353,7 @@
                 <option value="50000">50000게임정지</option>
             </select>
         </td>
-    </tr>
+    </td>
     <tr id="randHold">
         <td>
             고정번호 선택

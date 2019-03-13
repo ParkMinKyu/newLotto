@@ -24,7 +24,8 @@
 </script>
 
     <script type="text/javascript">
-        $(function(){
+        $(function(){          
+            
             $('select').addClass("form-control");
 
             for(var i =1 ; i <= 7 ; i ++){
@@ -81,10 +82,12 @@
                       }                       
                    },5);
                }
+               timer();
            });
            $('#stopBtn').on('click',function(){
                $('#winHold').show();
                $('#randHold').show();
+               clearTimeout(t);
                if(lottoInterval != null){
                    clearInterval(lottoInterval);
                    lottoInterval = null;
@@ -253,6 +256,28 @@
             $('#loseMoney').text((totalMoney - winMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
         }
 
+        var seconds = 0, minutes = 0, hours = 0, t;
+            
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            $('#gameTime').text((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+
+            timer();
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+        
         Array.prototype.contains = function(element) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] == element) {
@@ -326,7 +351,8 @@
         <td>
             투자: <span id="money"></span><br>
             수익: <span id="winMoney">0</span> <br>
-            손실: <span id="loseMoney">0</span><br>          
+            손실: <span id="loseMoney">0</span><br>
+            소요시간: <span id="gameTime">00:00:00</span>
         </td>
     </tr>
     <tr>

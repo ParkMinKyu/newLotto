@@ -107,6 +107,8 @@
             if(count >= parseInt($('#endCount').val(),10) && 0 != parseInt($('#endCount').val(),10)){
                 clearInterval(lottoInterval);
                    lottoInterval = null;
+                clearTimeout(t);
+               t = null;
                 alert('게임이 끝났습니다.');
             }
         }

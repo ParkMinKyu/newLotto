@@ -33,6 +33,48 @@
     <script type="text/javascript">
         $(function(){          
             
+             $("a[data-toggle='sns_share']").click(function(e){
+                e.preventDefault();
+
+                var _this = $(this);
+                var sns_type = _this.attr('data-service');
+                var href = "http://parkminkyu.github.io/newLotto/lottoWin.html";
+                var title = $("meta[name='og:title']").attr('content');
+                var loc = "";
+                var img = $("meta[name='og:image']").attr('content');
+
+                if( ! sns_type || !href || !title) return;
+
+                if( sns_type == 'facebook' ) {
+                    loc = '//www.facebook.com/sharer/sharer.php?u='+href+'&t='+title;
+                }
+                else if ( sns_type == 'twitter' ) {
+                    loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+                }
+                else if ( sns_type == 'google' ) {
+                    loc = '//plus.google.com/share?url='+href;
+                }
+                else if ( sns_type == 'pinterest' ) {
+
+                    loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+                }
+                else if ( sns_type == 'kakaostory') {
+                    loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'band' ) {
+                    loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'naver' ) {
+                    loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+                }
+                else {
+                    return false;
+                }
+
+                window.open(loc);
+                return false;
+            });
+            
             $('select').addClass("form-control");
 
             for(var i =1 ; i <= 7 ; i ++){
@@ -296,6 +338,27 @@
             }
             return false;
         }
+        
+        function copyToClipboard() {
+          var el = document.createElement('textarea');  // Create a <textarea> element
+          el.value = 'http://parkminkyu.github.io/newLotto/lottoWin.html'; // Set its value to the string that you want copied
+          el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+          el.style.position = 'absolute';                 
+          el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+          document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+          var selected =            
+            document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+              ? document.getSelection().getRangeAt(0)     // Store selection if found
+              : false;                                    // Mark as false to know no selection existed before
+          el.select();                                    // Select the <textarea> content
+          document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+          document.body.removeChild(el);                  // Remove the <textarea> element
+          if (selected) {                                 // If a selection existed before copying
+            document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+            document.getSelection().addRange(selected);   // Restore the original selection           
+          }
+          alert("주소가 복사되었습니다.");
+        };
     </script>
 </head>
 <body>
@@ -305,6 +368,26 @@
     <button id="startBtn" class="btn btn-primary btn-sm">시작</button>
     <button id="stopBtn" class="btn btn-default btn-sm">정지</button>
     <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유하기<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-toggle="sns_share" data-service="naver" data-title="로또 시뮬레이터">네이버</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="twitter" data-title="로또 시뮬레이터">트위터</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="facebook" data-title="로또 시뮬레이터">페이스북</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="google" data-title="로또 시뮬레이터">구글</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="band" data-title="로또 시뮬레이터">밴드</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="pinterest" data-title="로또 시뮬레이터">핀터레스트</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="kakaostory" data-title="로또 시뮬레이터">카카오스토리</a></li>
+        <li role="separator" class="divider"></li><li><a href="#" onclick="">주소복사</a></li>
+      </ul>
+    </div>
     <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>
 </div>
 <table class="table table-bordered">

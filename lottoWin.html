@@ -39,9 +39,9 @@
                 var _this = $(this);
                 var sns_type = _this.attr('data-service');
                 var href = "http://parkminkyu.github.io/newLotto/lottoWin.html";
-                var title = $("meta[name='og:title']").attr('content');
+                var title = $("meta[property='og:title']").attr("content");
                 var loc = "";
-                var img = $("meta[name='og:image']").attr('content');
+                var img = $("meta[property='og:image']").attr("content");
 
                 if( ! sns_type || !href || !title) return;
 
@@ -385,7 +385,7 @@
         <li><a href="#" data-toggle="sns_share" data-service="pinterest" data-title="로또 시뮬레이터">핀터레스트</a></li>
         <li role="separator" class="divider"></li>
         <li><a href="#" data-toggle="sns_share" data-service="kakaostory" data-title="로또 시뮬레이터">카카오스토리</a></li>
-        <li role="separator" class="divider"></li><li><a href="#" onclick="">주소복사</a></li>
+        <li role="separator" class="divider"></li><li><a href="#" onclick="copyToClipboard();">주소복사</a></li>
       </ul>
     </div>
     <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>

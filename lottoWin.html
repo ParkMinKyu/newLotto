@@ -41,6 +41,11 @@
         		$('#disqus_thread').before(commentScript);
             });
             
+            $('#commentDelBtn').click(function(){
+                $('#disqus_thread').parent().find('script').remove();
+                $('#disqus_thread').html('');
+            });
+            
              $("a[data-toggle='sns_share']").click(function(e){
                 e.preventDefault();
 
@@ -462,6 +467,8 @@
                 <option value="1">게임속도*1</option>                
                 <option value="3">게임속도*3</option>                
                 <option value="5">게임속도*5</option>                
+                <option value="10">게임속도*10</option>                
+                <option value="20">게임속도*20</option>                
             </select>
         </td>
         <td>            
@@ -471,6 +478,8 @@
                 <option value="5000">5000게임정지</option>
                 <option value="10000">10000게임정지</option>
                 <option value="50000">50000게임정지</option>
+                <option value="100000">100000게임정지</option>
+                <option value="500000">500000게임정지</option>
             </select>
         </td>
     </td>
@@ -561,6 +570,9 @@
     <tr>
         <td colspan="3">
             <button id="commentBtn" class="btn btn-primary btn-lg">댓글 보기</button>                                
+            <button id="commentDelBtn" class="btn btn-danger btn-lg">댓글 닫기</button>   
+            <br>
+            <small>끊기는 현상 발생시 댓글을 닫아보세요</small>
             <div id="disqus_thread"></div>            
         </td>
     </tr>

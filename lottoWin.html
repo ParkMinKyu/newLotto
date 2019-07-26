@@ -35,6 +35,10 @@
             
             $('#commentBtn').click(function(){
                 
+                var commentScript = document.createElement('script');        		
+        		var commentHtml = "(function() { var d = document, s = d.createElement('script'); s.src = '//roddo-dangceom-hwagryul-gyesangi.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();";        		
+        		commentScript.innerHTML = commentHtml;        		
+        		$('#disqus_thread').before(commentScript);
             });
             
              $("a[data-toggle='sns_share']").click(function(e){
@@ -133,7 +137,7 @@
                        displayLoseMoney();
                        checkEndGame();
                       }                       
-                   },5);
+                   },2);
                }
                if(t == null)timer();
            });
@@ -556,8 +560,8 @@
     </tr>
     <tr>
         <td colspan="3">
-            <div id="disqus_thread"></div>
             <button id="commentBtn" class="btn btn-primary btn-lg">댓글 보기</button>                                
+            <div id="disqus_thread"></div>            
         </td>
     </tr>
 </table>

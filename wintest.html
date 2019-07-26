@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta property="og:url" content="http://parkminkyu.github.io/newLotto/lottoWin.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="로또 시뮬레이터" />
+    <meta property="og:description" content="로또 당첨 얼마나 안되나 체감하기" />
+    <meta property="og:image" content="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" />
+    
+    <title>로또당첨번호확률계산기(로또 시뮬레이터)</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-social.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51448530-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51448530-10');
+</script>
+
+    <script type="text/javascript">
+        $(function(){          
+            
+             $("a[data-toggle='sns_share']").click(function(e){
+                e.preventDefault();
+
+                var _this = $(this);
+                var sns_type = _this.attr('data-service');
+                var href = "http://parkminkyu.github.io/newLotto/lottoWin.html";
+                var title = $("meta[property='og:title']").attr("content");
+                var loc = "";
+                var img = $("meta[property='og:image']").attr("content");
+
+                if( ! sns_type || !href || !title) return;
+
+                if( sns_type == 'facebook' ) {
+                    loc = '//www.facebook.com/sharer/sharer.php?u='+href+'&t='+title;
+                }
+                else if ( sns_type == 'twitter' ) {
+                    loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+                }
+                else if ( sns_type == 'google' ) {
+                    loc = '//plus.google.com/share?url='+href;
+                }
+                else if ( sns_type == 'pinterest' ) {
+
+                    loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+                }
+                else if ( sns_type == 'kakaostory') {
+                    loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'band' ) {
+                    loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'naver' ) {
+                    loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+                }
+                else {
+                    return false;
+                }
+
+                window.open(loc);
+                return false;
+            });
+            
+            $('select').addClass("form-control");
+
+            for(var i =1 ; i <= 7 ; i ++){
+                for(var k = 1 ; k <= 45 ; k ++){
+                    $("#hold"+i).append("<option value='"+k+"'>"+k);
+                    $("#win"+i).append("<option value='"+k+"'>"+k);
+                }
+            }
+
+            $('#saveWinBtn').on('click',function(){
+                createWinNums();
+            })
+
+            $('#goMarketBtn').on('click',function(){
+                var filter = "win16|win32|win64|mac";
+                if(navigator.platform){
+                    if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+                        location.href="market://details?id=com.min.lotto";
+                    }else{
+                        location.href="https://play.google.com/store/apps/details?id=com.min.lotto";
+                    }
+                }
+            });
+
+            $('#reloadWinBtn').on('click',function(){
+                for(var i = 1 ; i <= 7 ; i ++){
+                        $("#win"+i).val("");
+                }
+                createWinNums();
+            });
+
+            $('#resetBtn').on('click',function(){
+                location.reload();
+            });
+
+           $('#startBtn').on('click',function(){
+               $('#winHold').hide();
+               $('#randHold').hide();
+               if(lottoInterval != null){
+                   return;
+               }
+               else{
+                   lottoInterval = setInterval(function(){
+                      var gameSpeed = parseInt($('#gameSpeed').val(),10);
+                      for(var i = 0 ; i < gameSpeed ; i ++){
+                       var randNums = createRandomNums();
+                       displayNums('nowNums',randNums);
+                       if(checkNums(randNums)){
+                           $('#stopBtn').click();
+                       }
+                       displayWinMoney();
+                       displayLoseMoney();
+                       checkEndGame();
+                      }                       
+                   },5);
+               }
+               if(t == null)timer();
+           });
+           $('#stopBtn').on('click',function(){
+               $('#winHold').show();
+               $('#randHold').show();
+               clearTimeout(t);
+               t = null;
+               if(lottoInterval != null){
+                   clearInterval(lottoInterval);
+                   lottoInterval = null;
+               }
+            });
+
+            $('#reloadWinBtn').click();
+        });
+
+        var realNums = null;
+        var bonus = 0;
+        var count = 0;
+        var lottoInterval = null;
+
+        function checkEndGame(){
+            if(count >= parseInt($('#endCount').val(),10) && 0 != parseInt($('#endCount').val(),10)){
+                clearInterval(lottoInterval);
+                   lottoInterval = null;
+                clearTimeout(t);
+               t = null;
+                alert('게임이 끝났습니다.');
+            }
+        }
+        
+        function createWinNums(){
+            realNums = new Array();
+            for(var i =1 ; i <= 7 ; i ++){
+                if($("#win"+i).val() != ""){
+                    if(i != 7 ){
+                        realNums.push(parseInt($("#win"+i).val()));
+                    }else{
+                        bonus = parseInt($("#win"+i).val());
+                    }
+                }else{
+                    var num = createRandomNum();
+                    while(realNums.contains(num)){
+                        num = createRandomNum();
+                    }
+                    if(i != 7 ){
+                        realNums.push(num);
+                    }else{
+                       bonus = num;
+                    }
+                }
+            }
+
+            realNums.sort(function(a,b){return a-b;});
+
+            for(var i = 1 ; i <= 7 ; i ++){
+                if(i != 7 ){
+                    $("#win"+i).val(realNums[(i-1)]);
+                }else{
+                    $("#win"+i).val(bonus);
+                }
+            }
+
+            displayNums('realNums',realNums);
+        }
+
+        function createRandomNums(){
+            var randNums = new Array();
+            for(var i =1 ; i <= 6 ; i ++){
+                if($("#hold"+i).val() != ""){
+                    randNums.push(parseInt($("#hold"+i).val()));
+                }
+            }
+            if(randNums.length == 6)
+                return  randNums.sort(function(a,b){return a - b;});
+
+            while(true){
+                var num = createRandomNum();
+                while(randNums.contains(num)){
+                    num = createRandomNum();
+                }
+                randNums.push(num);
+                if(randNums.length == 6)
+                    return  randNums.sort(function(a,b){return a - b;});
+            }
+        }
+
+        function createRandomNum(){
+            return parseInt((Math.random() *45)+1);
+        }
+
+        function checkNums(randNums){
+            $('#count').text(++count);
+            $('#money').text((count * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원');
+            var ranking = 0;
+            for(var i = 0 ; i < 6 ; i ++){
+                if(realNums.contains(randNums[i])){
+                    ranking++;
+                }
+            }
+
+            var five = parseInt($('#five').text());
+            var four = parseInt($('#four').text());
+            var three = parseInt($('#three').text());
+            var two = parseInt($('#two').text());
+            var one = parseInt($('#one').text());
+            var none = parseInt($('#none').text());
+
+            switch (ranking){
+                case 3:
+                    $('#five').text(++five);
+                    displayNums('fiveMatch',randNums);
+                    break;
+                case 4:
+                    $('#four').text(++four);
+                    displayNums('fourMatch',randNums);
+                    break;
+                case 5:
+                    if(randNums.contains(bonus)){
+                        $('#two').text(++two);
+                        displayNums('twoMatch',randNums);
+                    }
+                    else{
+                        $('#three').text(++three);
+                        displayNums('threeMatch',randNums);
+                    }
+                    break;
+                case 6:
+                    $('#one').text(++one);
+                    displayNums('oneMatch',randNums);
+                    break;
+                default :
+                    $('#none').text(++none);
+                    break;
+            }
+
+            $('#fivePer').text((five/count * 100).toFixed(6) + ' %');
+            $('#fourPer').text((four/count * 100).toFixed(6) + ' %');
+            $('#threePer').text((three/count * 100).toFixed(6) + ' %');
+            $('#twoPer').text((two/count * 100).toFixed(6) + ' %');
+            $('#onePer').text((one/count * 100).toFixed(6) + ' %');
+            $('#nonePer').text((none/count * 100).toFixed(6) + ' %');
+
+            for(var i = 0 ; i < 6 ; i ++){
+                if(!realNums.contains(randNums[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function displayNums(id,nums){
+            var text = nums.join(',');
+            if(id == 'realNums')text += " 보너스 : " + bonus;
+            $('#'+id).text(text);
+        }
+
+        function displayWinMoney(){
+            var five = parseInt($('#five').text())* 5000;
+            var four = parseInt($('#four').text())* 50000;
+            var three = parseInt($('#three').text())* 1000000;
+            var two = parseInt($('#two').text())* 50000000;
+            var one = parseInt($('#one').text())* 2000000000;
+
+            $('#winMoney').text((five + four + three + two + one).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
+        }
+
+        function displayLoseMoney(){
+            var totalMoney = parseInt($('#money').text().replace(/[^0-9]/g,''));
+            var winMoney = parseInt($('#winMoney').text().replace(/[^0-9]/g,''));
+            $('#loseMoney').text((totalMoney - winMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
+        }
+
+        var seconds = 0, minutes = 0, hours = 0, t;
+            
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            $('#gameTime').text((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+
+            timer();
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+        
+        Array.prototype.contains = function(element) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == element) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function copyToClipboard() {
+          var el = document.createElement('textarea');  // Create a <textarea> element
+          el.value = 'http://parkminkyu.github.io/newLotto/lottoWin.html'; // Set its value to the string that you want copied
+          el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+          el.style.position = 'absolute';                 
+          el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+          document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+          var selected =            
+            document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+              ? document.getSelection().getRangeAt(0)     // Store selection if found
+              : false;                                    // Mark as false to know no selection existed before
+          el.select();                                    // Select the <textarea> content
+          document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+          document.body.removeChild(el);                  // Remove the <textarea> element
+          if (selected) {                                 // If a selection existed before copying
+            document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+            document.getSelection().addRange(selected);   // Restore the original selection           
+          }
+          alert("주소가 복사되었습니다.");
+        };
+    </script>
+</head>
+<body>
+<div class="container">
+    <h3>재미로 보는 로또 확률 계산기</h3>
+<div class="btn-group">
+    <button id="startBtn" class="btn btn-primary btn-sm">시작</button>
+    <button id="stopBtn" class="btn btn-default btn-sm">정지</button>
+    <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유하기<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-toggle="sns_share" data-service="naver" data-title="로또 시뮬레이터">네이버</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="twitter" data-title="로또 시뮬레이터">트위터</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="facebook" data-title="로또 시뮬레이터">페이스북</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="google" data-title="로또 시뮬레이터">구글</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="band" data-title="로또 시뮬레이터">밴드</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="pinterest" data-title="로또 시뮬레이터">핀터레스트</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="kakaostory" data-title="로또 시뮬레이터">카카오스토리</a></li>
+        <li role="separator" class="divider"></li><li><a href="#" onclick="copyToClipboard();">주소복사</a></li>
+      </ul>
+    </div>
+    <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>
+</div>
+<table class="table table-bordered">
+    <colgroup>
+        <col width="22%">
+        <col width="25%">
+        <col width="*">
+    </colgroup>
+    <tr>
+        <td colspan="3">1등 번호 : <span id="realNums"></span></td>
+    </tr>
+    <tr id="winHold">
+        <td>
+            1등 번호 선택
+        </td>
+        <td colspan="2">
+            <div class="form-group has-success has-feedback">
+                <div class="input-group">
+                    <select id="win1">
+                        <option value="">1등 번호1</option>
+                    </select>
+                    <select id="win2">
+                        <option value="">1등 번호2</option>
+                    </select>
+                    <select id="win3">
+                        <option value="">1등 번호3</option>
+                    </select>
+                    <select id="win4">
+                        <option value="">1등 번호4</option>
+                    </select>
+                    <select id="win5">
+                        <option value="">1등 번호5</option>
+                    </select>
+                    <select id="win6">
+                        <option value="">1등 번호6</option>
+                    </select>
+                    + 보너스
+                    <select id="win7">
+                        <option value="">보너스</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button id="saveWinBtn" class="btn btn-primary btn-sm">1등번호적용</button>
+                <button id="reloadWinBtn" class="btn btn-default btn-sm">1등자동생성</button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            게임수<br><span id="count"></span><br>
+            생성 번호<br><span id="nowNums"></span>
+        </td>
+        <td>
+            투자: <span id="money"></span><br>
+            수익: <span id="winMoney">0</span> <br>
+            손실: <span id="loseMoney">0</span><br>
+            소요시간: <span id="gameTime">00:00:00</span>
+        </td>
+    </tr>
+    <tr>
+     <td colspan="2">           
+            <select id="gameSpeed" class="form-control">
+                <option value="1">게임속도*1</option>                
+                <option value="3">게임속도*3</option>                
+                <option value="5">게임속도*5</option>                
+            </select>
+        </td>
+        <td>            
+            <select id="endCount" class="form-control">
+                <option value="0">무제한</option>
+                <option value="1000">1000게임정지</option>
+                <option value="5000">5000게임정지</option>
+                <option value="10000">10000게임정지</option>
+                <option value="50000">50000게임정지</option>
+            </select>
+        </td>
+    </td>
+    <tr id="randHold">
+        <td>
+            고정번호 선택
+        </td>
+        <td colspan="2">
+            <div class="form-group has-success has-feedback">
+                <div class="input-group">
+                    <select id="hold1">
+                        <option value="">고정 번호1</option>
+                    </select>
+                    <select id="hold2">
+                        <option value="">고정 번호2</option>
+                    </select>
+                    <select id="hold3">
+                        <option value="">고정 번호3</option>
+                    </select>
+                    <select id="hold4">
+                        <option value="">고정 번호4</option>
+                    </select>
+                    <select id="hold5">
+                        <option value="">고정 번호5</option>
+                    </select>
+                    <select id="hold6">
+                        <option value="">고정 번호6</option>
+                    </select>
+                    </div>
+                </div>
+        </td>
+    </tr>        
+    <tr>
+        <td>등수<br>(당첨수)</td>
+        <td>현재 확률<br>(공식 확률)</td>
+        <td>최근당첨번호</td>
+    </tr>
+    <tr>
+        <td>1등<br>(<span id="one">0</span>)</td>
+        <td>
+            <span id="onePer">0%</span><br>
+            <span class="label label-default"> 1 / 8,145,060 </span><br>
+            <span class="label label-default">( 0.000012 % )</span>
+        </td>
+        <td><span id="oneMatch"></span></td>
+    </tr>
+    <tr>
+        <td>2등<br>(<span id="two">0</span>)</td>
+        <td>
+            <span id="twoPer">0%</span><br>
+            <span class="label label-default"> 1 / 1,357,510 </span><br>
+            <span class="label label-default">( 0.000073 % )</span>
+        </td>
+        <td><span id="twoMatch"></span></td>
+    </tr>
+    <tr>
+        <td>3등<br>(<span id="three">0</span>)</td>
+        <td>
+            <span id="threePer">0%</span><br>
+            <span class="label label-default"> 1 / 35,724 </span><br>
+            <span class="label label-default">( 0.002799 % )</span>
+        </td>
+        <td><span id="threeMatch"></span></td>
+    </tr>
+    <tr>
+        <td>4등<br>(<span id="four">0</span>)</td>
+        <td>
+            <span id="fourPer">0%</span><br>
+            <span class="label label-default"> 1 / 733 </span><br>
+            <span class="label label-default">( 0.136425 % )</span>
+        </td>
+        <td><span id="fourMatch"></span></td>
+    </tr>
+    <tr>
+        <td>5등<br>(<span id="five">0</span>)</td>
+        <td>
+            <span id="fivePer">0%</span><br>
+            <span class="label label-default"> 1 / 45 </span><br>
+            <span class="label label-default">( 2.222222 % )</span>
+        </td>
+        <td><span id="fiveMatch"></span></td>
+    </tr>
+    <tr>
+        <td>꽝<br>(<span id="none">0</span>)</td>
+        <td><span id="nonePer">0%</span></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3">
+                 
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

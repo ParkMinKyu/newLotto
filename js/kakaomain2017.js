@@ -122,7 +122,8 @@ $(function(){
 		e.preventDefault();
 	});
 
-	CallAndroid.getLastGameNum('');
+	CallAndroid.Alert("새로운 버전이 출시 되엇습니다. 하단의 업데이트버튼을 눌러 신규앱으로 업데이트 해주세요.");
+	CallAndroid.getLastGameNum('800');
 });
 
 function showPop(type){

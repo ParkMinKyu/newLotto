@@ -5,16 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
     <meta charset="UTF-8">
-    <title>로또당첨번호확률계산기</title>
+    <meta property="og:url" content="http://parkminkyu.github.io/newLotto/lottoWin.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="로또 시뮬레이터" />
+    <meta property="og:description" content="로또 당첨 얼마나 안되나 체감하기" />
+    <meta property="og:image" content="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" />
+    
+    <title>로또당첨번호확률계산기(로또 시뮬레이터)</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-social.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51448530-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51448530-10');
+</script>
+
     <script type="text/javascript">
-        $(function(){
+        $(function(){          
+            
+            $('#commentBtn').click(function(){
+                
+                var commentScript = document.createElement('script');        		
+        		var commentHtml = "(function() { var d = document, s = d.createElement('script'); s.src = '//roddo-dangceom-hwagryul-gyesangi.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();";        		
+        		commentScript.innerHTML = commentHtml;        		
+        		$('#disqus_thread').before(commentScript);
+            });
+            
+            $('#commentDelBtn').click(function(){
+                $('#disqus_thread').parent().find('script').remove();
+                $('#disqus_thread').html('');
+            });
+            
+             $("a[data-toggle='sns_share']").click(function(e){
+                e.preventDefault();
+
+                var _this = $(this);
+                var sns_type = _this.attr('data-service');
+                var href = "http://parkminkyu.github.io/newLotto/lottoWin.html";
+                var title = $("meta[property='og:title']").attr("content");
+                var loc = "";
+                var img = $("meta[property='og:image']").attr("content");
+
+                if( ! sns_type || !href || !title) return;
+
+                if( sns_type == 'facebook' ) {
+                    loc = '//www.facebook.com/sharer/sharer.php?u='+href+'&t='+title;
+                }
+                else if ( sns_type == 'twitter' ) {
+                    loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+                }
+                else if ( sns_type == 'google' ) {
+                    loc = '//plus.google.com/share?url='+href;
+                }
+                else if ( sns_type == 'pinterest' ) {
+
+                    loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+                }
+                else if ( sns_type == 'kakaostory') {
+                    loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'band' ) {
+                    loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+                }
+                else if ( sns_type == 'naver' ) {
+                    loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+                }
+                else {
+                    return false;
+                }
+
+                window.open(loc);
+                return false;
+            });
+            
             $('select').addClass("form-control");
 
             for(var i =1 ; i <= 7 ; i ++){
@@ -58,6 +131,8 @@
                }
                else{
                    lottoInterval = setInterval(function(){
+                      var gameSpeed = parseInt($('#gameSpeed').val(),10);
+                      for(var i = 0 ; i < gameSpeed ; i ++){
                        var randNums = createRandomNums();
                        displayNums('nowNums',randNums);
                        if(checkNums(randNums)){
@@ -65,12 +140,17 @@
                        }
                        displayWinMoney();
                        displayLoseMoney();
-                   },5);
+                       checkEndGame();
+                      }                       
+                   },2);
                }
+               if(t == null)timer();
            });
            $('#stopBtn').on('click',function(){
                $('#winHold').show();
                $('#randHold').show();
+               clearTimeout(t);
+               t = null;
                if(lottoInterval != null){
                    clearInterval(lottoInterval);
                    lottoInterval = null;
@@ -85,6 +165,16 @@
         var count = 0;
         var lottoInterval = null;
 
+        function checkEndGame(){
+            if(count >= parseInt($('#endCount').val(),10) && 0 != parseInt($('#endCount').val(),10)){
+                clearInterval(lottoInterval);
+                   lottoInterval = null;
+                clearTimeout(t);
+               t = null;
+                alert('게임이 끝났습니다.');
+            }
+        }
+        
         function createWinNums(){
             realNums = new Array();
             for(var i =1 ; i <= 7 ; i ++){
@@ -231,6 +321,28 @@
             $('#loseMoney').text((totalMoney - winMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
         }
 
+        var seconds = 0, minutes = 0, hours = 0, t;
+            
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            $('#gameTime').text((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+
+            timer();
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+        
         Array.prototype.contains = function(element) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] == element) {
@@ -239,6 +351,27 @@
             }
             return false;
         }
+        
+        function copyToClipboard() {
+          var el = document.createElement('textarea');  // Create a <textarea> element
+          el.value = 'http://parkminkyu.github.io/newLotto/lottoWin.html'; // Set its value to the string that you want copied
+          el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+          el.style.position = 'absolute';                 
+          el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+          document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+          var selected =            
+            document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+              ? document.getSelection().getRangeAt(0)     // Store selection if found
+              : false;                                    // Mark as false to know no selection existed before
+          el.select();                                    // Select the <textarea> content
+          document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+          document.body.removeChild(el);                  // Remove the <textarea> element
+          if (selected) {                                 // If a selection existed before copying
+            document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+            document.getSelection().addRange(selected);   // Restore the original selection           
+          }
+          alert("주소가 복사되었습니다.");
+        };
     </script>
 </head>
 <body>
@@ -248,6 +381,26 @@
     <button id="startBtn" class="btn btn-primary btn-sm">시작</button>
     <button id="stopBtn" class="btn btn-default btn-sm">정지</button>
     <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유하기<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-toggle="sns_share" data-service="naver" data-title="로또 시뮬레이터">네이버</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="twitter" data-title="로또 시뮬레이터">트위터</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="facebook" data-title="로또 시뮬레이터">페이스북</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="google" data-title="로또 시뮬레이터">구글</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="band" data-title="로또 시뮬레이터">밴드</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="pinterest" data-title="로또 시뮬레이터">핀터레스트</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="kakaostory" data-title="로또 시뮬레이터">카카오스토리</a></li>
+        <li role="separator" class="divider"></li><li><a href="#" onclick="copyToClipboard();">주소복사</a></li>
+      </ul>
+    </div>
     <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>
 </div>
 <table class="table table-bordered">
@@ -297,11 +450,39 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">
-            게임수 : <span id="count"></span><br>
-            생성 번호 : <span id="nowNums"></span>
+        <td colspan="2">
+            게임수<br><span id="count"></span><br>
+            생성 번호<br><span id="nowNums"></span>
+        </td>
+        <td>
+            투자: <span id="money"></span><br>
+            수익: <span id="winMoney">0</span> <br>
+            손실: <span id="loseMoney">0</span><br>
+            소요시간: <span id="gameTime">00:00:00</span>
         </td>
     </tr>
+    <tr>
+     <td colspan="2">           
+            <select id="gameSpeed" class="form-control">
+                <option value="1">게임속도*1</option>                
+                <option value="3">게임속도*3</option>                
+                <option value="5">게임속도*5</option>                
+                <option value="10">게임속도*10</option>                
+                <option value="20">게임속도*20</option>                
+            </select>
+        </td>
+        <td>            
+            <select id="endCount" class="form-control">
+                <option value="0">무제한</option>
+                <option value="1000">1000게임정지</option>
+                <option value="5000">5000게임정지</option>
+                <option value="10000">10000게임정지</option>
+                <option value="50000">50000게임정지</option>
+                <option value="100000">100000게임정지</option>
+                <option value="500000">500000게임정지</option>
+            </select>
+        </td>
+    </td>
     <tr id="randHold">
         <td>
             고정번호 선택
@@ -330,14 +511,7 @@
                     </div>
                 </div>
         </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            총 사용 금액 : <span id="money"></span><br>
-            총 당첨 금액 : <span id="winMoney">0</span> <br>
-            총 피해 금액 : <span id="loseMoney">0</span>
-        </td>
-    </tr>
+    </tr>        
     <tr>
         <td>등수<br>(당첨수)</td>
         <td>현재 확률<br>(공식 확률)</td>
@@ -395,27 +569,11 @@
     </tr>
     <tr>
         <td colspan="3">
-            <div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = '//roddo-dangceom-hwagryul-gyesangi.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                                
+            <button id="commentBtn" class="btn btn-primary btn-lg">댓글 보기</button>                                
+            <button id="commentDelBtn" class="btn btn-danger btn-lg">댓글 닫기</button>   
+            <br>
+            <small>끊기는 현상 발생시 댓글을 닫아보세요</small>
+            <div id="disqus_thread"></div>            
         </td>
     </tr>
 </table>

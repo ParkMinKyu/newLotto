@@ -2,30 +2,6 @@ var realNums = new Array();
 var ballList = new Array(); 
 var selectBall = new Array();
 $(function(){
-	
-	$(document).on('pagechange',function(data,obj){
-	
-	});
-	
-	$('#insertBtn').on('touchstart',function(e){
-			
-		if($('input[id=comment]').val() == '' || $('input[id=comment]').length > 100){
-			CallAndroid.Alert("빈 내용이나 100 글자 이상은 등록 할 수 없습니다..");
-			$('input[id=comment]').focus();
-		}else{
-			$.base64.utf8encode = true;
-			//var message = $.base64.btoa($('input[id=comment]').val())
-			var message = encodeURI(encodeURIComponent($('input[id=comment]').val()));
-			$.getJSON("http://syeon0727.cafe24.com:10005/uriel/lotto/insertComment.do?callback=?&comment="+message,function(data){
-				$('input[id=comment]').val('');
-				getComment();
-			});
-		}
-		
-		e.preventDefault();
-	});
-	
-	
 	$('#reBall').on('touchstart',function(e){
 		$('#randomTable').html('');
 		ballList = new Array(); 
@@ -47,7 +23,8 @@ $(function(){
 	});
 	
 	$('#randomSave').on('touchstart',function(e){
-		CallAndroid.saveRandomNum(ballList.toString());
+		CallAndroid.Alert('저장기능 점검중입니다');
+		//CallAndroid.saveRandomNum(ballList.toString());
 		location.href="#home";
 		$('#reBall').tap();
 		e.preventDefault();
@@ -57,14 +34,16 @@ $(function(){
 		if(selectBall.length < 6){
 			CallAndroid.Alert("6개의 번호를 선택 하세요.");
 		}else{
-			CallAndroid.holdRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
+			CallAndroid.Alert('저장기능 점검중입니다');
+			//CallAndroid.holdRandomNum(selectBall.sort(function(a,b){return a - b;}).toString());
 			location.href="#home";
 		}
 		e.preventDefault();
 	});
 	
 	$('#allClear').on('tap',function(e){
-		CallAndroid.clearNum();
+		CallAndroid.Alert("삭제기능 점검중 입니다.");
+		//CallAndroid.clearNum();
 		e.preventDefault();
 	});
 	
@@ -74,10 +53,10 @@ $(function(){
 	});
 	
 	$('#reBall').touchstart();
-	CallAndroid.getLastGameNum('');
+	CallAndroid.getLastGameNum('800');
 	//setRealNums([4,6,11,22,35,44,33]);
 	//setMyNums([[4,6,11,22,35,44],[4,6,11,22,33,44],[4,6,11,22,35,41],[4,6,11,22,32,41],[4,6,10,22,32,41],[3,5,11,22,32,41]]);
-	createSelectBall();
+	createSelectBall();		
 });
 
 //덧글 불러오기

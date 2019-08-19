@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<meta name="author" contents="smartmingue@gmail.com">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./lib/jquery.mobile-1.4.2.min.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="./lib/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="./js/main2018.js"></script>
+<script type="text/javascript" src="./lib/jquery.base64.js"></script>
+</head>
+<body>
+<div data-role="page" id="home">
+	<div data-role="header" data-theme="b">
+		<h3>Lotto 당첨 확인</h3>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#random" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">자동번호</a></li>
+				<li><a href="#selectBall" data-rel="popup" data-position-to="window" data-transition="fade" data-corners="false" data-role="button" data-mini="true" data-theme="a">고정번호</a></li>
+			</ul>
+		</div>
+
+	</div>
+	<div data-role="main" class="ui-content">		
+		<span id="gameyear">2014년 06월 21일 당첨 번호</span>
+		<select id="matchNums" style="z-index:0;"></select>
+		<table>
+			<tbody id="realNums"></tbody>
+		</table>
+		<a href="#" data-role="button" data-mini="true" id="callCamera">QR코드 당첨확인</a>
+		<br>
+		<span>내 번호 당첨 확인</span>
+		<table>
+			<tbody id="myNums"></tbody>
+		</table>
+		<a href="#" data-role="button" data-mini="true" id="allClear">모든번호삭제</a>
+	</div>
+	<div data-role="footer" data-theme="b">
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+			<a href="http://parkminkyu.github.io/newLotto/lottoWin.html" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-first-child ui-last-child"> 로또확률계산 </a>			
+		</div>
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+			<a href="mailto:smartmingue@gmail.com" data-ajax="false" class="ui-btn ui-btn-inline ui-shadow ui-first-child ui-last-child">개발자 메일 : smartmingue@gmail.com</a>			
+		</div>
+	</div>
+
+	<div data-role="popup" id="random" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>자동번호</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      <div data-role="main" class="ui-content">
+		 <label for="isSame">체크시 중복 최소화</label><input type="checkbox" id="isSame">
+		 <table>
+			<tbody id="randomTable">
+			</tbody>
+		</table>
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+		  <a href="#" class="ui-btn" id="reBall">번호생성</a>
+		  <a href="#" class="ui-btn" id="randomSave">번호저장</a>
+		</div>
+      </div>
+  </div>
+  
+  
+  <div data-role="popup" id="selectBall" style="z-index:9999;">
+      <div data-role="header" data-theme="b">
+        <h1>공 선택</h1>
+        <a href="#home" data-role="button" data-mini="true" data-iconpos="notext" data-icon="back">Go Back</a>
+      </div>
+      
+      <div data-role="main" class="ui-content" style="text-align:center;">
+      	<h3>번호를 선택 하세요.</h3>
+		<table>
+			<tbody id="ballList">
+
+			</tbody>
+		</table>
+		<a href="#" data-role="button" id="holdSave">저장</a>
+      </div>
+  </div>
+  
+</div>
+</body>
+</html>

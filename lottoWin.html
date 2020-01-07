@@ -243,6 +243,7 @@
 
         function checkNums(randNums){
             $('#count').text(++count);
+            $('#realTime').text((count/(4*5)) + ' 개월');
             $('#money').text((count * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원');
             var ranking = 0;
             for(var i = 0 ; i < 6 ; i ++){
@@ -481,7 +482,8 @@
     </tr>
     <tr>
         <td colspan="2">
-            게임수<br><span id="count"></span><br>
+            게임수 : <span id="count"></span><br>
+            1주5장구매 : <span id="realTime"></span><br>
             생성 번호<br><span id="nowNums"></span>
         </td>
         <td>

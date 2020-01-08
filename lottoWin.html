@@ -243,7 +243,7 @@
 
         function checkNums(randNums){
             $('#count').text(++count);
-            $('#realTime').text((count/(4*5)) + ' 개월');
+            $('#realTime').text('약 '+ (Math.round( (count/(4*5)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년');
             $('#money').text((count * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원');
             var ranking = 0;
             for(var i = 0 ; i < 6 ; i ++){

@@ -96,6 +96,17 @@
                 }
             });
 
+	   $('#goSimulMarketBtn').on('click',function(){
+                var filter = "win16|win32|win64|mac";
+                if(navigator.platform){
+                    if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+                        location.href="market://details?id=kr.niee.lottosimulator";
+                    }else{
+                        location.href="https://play.google.com/store/apps/details?id=kr.niee.lottosimulator";
+                    }
+                }
+            });
+		
             $('#reloadWinBtn').on('click',function(){
                 for(var i = 1 ; i <= 7 ; i ++){
                         $("#win"+i).val("");
@@ -191,7 +202,15 @@
         <li role="separator" class="divider"></li><li><a href="#" onclick="copyToClipboard();">주소복사</a></li>
       </ul>
     </div>
-    <button id="goMarketBtn" class="btn btn-danger btn-sm">로또어플설치</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">앱설치<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">	      
+        <li><a href="#" id="goSimulMarketBtn">로또 시뮬레이터</a></li>                
+        <li role="separator" class="divider"></li>
+        <li><a href="#" id="goMarketBtn">로또 당첨 번호 확인</a></li>
+      </ul>
+    </div>    
 </div>
 <table class="table table-bordered">
     <colgroup>

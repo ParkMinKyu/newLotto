@@ -224,7 +224,8 @@
     <tr>
         <td colspan="2">
             게임수 : {{gameCount}}<br>
-            1주5장구매 : {{gameYear}}<br>
+            1주5게임시 : {{gameYear}}<br>
+	    1주10게임시 : {{gameYear2}}<br>
             생성 번호<br>{{userNums}}
         </td>
         <td>
@@ -418,6 +419,7 @@ var app = new Vue({
 	    fiveText :  [0,0,0,0,0,0],
 	    allMoney : 0,
 	    gameYear : "",
+	    gameYear2 : "",
 	    getMoney : 0,
 	    loseMoney : 0,
 	    gameTime : "00:00:00",
@@ -476,6 +478,7 @@ var app = new Vue({
         },
 	    checkGameData: function(){
 	    	this.gameYear = '약 '+ (Math.round( (this.gameCount/(4*5)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+		this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
 	    	this.checkGameNums();
 	    	this.moneyCheck();

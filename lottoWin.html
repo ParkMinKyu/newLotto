@@ -179,11 +179,24 @@
 <div class="container" id="lottoGame">
     <h3>재미로 보는 로또 확률 계산기</h3>
 <div class="btn-group">
+    <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            속도*{{gameSpeed}}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#" v-on:click="setSpeed(1)">1배</a></li>
+            <li><a href="#" v-on:click="setSpeed(5)">5배</a></li>
+            <li><a href="#" v-on:click="setSpeed(10)">10배</a></li>
+            <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
+            <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
+            <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
+        </ul>
+    </div>
     <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
     <button v-on:click="gameStop" class="btn btn-default btn-sm">정지</button>
     <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유하기<span class="caret"></span>
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유<span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
         <li><a href="#" data-toggle="sns_share" data-service="naver" data-title="로또 시뮬레이터">네이버</a></li>
@@ -223,8 +236,9 @@
     </tr>
     <tr>
         <td colspan="2">
-            게임수 : {{gameCount}}<br>
-            1주5장구매 : {{gameYear}}<br>
+            게임수 : {{gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}<br>
+            1주5게임시 : {{gameYear}}<br>
+	        1주10게임시 : {{gameYear2}}<br>
             생성 번호<br>{{userNums}}
         </td>
         <td>
@@ -232,25 +246,7 @@
             수익금: {{getMoney}} <br>
             순이익: {{loseMoney}}<br>
             소요시간: {{gameTime}}<br>
-            벼락맞은수: {{boltCount}}({{boltper}}%)<br>
-            벼락확률: 1/60만(0.00016%)
-        </td>
-    </tr>
-    <tr>
-     <td colspan="2">           
-            <select v-model="gameSpeed" class="form-control">
-                <option value="1">게임속도*1</option>                                
-                <option value="5">게임속도*5</option>                
-                <option value="10">게임속도*10</option>                
-                <option value="20">게임속도*20</option>                
-	    	    <option value="50">게임속도*50</option>
-	        	<option value="100">게임속도*100</option>
-	        	<option value="1000">게임속도*1000</option>
-	        	<option value="10000">게임속도*10000</option>
-            </select>
-        </td>
-        <td>            
-            <select v-model="endCount" class="form-control">
+            <select v-model="endCount">
                 <option value="0">무제한</option>
                 <option value="1000">1000게임정지</option>
                 <option value="5000">5000게임정지</option>
@@ -258,7 +254,7 @@
                 <option value="50000">50000게임정지</option>
                 <option value="100000">100000게임정지</option>
                 <option value="500000">500000게임정지</option>
-	        	<option value="1000000">1000000게임정지</option>
+                <option value="1000000">1000000게임정지</option>
                 <option value="5000000">5000000게임정지</option>
             </select>
         </td>
@@ -270,37 +266,37 @@
         <td colspan="2">
             <div class="form-group has-success has-feedback">
                 <div class="input-group">
-                    <select id="hold1" v-model="userGameNum1" class="form-control">
+                    <select id="hold1" v-model="userGameNum1">
                         <option value="0">고정 번호1</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
                         </option>
                     </select>
-                    <select id="hold2" v-model="userGameNum2" class="form-control">
+                    <select id="hold2" v-model="userGameNum2">
                         <option value="0">고정 번호2</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
                         </option>
                     </select>
-                    <select id="hold3" v-model="userGameNum3" class="form-control">
+                    <select id="hold3" v-model="userGameNum3">
                         <option value="0">고정 번호3</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
                         </option>
                     </select>
-                    <select id="hold4" v-model="userGameNum4" class="form-control">
+                    <select id="hold4" v-model="userGameNum4">
                         <option value="0">고정 번호4</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
                         </option>
                     </select>
-                    <select id="hold5" v-model="userGameNum5" class="form-control">
+                    <select id="hold5" v-model="userGameNum5">
                         <option value="0">고정 번호5</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
                         </option>
                     </select>
-                    <select id="hold6" v-model="userGameNum6" class="form-control">
+                    <select id="hold6" v-model="userGameNum6">
                         <option value="0">고정 번호6</option>
                         <option v-for="num in lottoNums" :value="num">
                         	{{num}}
@@ -309,7 +305,13 @@
                     </div>
                 </div>
         </td>
-    </tr>        
+    </tr>
+    <tr>
+        <td colspan="3">
+            벼락맞은수: {{boltCount}}회 ({{boltper}}%)<br>
+            (1/60만)(0.00016%)<br>
+        </td>
+    </tr>
     <tr>
         <td>등수<br>(당첨수)</td>
         <td>현재 확률<br>(공식 확률)</td>
@@ -422,6 +424,7 @@ var app = new Vue({
 	    fiveText :  [0,0,0,0,0,0],
 	    allMoney : 0,
 	    gameYear : "",
+	    gameYear2 : "",
 	    getMoney : 0,
 	    loseMoney : 0,
 	    gameTime : "00:00:00",
@@ -429,9 +432,10 @@ var app = new Vue({
 	    gameInterval : null,
 	    timeInterval : null,
 	    gameSpeed : 1,
-	    timeCount : 0,
+	    timeCount : new Date().getTime(),
         boltCount: 0,
-        boltper: 0
+        boltper: 0,
+        carCount: 0
 	  },
 	  beforeMount(){
 		  this.createWinNums();
@@ -442,10 +446,10 @@ var app = new Vue({
 			var self = this;
 			setTimeout(function(){
 				if(self.isStart){
-					self.timeCount++;
-					var minutes = parseInt(self.timeCount / 60, 10);
+					var nowTime = parseInt((new Date().getTime() - self.timeCount)/1000);
+					var minutes = parseInt(nowTime / 60, 10);
 					var hours = parseInt(minutes / 60, 10);
-					var seconds = self.timeCount%60;
+					var seconds = nowTime%60;
 					minutes %= 60;
 
 					self.gameTime = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
@@ -455,6 +459,7 @@ var app = new Vue({
 		},
 	    gameStart:function () {
 			var self = this;
+            self.timeCount= new Date().getTime();
 			var i = 0;
 			if(this.isStart == false){
 				this.isStart = true;
@@ -468,15 +473,19 @@ var app = new Vue({
 						}
 						self.gameCount++;
                         var num = parseInt(Math.random() * 600000) + 1;
+                        var num2 = parseInt(Math.random() * 105) + 1;
                         if( num == 1){
                             self.boltCount++;
+                        }
+                        if( num2 == 1){
+                            self.carCount++;
                         }
                         self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
 						self.checkGameData();
 						self.createUserNums();
 						self.checkEndGame();
 					}
-				});
+				},1);
 			}
 	    },
 	    checkEndGame: function(){
@@ -487,6 +496,7 @@ var app = new Vue({
         },
 	    checkGameData: function(){
 	    	this.gameYear = '약 '+ (Math.round( (this.gameCount/(4*5)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+		this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
 	    	this.checkGameNums();
 	    	this.moneyCheck();
@@ -609,6 +619,9 @@ var app = new Vue({
         	var text = this.winNums.join(", ");
         	return text.substr(0,text.lastIndexOf(',')) + " 보너스 : " + text.substr(text.lastIndexOf(', ')+1); 
     	    //printWinNumsText : "1, 2, 3, 4, 5, 6 보너스 : 7"
+        },
+        setSpeed:function(speed){
+            this.gameSpeed = speed;
         }
 	  }
 	})

@@ -231,7 +231,9 @@
             투자금: {{allMoney}}<br>
             수익금: {{getMoney}} <br>
             순이익: {{loseMoney}}<br>
-            소요시간: {{gameTime}}
+            소요시간: {{gameTime}}<br>
+            벼락맞은수: {{boltCount}}({{boltper}}%)<br>
+            벼락확률: 1/60만(0.00016%)
         </td>
     </tr>
     <tr>
@@ -241,8 +243,10 @@
                 <option value="5">게임속도*5</option>                
                 <option value="10">게임속도*10</option>                
                 <option value="20">게임속도*20</option>                
-	    	<option value="50">게임속도*50</option>                
-		<option value="100">게임속도*100</option>                
+	    	    <option value="50">게임속도*50</option>
+	        	<option value="100">게임속도*100</option>
+	        	<option value="1000">게임속도*1000</option>
+	        	<option value="10000">게임속도*10000</option>
             </select>
         </td>
         <td>            
@@ -254,7 +258,7 @@
                 <option value="50000">50000게임정지</option>
                 <option value="100000">100000게임정지</option>
                 <option value="500000">500000게임정지</option>
-	    	<option value="1000000">1000000게임정지</option>
+	        	<option value="1000000">1000000게임정지</option>
                 <option value="5000000">5000000게임정지</option>
             </select>
         </td>
@@ -425,7 +429,9 @@ var app = new Vue({
 	    gameInterval : null,
 	    timeInterval : null,
 	    gameSpeed : 1,
-	    timeCount : 0
+	    timeCount : 0,
+        boltCount: 0,
+        boltper: 0
 	  },
 	  beforeMount(){
 		  this.createWinNums();
@@ -461,6 +467,11 @@ var app = new Vue({
 							break;
 						}
 						self.gameCount++;
+                        var num = parseInt(Math.random() * 600000) + 1;
+                        if( num == 1){
+                            self.boltCount++;
+                        }
+                        self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
 						self.checkGameData();
 						self.createUserNums();
 						self.checkEndGame();

@@ -303,6 +303,13 @@
                         </option>
                     </select>
                     </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-default" v-on:click="resetUserNum()">초기화</button>
+                        <button type="button" class="btn btn-sm btn-default" v-on:click="createUserNum()">고정번호생성</button>
+                        <button type="button" class="btn btn-sm btn-primary" v-on:click="userNumChecker()">이 번호 샀더라면...</button>
+                    </div>
+                    <br>
+                    <div v-html="allText"></div>
                 </div>
         </td>
     </tr>
@@ -435,11 +442,20 @@ var app = new Vue({
 	    timeCount : new Date().getTime(),
         boltCount: 0,
         boltper: 0,
-        carCount: 0
+        carCount: 0,
+        allRealData: [],
+        allText: ''
 	  },
 	  beforeMount(){
+          var self = this;
 		  this.createWinNums();
 		  this.startTimer();
+          $.ajax({
+              url : 'https://parkminkyu.github.io/bok/lottoHistory.json?d='+ new Date(),
+              success : function(res){
+                  self.allRealData = res;
+              }
+          });
 	  },
 	  methods: {
 		startTimer:function(){
@@ -496,7 +512,7 @@ var app = new Vue({
         },
 	    checkGameData: function(){
 	    	this.gameYear = '약 '+ (Math.round( (this.gameCount/(4*5)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
-		this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+	    	this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
 	    	this.checkGameNums();
 	    	this.moneyCheck();
@@ -574,7 +590,7 @@ var app = new Vue({
         },
         createUserNums: function(){
         	var i = 0;
-        	this.userNums[0] = this.userGameNum1; 
+        	this.userNums[0] = this.userGameNum1;
             this.userNums[1] = this.userGameNum2; 
             this.userNums[2] = this.userGameNum3; 
             this.userNums[3] = this.userGameNum4; 
@@ -622,6 +638,140 @@ var app = new Vue({
         },
         setSpeed:function(speed){
             this.gameSpeed = speed;
+        },
+        userNumChecker:function(){
+            this.endCount = 0;
+            this.gameCount = 0;
+            this.oneCount = 0;
+            this.twoCount = 0;
+            this.threeCount = 0;
+            this.fourCount = 0;
+            this.fiveCount = 0;
+            this.noCount = 0;
+
+            this.userNums[0] = this.userGameNum1;
+            this.userNums[1] = this.userGameNum2;
+            this.userNums[2] = this.userGameNum3;
+            this.userNums[3] = this.userGameNum4;
+            this.userNums[4] = this.userGameNum5;
+            this.userNums[5] = this.userGameNum6;
+            if(this.userNums.filter( v => v == 0).length > 0){
+                alert("고정번호 선택 후 눌러주세요");
+            }else {
+                var self = this;
+                var winText = '';
+                this.gameCount = 0;
+                this.userNums.sort();
+                var maxWinRank = 6;
+
+                for (var i = 0 ; i < this.allRealData.length ; i ++){
+                    var oneTmp = this.oneCount;
+                    var twoTmp = this.twoCount;
+                    var threeTmp = this.threeCount;
+                    var fourTmp = this.fourCount;
+                    var fiveTmp = this.fiveCount;
+                    var thisRank = 7;
+
+                    var data = this.allRealData[i];
+                    console.log(data);
+                    this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
+                    self.gameCount++;
+                    var num = parseInt(Math.random() * 600000) + 1;
+                    var num2 = parseInt(Math.random() * 105) + 1;
+                    if( num == 1){
+                        self.boltCount++;
+                    }
+                    if( num2 == 1){
+                        self.carCount++;
+                    }
+                    self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
+                    self.checkGameData();
+                    self.createUserNums();
+
+                    if(
+                        oneTmp < this.oneCount||
+                        twoTmp < this.twoCount||
+                        threeTmp < this.threeCount||
+                        fourTmp < this.fourCount||
+                        fiveTmp < this.fiveCount
+                    ){
+                        var color = '#000000';
+                        var rank = '꽝';
+
+                        if(fourTmp < this.fourCount){
+                            color = '#7e199f';
+                        }
+
+                        if(threeTmp < this.threeCount){
+                            color = '#269f19';
+                        }
+
+                        if(twoTmp < this.twoCount){
+                            color = '#194a9f';
+                        }
+
+                        if(oneTmp < this.oneCount) {
+                            color = '#9f191f';
+                        }
+
+                        if(this.oneCount - oneTmp == 1){
+                            rank = "1등";
+                            thisRank = 1;
+                        }else if(this.twoCount - twoTmp == 1){
+                            rank = "2등";
+                            thisRank = 2;
+                        }else if(this.threeCount - threeTmp == 1){
+                            rank = "3등";
+                            thisRank = 3;
+                        }else if(this.fourCount - fourTmp == 1){
+                            rank = "4등";
+                            thisRank = 4;
+                        }else if(this.fiveCount - fiveTmp == 1){
+                            rank = "5등";
+                            thisRank = 5;
+                        }
+
+                        if(thisRank < maxWinRank){
+                            maxWinRank = thisRank;
+                        }
+
+                        winText += "<div style='color: "+color+"'>"
+                        winText +=
+                            data.drwNo+"회 " + rank + " (" + data.drwNoDate +")<br><strong>1등 당첨금: "
+                            +data.firstWinamnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원</strong>"
+                            +"<br>1등 번호: " + this.winNums.join(",") + "<br><br>";
+                        winText += "</div>"
+                    }
+                }
+                this.allText = "<strong>최고등수: " + maxWinRank + "등<br>결과 1등: "+ this.oneCount +"번,  2등: "+ this.twoCount +"번,  3등: "+ this.threeCount +"번,  4등: "+ this.fourCount +"번,  5등: "+ this.fiveCount +"번,  꽝: "+ this.noCount +"번</strong><br><br> 상세결과<br>" + winText;
+            }
+        },
+        createUserNum:function(){
+            this.userNums = [1,2,3,4,5,6];
+            var i = 0;
+            while(i < 6){
+                var num = this.createRandomNum();
+                while(this.userNums.contains(num)){
+                    num = this.createRandomNum();
+                }
+                this.userNums[i++] = num;
+            }
+            this.userNums.sort(function(a,b){return a - b;});
+
+            this.userGameNum1 = this.userNums[0];
+            this.userGameNum2 = this.userNums[1];
+            this.userGameNum3 = this.userNums[2];
+            this.userGameNum4 = this.userNums[3];
+            this.userGameNum5 = this.userNums[4];
+            this.userGameNum6 = this.userNums[5];
+        },
+        resetUserNum:function(){
+          this.userGameNum1 = 0;
+          this.userGameNum2 = 0;
+          this.userGameNum3 = 0;
+          this.userGameNum4 = 0;
+          this.userGameNum5 = 0;
+          this.userGameNum6 = 0;
         }
 	  }
 	})

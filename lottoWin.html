@@ -487,8 +487,7 @@ var app = new Vue({
 			},1000);
 		},
 	    gameStart:function () {
-			var self = this;
-		    	var gameSpeed = self.gameSpeed;
+			var self = this;		    	
             self.timeCount= new Date().getTime();
 			var i = 0;
 			if(this.isStart == false){
@@ -497,7 +496,7 @@ var app = new Vue({
 					if(!self.isStart){
 						clearInterval(self.gameInterval);
 					}
-					for(var j = 0 ; j < gameSpeed ; j ++){
+					for(var j = 0 ; j < self.gameSpeed ; j ++){
 						if(!self.isStart){
 							break;
 						}

@@ -243,7 +243,51 @@
         <col width="*">
     </colgroup>
     <tr>
-        <td colspan="3">1등 번호 : {{printWinNums()}} <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button></td>
+        <td colspan="3">
+            <div class="checkbox">
+                1등 번호 : <select v-model="winNums[0]" v-on:change="checkWinnums($event,0)"  :disabled="isStart" v-on:focus="saveTempNum($event)">
+                            <option v-for="lottoNum in lottoNums">
+                                {{ lottoNum }}
+                            </option>
+                        </select>
+                            <select v-model="winNums[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                                <option v-for="lottoNum in lottoNums">
+                                    {{ lottoNum }}
+                                </option>
+                            </select>
+                            <select v-model="winNums[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                                <option v-for="lottoNum in lottoNums">
+                                    {{ lottoNum }}
+                                </option>
+                            </select>
+                            <select v-model="winNums[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                                <option v-for="lottoNum in lottoNums">
+                                    {{ lottoNum }}
+                                </option>
+                            </select>
+                            <select v-model="winNums[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                                <option v-for="lottoNum in lottoNums">
+                                    {{ lottoNum }}
+                                </option>
+                            </select>
+                            <select v-model="winNums[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                                <option v-for="lottoNum in lottoNums">
+                                    {{ lottoNum }}
+                                </option>
+                            </select>
+                            <br>
+                            보너스 : <select v-model="winNums[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+                            <option v-for="lottoNum in lottoNums">
+                                {{ lottoNum }}
+                            </option>
+                        </select>
+                <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button>
+                <label>
+                    <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
+                </label>
+            </div>
+
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -267,8 +311,8 @@
                 <option value="500000">500,000게임정지</option>
                 <option value="1000000">1,000,000게임정지</option>
                 <option value="5000000">5,000,000게임정지</option>
-		<option value="10000000">10,000,000게임정지</option>
-		<option value="50000000">50,000,000게임정지</option>
+                <option value="10000000">10,000,000게임정지</option>
+                <option value="50000000">50,000,000게임정지</option>
             </select>
         </td>
     </tr>
@@ -457,7 +501,9 @@ var app = new Vue({
         boltper: 0,
         carCount: 0,
         allRealData: [],
-        allText: ''
+        allText: '',
+        winStop: true,
+        stempNum : 0
 	  },
 	  beforeMount(){
           var self = this;
@@ -487,9 +533,10 @@ var app = new Vue({
 			},1000);
 		},
 	    gameStart:function () {
-			var self = this;		    	
-            self.timeCount= new Date().getTime();
-			var i = 0;
+			var self = this;
+            if(this.isStart == false){
+                self.timeCount= new Date().getTime();
+            }
 			if(this.isStart == false){
 				this.isStart = true;
 				self.gameInterval = setInterval( function(){
@@ -558,10 +605,12 @@ var app = new Vue({
 	                }
 	                break;
 	            case 6:
-	            	this.isStart = false;
+	            	if(this.winStop){
+                        this.isStart = false;
+                        alert('축하합니다. 1등에 당첨되셨습니다.');
+                    }
 	            	++this.oneCount;
 	            	this.copyArrays(this.oneText,this.userNums);
-	            	alert('축하합니다. 1등에 당첨되셨습니다.');
 	                break;
 	            default :
 	                ++this.noCount;
@@ -786,7 +835,26 @@ var app = new Vue({
           this.userGameNum5 = 0;
           this.userGameNum6 = 0;
         }
-	  }
+	  },
+        checkWinnums : function(event, idx){
+            var isduple = false;
+            for(var i = 0 ; i < this.winNums.length ; i ++){
+                for(var j = i+1 ; j < this.winNums.length ; j ++){
+                    if(this.winNums[i]==this.winNums[j]){
+                        alert("번호가 중복 되었습니다.");
+                        isduple = true;
+                        break;
+                    }
+                }
+            }
+
+            if(isduple){
+                this.winNums[idx] = this.stempNum;
+            }
+        },
+        saveTempNum : function(event){
+            this.stempNum = parseInt(event.target.value);
+        },
 	})
 </script>
 <nav class="navbar navbar-default navbar-fixed-bottom">

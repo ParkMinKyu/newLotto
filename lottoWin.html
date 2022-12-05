@@ -487,6 +487,7 @@ var app = new Vue({
 		},
 	    gameStart:function () {
 			var self = this;
+		    	var gameSpeed = self.gameSpeed;
             self.timeCount= new Date().getTime();
 			var i = 0;
 			if(this.isStart == false){
@@ -495,7 +496,7 @@ var app = new Vue({
 					if(!self.isStart){
 						clearInterval(self.gameInterval);
 					}
-					for(var j = 0 ; j < self.gameSpeed ; j ++){
+					for(var j = 0 ; j <  ; j ++){
 						if(!self.isStart){
 							break;
 						}
@@ -531,7 +532,7 @@ var app = new Vue({
 	    },
 	    checkGameNums: function(){
 	    	var matchCount = 0;
-	    	for(var i = 0 ; i < this.winNums.length - 1 ; i ++){
+	    	for(var i = 0 ; i < 6 ; i ++){
 				if(this.userNums.contains(this.winNums[i])){
 					matchCount++;
 				}

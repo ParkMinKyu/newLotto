@@ -192,8 +192,15 @@
             <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
 	    <li><a href="#">-고 사양(렉주의)-</a></li>
             <li><a href="#" v-on:click="setSpeed(1000)">1,000배</a></li>
-            <li><a href="#" v-on:click="setSpeed(1500)">1,500배</a></li>		
-            <li><a href="#" v-on:click="setSpeed(2000)">2,000배</a></li>            
+            <li><a href="#" v-on:click="setSpeed(1500)">1,500배</a></li>
+            <li><a href="#" v-on:click="setSpeed(2000)">2,000배</a></li>
+	    <li><a href="#" v-on:click="setSpeed(2500)">2,500배</a></li>
+            <li><a href="#" v-on:click="setSpeed(3000)">3,000배</a></li>
+	    <li><a href="#" v-on:click="setSpeed(3500)">3,500배</a></li>
+            <li><a href="#" v-on:click="setSpeed(4000)">4,000배</a></li>
+	    <li><a href="#" v-on:click="setSpeed(4500)">4,500배</a></li>
+            <li><a href="#" v-on:click="setSpeed(5000)">5,000배</a></li>            
+	    <li><a href="#">-더 느릴 수있음-</a></li>
         </ul>
     </div>
     <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
@@ -495,20 +502,20 @@ var app = new Vue({
 							break;
 						}
 						self.gameCount++;
-                        var num = parseInt(Math.random() * 600000) + 1;
-                        var num2 = parseInt(Math.random() * 105) + 1;
-                        if( num == 1){
-                            self.boltCount++;
-                        }
-                        if( num2 == 1){
-                            self.carCount++;
-                        }
-                        self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
+						var num = parseInt(Math.random() * 600000) + 1;
+						var num2 = parseInt(Math.random() * 105) + 1;
+						if( num == 1){
+						    self.boltCount++;
+						}
+						if( num2 == 1){
+						    self.carCount++;
+						}
+						self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
 						self.checkGameData();
 						self.createUserNums();
 						self.checkEndGame();
 					}
-				});
+				},1);
 			}
 	    },
 	    checkEndGame: function(){

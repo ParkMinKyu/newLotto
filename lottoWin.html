@@ -190,6 +190,16 @@
             <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
             <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
             <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
+	    <li><a href="#">-고 사양(렉주의)-</a></li>
+            <li><a href="#" v-on:click="setSpeed(1000)">1000배</a></li>
+            <li><a href="#" v-on:click="setSpeed(1500)">1500배</a></li>		
+            <li><a href="#" v-on:click="setSpeed(2000)">2000배</a></li>
+            <li><a href="#" v-on:click="setSpeed(2500)">2500배</a></li>
+            <li><a href="#" v-on:click="setSpeed(3000)">3000배</a></li>
+            <li><a href="#" v-on:click="setSpeed(3500)">3500배</a></li>		
+	    <li><a href="#" v-on:click="setSpeed(4000)">4000배</a></li>
+            <li><a href="#" v-on:click="setSpeed(4500)">4500배</a></li>		
+	    <li><a href="#" v-on:click="setSpeed(5000)">5000배</a></li>		
         </ul>
     </div>
     <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
@@ -248,14 +258,16 @@
             소요시간: {{gameTime}}<br>
             <select v-model="endCount">
                 <option value="0">무제한</option>
-                <option value="1000">1000게임정지</option>
-                <option value="5000">5000게임정지</option>
-                <option value="10000">10000게임정지</option>
-                <option value="50000">50000게임정지</option>
-                <option value="100000">100000게임정지</option>
-                <option value="500000">500000게임정지</option>
-                <option value="1000000">1000000게임정지</option>
-                <option value="5000000">5000000게임정지</option>
+                <option value="1000">1,000게임정지</option>
+                <option value="5000">5,000게임정지</option>
+                <option value="10000">10,000게임정지</option>
+                <option value="50000">50,000게임정지</option>
+                <option value="100000">100,000게임정지</option>
+                <option value="500000">500,000게임정지</option>
+                <option value="1000000">1,000,000게임정지</option>
+                <option value="5000000">5,000,000게임정지</option>
+		<option value="10000000">10,000,000게임정지</option>
+		<option value="50000000">50,000,000게임정지</option>
             </select>
         </td>
     </tr>

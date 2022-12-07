@@ -551,6 +551,9 @@ var app = new Vue({
 						if(!self.isStart){
 							break;
 						}
+						if(self.winRandom){
+						    self.createWinNums();
+						}
 						self.gameCount++;
 						var num = parseInt(Math.random() * 600000) + 1;
 						var num2 = parseInt(Math.random() * 105) + 1;
@@ -563,10 +566,7 @@ var app = new Vue({
 						self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
 						self.checkGameData();
 						self.createUserNums();
-						self.checkEndGame();
-                        if(self.winRandom){
-                            self.createWinNums();
-                        }
+						self.checkEndGame();                        
 					}
 				},1);
 			}

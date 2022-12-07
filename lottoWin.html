@@ -285,6 +285,9 @@
                 <label>
                     <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
                 </label>
+                <label>
+                    <input type="checkbox" v-model="winRandom">1등 무작위
+                </label>
             </div>
 
         </td>
@@ -503,7 +506,8 @@ var app = new Vue({
         allRealData: [],
         allText: '',
         winStop: true,
-        stempNum : 0
+        stempNum: 0,
+        winRandom: false
 	  },
 	  beforeMount(){
           var self = this;
@@ -560,6 +564,9 @@ var app = new Vue({
 						self.checkGameData();
 						self.createUserNums();
 						self.checkEndGame();
+                        if(self.winRandom){
+                            self.createWinNums();
+                        }
 					}
 				},1);
 			}

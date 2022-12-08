@@ -587,7 +587,7 @@ var app = new Vue({
 	    	this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
-	        this.bankMoney = Math.round(this.gameCount/(4*5)) * 20000;
+	        this.bankMoney = Math.round(this.gameCount/(4)) * 20000;
 	        var bns = (this.bankMoney * 0.03 / 12);
 
 	        if(this.tmpBonus != bns){

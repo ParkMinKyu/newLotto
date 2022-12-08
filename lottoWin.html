@@ -377,6 +377,8 @@
         <td colspan="3">
             벼락맞은수: {{boltCount}}회 ({{boltper}}%)<br>
             (1/60만)(0.00016%)<br>
+	    적금시(2만/약{{Math.round(gameCount/(4*5)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
+            적금 이자(연3%): {{bankBonus.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원
         </td>
     </tr>
     <tr>
@@ -500,14 +502,17 @@ var app = new Vue({
 	    timeInterval : null,
 	    gameSpeed : 1,
 	    timeCount : new Date().getTime(),
-        boltCount: 0,
-        boltper: 0,
-        carCount: 0,
-        allRealData: [],
-        allText: '',
-        winStop: true,
-        stempNum: 0,
-        winRandom: false
+	    boltCount: 0,
+	    boltper: 0,
+	    carCount: 0,
+	    allRealData: [],
+	    allText: '',
+	    winStop: true,
+	    stempNum: 0,
+	    winRandom: false,
+	    bankMoney: 0,
+	    bankBonus: 0,
+	    tmpBonus: 0
 	  },
 	  beforeMount(){
           var self = this;
@@ -578,9 +583,18 @@ var app = new Vue({
             }
         },
 	    checkGameData: function(){
-	    	this.gameYear = '약 '+ (Math.round( (this.gameCount/(4*5)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+		var tempYear = (Math.round( (this.gameCount/(4*5)/12) ));
+	    	this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
+	        this.bankMoney = Math.round(this.gameCount/(4*5)) * 20000;
+	        var bns = (this.bankMoney * 0.03 / 12);
+
+	        if(this.tmpBonus != bns){
+	            this.bankBonus += bns;
+	            this.tmpBonus = bns;
+	        }
+		    
 	    	this.checkGameNums();
 	    	this.moneyCheck();
 	    },

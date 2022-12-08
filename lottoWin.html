@@ -377,7 +377,7 @@
         <td colspan="3">
             벼락맞은수: {{boltCount}}회 ({{boltper}}%)<br>
             (1/60만)(0.00016%)<br>
-	    적금시(2만/약{{Math.round(gameCount/(4*5)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
+	    적금시(2만/약{{Math.round(gameCount/(4)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
             적금 이자(연3%): {{bankBonus.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원
         </td>
     </tr>

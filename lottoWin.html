@@ -374,9 +374,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">
-            벼락맞은수: {{boltCount}}회 ({{boltper}}%)<br>
-            (1/60만)(0.00016%)<br>
+        <td colspan="3">            
 	    적금시(2만/약{{Math.round(gameCount/(4*5)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
             적금 이자(연3%): {{bankBonus.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원
         </td>
@@ -501,10 +499,7 @@ var app = new Vue({
 	    gameInterval : null,
 	    timeInterval : null,
 	    gameSpeed : 1,
-	    timeCount : new Date().getTime(),
-	    boltCount: 0,
-	    boltper: 0,
-	    carCount: 0,
+	    timeCount : new Date().getTime(),	    
 	    allRealData: [],
 	    allText: '',
 	    winStop: true,
@@ -559,16 +554,7 @@ var app = new Vue({
 						if(self.winRandom){
 						    self.createWinNums();
 						}
-						self.gameCount++;
-						var num = parseInt(Math.random() * 600000) + 1;
-						var num2 = parseInt(Math.random() * 105) + 1;
-						if( num == 1){
-						    self.boltCount++;
-						}
-						if( num2 == 1){
-						    self.carCount++;
-						}
-						self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
+						self.gameCount++;						
 						self.checkGameData();
 						self.createUserNums();
 						self.checkEndGame();                        
@@ -758,16 +744,7 @@ var app = new Vue({
                     var data = this.allRealData[i];
                     console.log(data);
                     this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
-                    self.gameCount++;
-                    var num = parseInt(Math.random() * 600000) + 1;
-                    var num2 = parseInt(Math.random() * 105) + 1;
-                    if( num == 1){
-                        self.boltCount++;
-                    }
-                    if( num2 == 1){
-                        self.carCount++;
-                    }
-                    self.boltper = (self.boltCount/self.gameCount * 100).toFixed(6);
+                    self.gameCount++;                    
                     self.checkGameData();
                     self.createUserNums();
 

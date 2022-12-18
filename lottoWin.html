@@ -680,7 +680,7 @@ var app = new Vue({
             this.userNums.sort(function(a,b){return a - b;});
         },
         createWinNums: function(){
-        	this.winNums = [1,2,3,4,5,6,999];
+        	this.winNums = [0,0,0,0,0,0,999];
         	var i = 0;
             while(i < 6){
                 var num = this.createRandomNum();
@@ -807,7 +807,7 @@ var app = new Vue({
             }
         },
         createUserNum:function(){
-            this.userNums = [1,2,3,4,5,6];
+            this.userNums = [0,0,0,0,0,0];
             var i = 0;
             while(i < 6){
                 var num = this.createRandomNum();

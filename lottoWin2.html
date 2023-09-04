@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta property="og:url" content="https://parkminkyu.github.io/newLotto/lottoWin2.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="로또 시뮬레이터V2" />
+  <meta property="og:description" content="로또 시뮬레이터 입니다. 로또 당첨이 얼마나 안되나 체감하고 싶으면 도전하세요." />
+  <meta property="og:image" content="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" />
+  <meta property="descripiton" content="가상으로 로또 당첨을 확인하는 로또 시뮬레이터 입니다. 로또 1등 당첨이 얼마나 안되나 체감하고 싶으면 도전하세요." />
+
+  <title>로또당첨번호확률계산기V2(로또 시뮬레이터)</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="bootstrap-social.css">
+  <style type="text/css">
+    body{
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-51448530-10"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-51448530-10');
+  </script>
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/vue.js"></script>
+
+  <script type="text/javascript">
+    $(function(){
+
+      $("a[data-toggle='sns_share']").click(function(e){
+        e.preventDefault();
+
+        var _this = $(this);
+        var sns_type = _this.attr('data-service');
+        var href = "https://parkminkyu.github.io/newLotto/lottoWin.html";
+        var title = $("meta[property='og:title']").attr("content");
+        var loc = "";
+        var img = $("meta[property='og:image']").attr("content");
+
+        if( ! sns_type || !href || !title) return;
+
+        if( sns_type == 'facebook' ) {
+          loc = '//www.facebook.com/sharer/sharer.php?u='+href+'&t='+title;
+        }
+        else if ( sns_type == 'twitter' ) {
+          loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+        }
+        else if ( sns_type == 'google' ) {
+          loc = '//plus.google.com/share?url='+href;
+        }
+        else if ( sns_type == 'pinterest' ) {
+
+          loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+        }
+        else if ( sns_type == 'kakaostory') {
+          loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+        }
+        else if ( sns_type == 'band' ) {
+          loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+        }
+        else if ( sns_type == 'naver' ) {
+          loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+        }
+        else {
+          return false;
+        }
+
+        window.open(loc);
+        return false;
+      });
+
+      $('#goMarketBtn').on('click',function(){
+        var filter = "win16|win32|win64|mac";
+        if(navigator.platform){
+          if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+            location.href="market://details?id=com.min.lotto";
+          }else{
+            location.href="https://play.google.com/store/apps/details?id=com.min.lotto";
+          }
+        }
+      });
+
+      $('#goSimulMarketBtn').on('click',function(){
+        var filter = "win16|win32|win64|mac";
+        if(navigator.platform){
+          if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+            location.href="market://details?id=kr.niee.lottosimulator";
+          }else{
+            location.href="https://play.google.com/store/apps/details?id=kr.niee.lottosimulator";
+          }
+        }
+      });
+
+      $('#reloadWinBtn').on('click',function(){
+        for(var i = 1 ; i <= 7 ; i ++){
+          $("#win"+i).val("");
+        }
+      });
+
+      $('#resetBtn').on('click',function(){
+        location.reload();
+      });
+
+      $('#reloadWinBtn').click();
+    });
+
+    Array.prototype.contains = function(element) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == element) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function copyToClipboard() {
+      var el = document.createElement('textarea');  // Create a <textarea> element
+      el.value = 'https://parkminkyu.github.io/newLotto/lottoWin.html'; // Set its value to the string that you want copied
+      el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+      document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+      var selected =
+              document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+                      ? document.getSelection().getRangeAt(0)     // Store selection if found
+                      : false;                                    // Mark as false to know no selection existed before
+      el.select();                                    // Select the <textarea> content
+      document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+      document.body.removeChild(el);                  // Remove the <textarea> element
+      if (selected) {                                 // If a selection existed before copying
+        document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+        document.getSelection().addRange(selected);   // Restore the original selection
+      }
+      alert("주소가 복사되었습니다.");
+    };
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
+      </a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">인생역전 LOTTO</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/bok/history.html">로또 통계 <span class="sr-only">(current)</span></a></li>
+        <li><a href="/newLotto/lottoWin.html">로또 시뮬레이터</a></li>
+        <li class="active"><a href="/newLotto/lottoWin2.html">로또 시뮬레이터V2</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container" id="lottoGame">
+  <h3>재미로 보는 로또 확률 계산기V2</h3>
+  <div class="btn-group">
+    <div class="btn-group">
+      <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        속도*{{gameSpeed}}<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" v-on:click="setSpeed(1)">1배</a></li>
+        <li><a href="#" v-on:click="setSpeed(5)">5배</a></li>
+        <li><a href="#" v-on:click="setSpeed(10)">10배</a></li>
+        <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
+        <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
+      </ul>
+    </div>
+    <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
+    <button v-on:click="gameStop" class="btn btn-default btn-sm">정지</button>
+    <button id="resetBtn" class="btn btn-default btn-sm">초기화</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공유<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-toggle="sns_share" data-service="naver" data-title="로또 시뮬레이터">네이버</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="twitter" data-title="로또 시뮬레이터">트위터</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="facebook" data-title="로또 시뮬레이터">페이스북</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="google" data-title="로또 시뮬레이터">구글</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="band" data-title="로또 시뮬레이터">밴드</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="pinterest" data-title="로또 시뮬레이터">핀터레스트</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" data-toggle="sns_share" data-service="kakaostory" data-title="로또 시뮬레이터">카카오스토리</a></li>
+        <li role="separator" class="divider"></li><li><a href="#" onclick="copyToClipboard();">주소복사</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">앱설치<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" id="goSimulMarketBtn">로또 시뮬레이터</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" id="goMarketBtn">로또 당첨 번호 확인</a></li>
+      </ul>
+    </div>
+  </div>
+  <table class="table table-bordered">
+    <colgroup>
+      <col width="22%">
+      <col width="25%">
+      <col width="*">
+    </colgroup>
+    <tr>
+      <td colspan="3">
+        <div class="checkbox">
+          1등 번호 : <select v-model="winNums[0]" v-on:change="checkWinnums($event,0)"  :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <option v-for="lottoNum in lottoNums">
+            {{ lottoNum }}
+          </option>
+        </select>
+          <select v-model="winNums[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option v-for="lottoNum in lottoNums">
+              {{ lottoNum }}
+            </option>
+          </select>
+          <select v-model="winNums[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option v-for="lottoNum in lottoNums">
+              {{ lottoNum }}
+            </option>
+          </select>
+          <select v-model="winNums[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option v-for="lottoNum in lottoNums">
+              {{ lottoNum }}
+            </option>
+          </select>
+          <select v-model="winNums[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option v-for="lottoNum in lottoNums">
+              {{ lottoNum }}
+            </option>
+          </select>
+          <select v-model="winNums[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option v-for="lottoNum in lottoNums">
+              {{ lottoNum }}
+            </option>
+          </select>
+          <br>
+          보너스 : <select v-model="winNums[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <option v-for="lottoNum in lottoNums">
+            {{ lottoNum }}
+          </option>
+        </select>
+          <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button>
+          <label>
+            <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
+          </label>
+          <label>
+            <input type="checkbox" v-model="winRandom">1등 무작위
+          </label>
+        </div>
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        제 {{gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 회차<br>
+        1주{{buyGameCount}}게임: {{gameYear}} 경과<br>
+        생성 번호<br>{{userNumsList[0]}}
+      </td>
+      <td>
+        투자금: {{allMoney}}<br>
+        수익금: {{getMoney}} <br>
+        순이익: {{loseMoney}}<br>
+        소요시간: {{gameTime}}<br>
+        <select v-model="endCount">
+          <option value="0">무제한</option>
+          <option value="100">100게임정지</option>
+          <option value="500">500게임정지</option>
+          <option value="1000">1,000게임정지</option>
+          <option value="5000">5,000게임정지</option>
+          <option value="10000">10,000게임정지</option>
+          <option value="50000">50,000게임정지</option>
+          <option value="100000">100,000게임정지</option>
+          <option value="500000">500,000게임정지</option>
+          <option value="1000000">1,000,000게임정지</option>
+          <option value="5000000">5,000,000게임정지</option>
+          <option value="10000000">10,000,000게임정지</option>
+          <option value="50000000">50,000,000게임정지</option>
+        </select>
+      </td>
+    </tr>
+    <tr id="randHold">
+      <!-- <tr id="randHold"> -->
+      <td colspan="3">
+        게임 설정
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table width="100%">
+          <tr>
+            <td colspan="2">
+              <div class="form-group has-success has-feedback">
+                1회당 <input type="number" v-model="buyGameCount" v-on:input="setBuyGameCount($event)" style="width: 50px">게임 구매/(1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
+                <br>번호선택 <label>
+                <input type="checkbox" v-model="holdAllRandom" v-on:change="holdAllChecked($event)" checked="checked">선택 번호 모든게임에 고정
+              </label> <br>
+                <select id="hold1" v-model="userGameNum1" v-on:change="changeUserGameNum(0)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호1</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold2" v-model="userGameNum2" v-on:change="changeUserGameNum(1)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호2</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold3" v-model="userGameNum3" v-on:change="changeUserGameNum(2)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호3</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold4" v-model="userGameNum4" v-on:change="changeUserGameNum(3)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호4</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold5" v-model="userGameNum5" v-on:change="changeUserGameNum(4)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호5</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold6" v-model="userGameNum6" v-on:change="changeUserGameNum(5)" v-bind:disabled="!holdAllRandom">
+                  <option value="0">랜덤번호6</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-if="bgameCount%2==0">
+                GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom">
+                <option value="0">랜덤번호1</option>
+                <option v-for="num in lottoNums" :value="num">
+                  {{num}}
+                </option>
+              </select>
+                <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호2</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호3</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호4</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호5</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호6</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-if="bgameCount%2!=0">
+                GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom">
+                <option value="0">랜덤번호1</option>
+                <option v-for="num in lottoNums" :value="num">
+                  {{num}}
+                </option>
+              </select>
+                <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호2</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호3</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호4</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호5</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+                <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom">
+                  <option value="0">랜덤번호6</option>
+                  <option v-for="num in lottoNums" :value="num">
+                    {{num}}
+                  </option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>등수<br>(당첨수)</td>
+      <td>현재 확률<br>(공식 확률)</td>
+      <td>최근당첨번호</td>
+    </tr>
+    <tr>
+      <td>1등<br>({{oneCount}})</td>
+      <td>
+        {{onePer}}%<br>
+        <span class="label label-default"> 1 / 8,145,060 </span><br>
+        <span class="label label-default">( 0.000012 % )</span>
+      </td>
+      <td>{{oneText}}</td>
+    </tr>
+    <tr>
+      <td>2등<br>({{twoCount}})</td>
+      <td>
+        {{twoPer}}%<br>
+        <span class="label label-default"> 1 / 1,357,510 </span><br>
+        <span class="label label-default">( 0.000073 % )</span>
+      </td>
+      <td>{{twoText}}</td>
+    </tr>
+    <tr>
+      <td>3등<br>({{threeCount}})</td>
+      <td>
+        {{threePer}}%<br>
+        <span class="label label-default"> 1 / 35,724 </span><br>
+        <span class="label label-default">( 0.002799 % )</span>
+      </td>
+      <td>{{threeText}}</td>
+    </tr>
+    <tr>
+      <td>4등<br>({{fourCount}})</td>
+      <td>
+        {{fourPer}}%<br>
+        <span class="label label-default"> 1 / 733 </span><br>
+        <span class="label label-default">( 0.136425 % )</span>
+      </td>
+      <td>{{fourText}}</td>
+    </tr>
+    <tr>
+      <td>5등<br>({{fiveCount}})</td>
+      <td>
+        {{fivePer}}%<br>
+        <span class="label label-default"> 1 / 45 </span><br>
+        <span class="label label-default">( 2.222222 % )</span>
+      </td>
+      <td>{{fiveText}}</td>
+    </tr>
+    <tr>
+      <td>꽝<br>({{noCount}})</td>
+      <td>{{noPer}}%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <iframe src="https://coupa.ng/cc4GkP" width="100%" height="36" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+        <iframe src="https://ads-partners.coupang.com/widgets.html?id=596727&template=carousel&trackingCode=AF6210416&subId=&width=100&height=140" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+  var app = new Vue({
+    el: '#lottoGame',
+    data: {
+      lottoNums : [
+        1,2,3,4,5,6,7,8,9,10,
+        11,12,13,14,15,16,17,18,19,20,
+        21,22,23,24,25,26,27,28,29,30,
+        31,32,33,34,35,36,37,38,39,40,
+        41,42,43,44,45
+      ],
+      winNums : [1,2,3,4,5,6,999],
+      userGameNum1 : 0,
+      userGameNum2 : 0,
+      userGameNum3 : 0,
+      userGameNum4 : 0,
+      userGameNum5 : 0,
+      userGameNum6 : 0,
+      userNums : [0,0,0,0,0,0],
+      userNumsList:[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],
+      endCount : 0,
+      gameCount : 0,
+      oneCount : 0,
+      twoCount : 0,
+      threeCount : 0,
+      fourCount : 0,
+      fiveCount : 0,
+      noCount : 0,
+      onePer : 0,
+      twoPer : 0,
+      threePer : 0,
+      fourPer : 0,
+      fivePer : 0,
+      noPer : 0,
+      oneText :  [0,0,0,0,0,0],
+      twoText :  [0,0,0,0,0,0],
+      threeText :  [0,0,0,0,0,0],
+      fourText :  [0,0,0,0,0,0],
+      fiveText :  [0,0,0,0,0,0],
+      allMoney : 0,
+      gameYear : "",
+      gameYear2 : "",
+      getMoney : 0,
+      loseMoney : 0,
+      gameTime : "00:00:00",
+      isStart : false,
+      gameInterval : null,
+      timeInterval : null,
+      gameSpeed : 1,
+      timeCount : new Date().getTime(),
+      allRealData: [],
+      allText: '',
+      winStop: true,
+      stempNum: 0,
+      winRandom: false,
+      bankMoney: 0,
+      bankBonus: 0,
+      tmpBonus: 0,
+      buyGameCount: 5,
+      buyGameCountArray: [0,1,2,3,4],
+      holdAllRandom: true,
+      winPos1: [],
+      winPos2: [],
+      winPos3: [],
+      winPos4: [],
+      winPos5: [],
+    },
+    beforeMount(){
+      var self = this;
+      this.createWinNums();
+      this.startTimer();
+      $.ajax({
+        url : 'https://parkminkyu.github.io/bok/lottoHistory.json?d='+ new Date(),
+        success : function(res){
+          self.allRealData = res;
+        }
+      });
+    },
+    methods: {
+      holdAllChecked:function(event){
+
+      },
+      changeUserGameNum:function(pos){
+        for(var i = 0 ; i < this.userNumsList.length ; i ++){
+          if(this.holdAllRandom){
+            switch(pos){
+              case 0:
+                this.userNumsList[i][pos] = this.userGameNum1;
+                break;
+              case 1:
+                this.userNumsList[i][pos] = this.userGameNum2;
+                break;
+              case 2:
+                this.userNumsList[i][pos] = this.userGameNum3;
+                break;
+              case 3:
+                this.userNumsList[i][pos] = this.userGameNum4;
+                break;
+              case 4:
+                this.userNumsList[i][pos] = this.userGameNum5;
+                break;
+              case 5:
+                this.userNumsList[i][pos] = this.userGameNum6;
+                break;
+            }
+          }
+        }
+      },
+      setBuyGameCount:function(event){
+        var cnt = parseInt(event.target.value,10);
+        if(cnt < 1){
+          this.buyGameCount = 1;
+          return false;
+        }else if(cnt > 100){
+          this.buyGameCount = 100;
+          return false;
+        }
+
+        if(this.buyGameCount < this.buyGameCountArray.length){
+          this.buyGameCountArray.pop();
+          this.userNumsList.pop();
+        }else{
+          for(var i = this.buyGameCountArray.length ; i < parseInt(event.target.value,10) ; i ++){
+            this.buyGameCountArray.push(i);
+            if(this.holdAllRandom){
+              this.userNumsList.push([this.userGameNum1,this.userGameNum2,this.userGameNum3,this.userGameNum4,this.userGameNum5,this.userGameNum6]);
+            }else{
+              var arr = [0,0,0,0,0,0]
+              this.userNumsList.push(arr);
+            }
+          }
+        }
+
+
+      },
+      startTimer:function(){
+        var self = this;
+        setTimeout(function(){
+          if(self.isStart){
+            var nowTime = parseInt((new Date().getTime() - self.timeCount)/1000);
+            var minutes = parseInt(nowTime / 60, 10);
+            var hours = parseInt(minutes / 60, 10);
+            var seconds = nowTime%60;
+            minutes %= 60;
+
+            self.gameTime = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+          }
+          self.startTimer();
+        },1000);
+      },
+      gameStart:function () {
+        var self = this;
+        if(this.isStart == false){
+          self.timeCount= new Date().getTime();
+        }
+        if(this.isStart == false){
+          this.isStart = true;
+          self.gameInterval = setInterval( function(){
+            if(!self.isStart){
+              clearInterval(self.gameInterval);
+            }
+
+            for(var j = 0 ; j < self.gameSpeed ; j ++){
+              if(!self.isStart){
+                break;
+              }
+              if(self.winRandom){
+                self.createWinNums();
+              }
+              self.gameCount++;
+              self.checkGameData();
+
+              if(self.isStart == true){
+                self.createGameUserNums();
+              }
+              self.checkEndGame();
+            }
+          },1);
+        }
+      },
+      checkEndGame: function(){
+        for(var i = 0 ; i < this.userNumsList.length ; i ++){
+          $('#hold'+i+'_1').parent().css('background', '');
+        }
+        for(var i = 0 ; i < this.winPos1.length ; i ++){
+          $(this.winPos1[i]).parent().css('background', 'blueviolet');
+        }
+        for(var i = 0 ; i < this.winPos2.length ; i ++){
+          $(this.winPos2[i]).parent().css('background', 'red');
+        }
+        for(var i = 0 ; i < this.winPos3.length ; i ++){
+          $(this.winPos3[i]).parent().css('background', 'yellow');
+        }
+        for(var i = 0 ; i < this.winPos4.length ; i ++){
+          $(this.winPos4[i]).parent().css('background', 'blue');
+        }
+        for(var i = 0 ; i < this.winPos5.length ; i ++){
+          $(this.winPos5[i]).parent().css('background', 'green');
+        }
+
+        if(this.gameCount >= this.endCount && 0 != this.endCount){
+          this.isStart = false;
+          alert('게임이 끝났습니다.');
+        }
+      },
+      checkGameData: function(){
+        var tempYear = (Math.round( (this.gameCount/52) ));
+        this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+        this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+        this.allMoney = (this.gameCount * this.buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
+        this.bankMoney = Math.round(this.gameCount * this.buyGameCount/(4*5)) * 20000;
+        var bns = (this.bankMoney * 0.03 / 12);
+
+        if(this.tmpBonus != bns){
+          this.bankBonus += bns;
+          this.tmpBonus = bns;
+        }
+
+        this.checkGameNums();
+        this.moneyCheck();
+      },
+      checkGameNums: function(){
+        var isWinAlert = false;
+        this.winPos5 = [];
+        this.winPos4 = [];
+        this.winPos3 = [];
+        this.winPos2 = [];
+        this.winPos1 = [];
+        for(var k = 0 ; k < this.userNumsList.length ; k ++){
+          var arr = this.userNumsList[k];
+
+          var matchCount = 0;
+          for(var i = 0 ; i < 6 ; i ++){
+            if(arr.contains(this.winNums[i])){
+              matchCount++;
+            }
+          }
+
+          switch (matchCount){
+            case 3:
+              ++this.fiveCount;
+              this.copyArrays(this.fiveText,arr);
+              this.winPos5.push('#hold'+k+'_1');
+              break;
+            case 4:
+              ++this.fourCount;
+              this.copyArrays(this.fourText,arr);
+              this.winPos4.push('#hold'+k+'_1');
+              break;
+            case 5:
+              if(arr.contains(this.winNums[6])){
+                ++this.twoCount;
+                this.copyArrays(this.twoText,arr);
+                this.winPos2.push('#hold'+k+'_1');
+              }
+              else{
+                ++this.threeCount;
+                this.copyArrays(this.threeText,arr);
+                this.winPos3.push('#hold'+k+'_1');
+              }
+              break;
+            case 6:
+              if(this.winStop){
+                this.isStart = false;
+                console.log('#hold'+k+'_1');
+                this.winPos1.push('#hold'+k+'_1');
+                if(!isWinAlert){
+                  alert('축하합니다. 1등에 당첨되셨습니다.');
+                  isWinAlert = true;
+                }
+              }
+              ++this.oneCount;
+              this.copyArrays(this.oneText,arr);
+              break;
+            default :
+              ++this.noCount;
+              break;
+          }
+        }
+
+        this.fivePer = ((this.fiveCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+        this.fourPer = ((this.fourCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+        this.threePer = ((this.threeCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+        this.twoPer = ((this.twoCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+        this.onePer = ((this.oneCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+        this.noPer = ((this.noCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+
+      },
+      copyArrays:function(tar,arr){
+        tar[0] = arr[0];
+        tar[1] = arr[1];
+        tar[2] = arr[2];
+        tar[3] = arr[3];
+        tar[4] = arr[4];
+        tar[5] = arr[5];
+      },
+      moneyCheck: function(){
+        var five = this.fiveCount * 5000;
+        var four = this.fourCount * 50000;
+        var three = this.threeCount* 1000000;
+        var two = this.twoCount* 50000000;
+        var one = this.oneCount* 2000000000;
+        var total = five + four + three + two + one;
+
+        this.getMoney = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+        this.loseMoney = (((this.gameCount * this.buyGameCount * 1000) - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+      },
+      gameStop:function(){
+        this.isStart = false;
+      },
+      createRandomNum: function(){
+        return parseInt((Math.random() *45)+1);
+      },
+      createGameUserNums: function(){
+        for(var k = 0 ; k < this.userNumsList.length ; k ++){
+          var arr = this.userNumsList[k];
+
+          var i = 0;
+          if(this.holdAllRandom){
+            arr[0] = this.userGameNum1;
+            arr[1] = this.userGameNum2;
+            arr[2] = this.userGameNum3;
+            arr[3] = this.userGameNum4;
+            arr[4] = this.userGameNum5;
+            arr[5] = this.userGameNum6;
+          }
+
+          while(i < 6){
+            if(arr[i] != 0){
+              i++;
+              continue;
+            }
+            var num = this.createRandomNum();
+            while(arr.contains(num)){
+              num = this.createRandomNum();
+            }
+            arr[i++] = num;
+          }
+          arr.sort(function(a,b){return a - b;});
+        }
+      },
+      createUserNums: function(arr){
+        var i = 0;
+        if(this.holdAllRandom){
+          arr[0] = this.userGameNum1;
+          arr[1] = this.userGameNum2;
+          arr[2] = this.userGameNum3;
+          arr[3] = this.userGameNum4;
+          arr[4] = this.userGameNum5;
+          arr[5] = this.userGameNum6;
+        }
+
+        while(i < 6){
+          if(arr[i] != 0){
+            i++;
+            continue;
+          }
+          var num = this.createRandomNum();
+          while(arr.contains(num)){
+            num = this.createRandomNum();
+          }
+          arr[i++] = num;
+        }
+        arr.sort(function(a,b){return a - b;});
+      },
+      createWinNums: function(){
+        this.winNums = [0,0,0,0,0,0,999];
+        var i = 0;
+        while(i < 6){
+          var num = this.createRandomNum();
+          while(this.winNums.contains(num)){
+            num = this.createRandomNum();
+          }
+          this.winNums[i++] = num;
+        }
+        this.winNums.sort(function(a,b){return a - b;});
+        while(this.winNums[6] == 999){
+          var num = this.createRandomNum();
+          while(this.winNums.contains(num)){
+            num = this.createRandomNum();
+          }
+          this.winNums[i++] = num;
+        }
+
+        this.printWinNums();
+      },
+      printWinNums:function(){
+        var text = this.winNums.join(", ");
+        return text.substr(0,text.lastIndexOf(',')) + " 보너스 : " + text.substr(text.lastIndexOf(', ')+1);
+        //printWinNumsText : "1, 2, 3, 4, 5, 6 보너스 : 7"
+      },
+      setSpeed:function(speed){
+        this.gameSpeed = speed;
+      },
+      userNumChecker:function(){
+        this.endCount = 0;
+        this.gameCount = 0;
+        this.oneCount = 0;
+        this.twoCount = 0;
+        this.threeCount = 0;
+        this.fourCount = 0;
+        this.fiveCount = 0;
+        this.noCount = 0;
+
+        this.userNums[0] = this.userGameNum1;
+        this.userNums[1] = this.userGameNum2;
+        this.userNums[2] = this.userGameNum3;
+        this.userNums[3] = this.userGameNum4;
+        this.userNums[4] = this.userGameNum5;
+        this.userNums[5] = this.userGameNum6;
+        if(this.userNums.filter( v => v == 0).length > 0){
+          alert("고정번호 선택 후 눌러주세요");
+        }else {
+          var self = this;
+          var winText = '';
+          this.gameCount = 0;
+          this.userNums.sort();
+          var maxWinRank = 6;
+
+          for (var i = 0 ; i < this.allRealData.length ; i ++){
+            var oneTmp = this.oneCount;
+            var twoTmp = this.twoCount;
+            var threeTmp = this.threeCount;
+            var fourTmp = this.fourCount;
+            var fiveTmp = this.fiveCount;
+            var thisRank = 7;
+
+            var data = this.allRealData[i];
+            console.log(data);
+            this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
+            self.gameCount++;
+            self.checkGameData();
+            self.createUserNums();
+
+            if(
+                    oneTmp < this.oneCount||
+                    twoTmp < this.twoCount||
+                    threeTmp < this.threeCount||
+                    fourTmp < this.fourCount||
+                    fiveTmp < this.fiveCount
+            ){
+              var color = '#000000';
+              var rank = '꽝';
+
+              if(fourTmp < this.fourCount){
+                color = '#7e199f';
+              }
+
+              if(threeTmp < this.threeCount){
+                color = '#269f19';
+              }
+
+              if(twoTmp < this.twoCount){
+                color = '#194a9f';
+              }
+
+              if(oneTmp < this.oneCount) {
+                color = '#9f191f';
+              }
+
+              if(this.oneCount - oneTmp == 1){
+                rank = "1등";
+                thisRank = 1;
+              }else if(this.twoCount - twoTmp == 1){
+                rank = "2등";
+                thisRank = 2;
+              }else if(this.threeCount - threeTmp == 1){
+                rank = "3등";
+                thisRank = 3;
+              }else if(this.fourCount - fourTmp == 1){
+                rank = "4등";
+                thisRank = 4;
+              }else if(this.fiveCount - fiveTmp == 1){
+                rank = "5등";
+                thisRank = 5;
+              }
+
+              if(thisRank < maxWinRank){
+                maxWinRank = thisRank;
+              }
+
+              winText += "<div style='color: "+color+"'>"
+              winText +=
+                      data.drwNo+"회 " + rank + " (" + data.drwNoDate +")<br><strong>1등 당첨금: "
+                      +data.firstWinamnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원</strong>"
+                      +"<br>1등 번호: " + this.winNums.join(",") + "<br><br>";
+              winText += "</div>"
+            }
+          }
+          this.allText = "<strong>최고등수: " + maxWinRank + "등<br>결과 1등: "+ this.oneCount +"번,  2등: "+ this.twoCount +"번,  3등: "+ this.threeCount +"번,  4등: "+ this.fourCount +"번,  5등: "+ this.fiveCount +"번,  꽝: "+ this.noCount +"번</strong><br><br> 상세결과<br>" + winText;
+        }
+      },
+      createUserNum:function(){
+        this.userNums = [0,0,0,0,0,0];
+        var i = 0;
+        while(i < 6){
+          var num = this.createRandomNum();
+          while(this.userNums.contains(num)){
+            num = this.createRandomNum();
+          }
+          this.userNums[i++] = num;
+        }
+        this.userNums.sort(function(a,b){return a - b;});
+
+        this.userGameNum1 = this.userNums[0];
+        this.userGameNum2 = this.userNums[1];
+        this.userGameNum3 = this.userNums[2];
+        this.userGameNum4 = this.userNums[3];
+        this.userGameNum5 = this.userNums[4];
+        this.userGameNum6 = this.userNums[5];
+      },
+      resetUserNum:function(){
+        this.userGameNum1 = 0;
+        this.userGameNum2 = 0;
+        this.userGameNum3 = 0;
+        this.userGameNum4 = 0;
+        this.userGameNum5 = 0;
+        this.userGameNum6 = 0;
+        this.allText = "";
+      }
+    },
+    checkWinnums : function(event, idx){
+      var isduple = false;
+      for(var i = 0 ; i < this.winNums.length ; i ++){
+        for(var j = i+1 ; j < this.winNums.length ; j ++){
+          if(this.winNums[i]==this.winNums[j]){
+            alert("번호가 중복 되었습니다.");
+            isduple = true;
+            break;
+          }
+        }
+      }
+
+      if(isduple){
+        this.winNums[idx] = this.stempNum;
+      }
+    },
+    saveTempNum : function(event){
+      this.stempNum = parseInt(event.target.value);
+    },
+  })
+</script>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="mailto:smartmingue@gmail.com">개발자 이메일 : smartmingue@gmail.com</a>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+</body>
+</html>

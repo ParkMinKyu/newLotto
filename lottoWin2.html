@@ -546,7 +546,7 @@
       allText: '',
       winStop: true,
       stempNum: 0,
-      winRandom: false,
+      winRandom: true,
       bankMoney: 0,
       bankBonus: 0,
       tmpBonus: 0,
@@ -657,6 +657,7 @@
       },
       gameStart:function () {
         var self = this;
+        self.createGameUserNums();
         if(this.isStart == false){
           self.timeCount= new Date().getTime();
         }

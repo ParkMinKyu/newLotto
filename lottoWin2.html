@@ -292,160 +292,132 @@
         수익금: {{getMoney}} <br>
         순이익: {{loseMoney}}<br>
         소요시간: {{gameTime}}<br>
-        <select v-model="endCount">
-          <option value="0">무제한</option>
-          <option value="100">100게임정지</option>
-          <option value="500">500게임정지</option>
-          <option value="1000">1,000게임정지</option>
-          <option value="5000">5,000게임정지</option>
-          <option value="10000">10,000게임정지</option>
-          <option value="50000">50,000게임정지</option>
-          <option value="100000">100,000게임정지</option>
-          <option value="500000">500,000게임정지</option>
-          <option value="1000000">1,000,000게임정지</option>
-          <option value="5000000">5,000,000게임정지</option>
-          <option value="10000000">10,000,000게임정지</option>
-          <option value="50000000">50,000,000게임정지</option>
-        </select>
       </td>
     </tr>
     <tr id="randHold">
       <!-- <tr id="randHold"> -->
-      <td colspan="3">
-        게임 설정
+      <td colspan="2">
+        게임 상태
+        <div style="background:blueviolet;color: white">1등({{oneCount}})</div>
+        <div style="background:red;color: white">2등({{twoCount}})</div>
+        <div style="background:yellow;color: black">3등({{threeCount}})</div>
+        <div style="background:blue;color: white">4등({{fourCount}})</div>
+        <div style="background:green;color: white">5등({{fiveCount}})</div>
+      </td>
+      <td>
+        <div class="form-group has-success has-feedback">
+          1회당 <select v-model="buyGameCount" v-on:change="setBuyGameCount($event)" style="width: 50px" :disabled="isStart">
+            <option v-for="i in 100" :value="i" :selectd=" i == 5">{{i}}</option>
+        </select>게임 구매<br>
+          (1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
+          게임수: <select v-model="endCount" :disabled="isStart">
+            <option value="0">무제한</option>
+            <option value="100">100게임정지</option>
+            <option value="500">500게임정지</option>
+            <option value="1000">1,000게임정지</option>
+            <option value="5000">5,000게임정지</option>
+            <option value="10000">10,000게임정지</option>
+            <option value="50000">50,000게임정지</option>
+            <option value="100000">100,000게임정지</option>
+            <option value="500000">500,000게임정지</option>
+            <option value="1000000">1,000,000게임정지</option>
+            <option value="5000000">5,000,000게임정지</option>
+            <option value="10000000">10,000,000게임정지</option>
+            <option value="50000000">50,000,000게임정지</option>
+          </select>
+          <br>
+          <label>
+            <input type="checkbox" v-model="showGameArea" checked="checked">게임중번호보기
+          </label>
+          <br>
+          (속도*게임수가 높아 렉이 걸릴 경우 게임중 번호 보기 체크 해제)
       </td>
     </tr>
-    <tr>
+    <tr v-if="showGameArea && isStart">
       <td colspan="3">
-        <table width="100%">
-          <tr>
-            <td colspan="2">
-              <div class="form-group has-success has-feedback">
-                1회당 <input type="number" v-model="buyGameCount" v-on:input="setBuyGameCount($event)" style="width: 50px">게임 구매/(1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
-                <br>번호선택 <label>
-                <input type="checkbox" v-model="holdAllRandom" v-on:change="holdAllChecked($event)" checked="checked">선택 번호 모든게임에 고정
-              </label> <br>
-                <select id="hold1" v-model="userGameNum1" v-on:change="changeUserGameNum(0)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호1</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold2" v-model="userGameNum2" v-on:change="changeUserGameNum(1)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호2</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold3" v-model="userGameNum3" v-on:change="changeUserGameNum(2)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호3</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold4" v-model="userGameNum4" v-on:change="changeUserGameNum(3)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호4</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold5" v-model="userGameNum5" v-on:change="changeUserGameNum(4)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호5</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold6" v-model="userGameNum6" v-on:change="changeUserGameNum(5)" v-bind:disabled="!holdAllRandom">
-                  <option value="0">랜덤번호6</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-if="bgameCount%2==0">
-                GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom">
-                <option value="0">랜덤번호1</option>
-                <option v-for="num in lottoNums" :value="num">
-                  {{num}}
-                </option>
-              </select>
-                <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호2</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호3</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호4</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호5</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호6</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-              </div>
-            </td>
-            <td>
-              <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-if="bgameCount%2!=0">
-                GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom">
-                <option value="0">랜덤번호1</option>
-                <option v-for="num in lottoNums" :value="num">
-                  {{num}}
-                </option>
-              </select>
-                <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호2</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호3</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호4</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호5</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-                <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom">
-                  <option value="0">랜덤번호6</option>
-                  <option v-for="num in lottoNums" :value="num">
-                    {{num}}
-                  </option>
-                </select>
-              </div>
-            </td>
-          </tr>
-        </table>
+
+        번호선택 <label>
+        <input type="checkbox" v-model="holdAllRandom" v-on:change="holdAllChecked($event)" checked="checked" v-bind:disabled="isStart">선택 번호 모든게임에 고정
+      </label> <br>
+        <select id="hold1" v-model="userGameNum1" v-on:change="changeUserGameNum(0)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <select id="hold2" v-model="userGameNum2" v-on:change="changeUserGameNum(1)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <select id="hold3" v-model="userGameNum3" v-on:change="changeUserGameNum(2)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <select id="hold4" v-model="userGameNum4" v-on:change="changeUserGameNum(3)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <select id="hold5" v-model="userGameNum5" v-on:change="changeUserGameNum(4)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <select id="hold6" v-model="userGameNum6" v-on:change="changeUserGameNum(5)" v-bind:disabled="!holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+        <br>
+        <br>
+        <label>
+          <input type="checkbox" v-model="showOnlyWin" checked="checked">당첨게임만보기
+        </label> <br>
+        <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray">
+          GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart">
+          <option value="0">랜덤</option>
+          <option v-for="num in lottoNums" :value="num">
+            {{num}}
+          </option>
+        </select>
+          <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom || isStart">
+            <option value="0">랜덤</option>
+            <option v-for="num in lottoNums" :value="num">
+              {{num}}
+            </option>
+          </select>
+          <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom || isStart">
+            <option value="0">랜덤</option>
+            <option v-for="num in lottoNums" :value="num">
+              {{num}}
+            </option>
+          </select>
+          <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom || isStart">
+            <option value="0">랜덤</option>
+            <option v-for="num in lottoNums" :value="num">
+              {{num}}
+            </option>
+          </select>
+          <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom || isStart">
+            <option value="0">랜덤</option>
+            <option v-for="num in lottoNums" :value="num">
+              {{num}}
+            </option>
+          </select>
+          <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom || isStart">
+            <option value="0">랜덤</option>
+            <option v-for="num in lottoNums" :value="num">
+              {{num}}
+            </option>
+          </select>
+        </div>
       </td>
     </tr>
     <tr>
@@ -507,6 +479,15 @@
       <td colspan="3">
         <iframe src="https://coupa.ng/cc4GkP" width="100%" height="36" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
         <iframe src="https://ads-partners.coupang.com/widgets.html?id=596727&template=carousel&trackingCode=AF6210416&subId=&width=100&height=140" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <div id="disqus_thread">
+          <script>
+            (function() { var d = document, s = d.createElement('script'); s.src = '//roddo-dangceom-hwagryul-gyesangi.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();
+          </script>
+        </div>
       </td>
     </tr>
   </table>
@@ -577,6 +558,8 @@
       winPos3: [],
       winPos4: [],
       winPos5: [],
+      showOnlyWin: false,
+      showGameArea: true
     },
     beforeMount(){
       var self = this;
@@ -591,7 +574,18 @@
     },
     methods: {
       holdAllChecked:function(event){
-
+        if(this.holdAllRandom){
+          for(var i = 0 ; i < this.userNumsList.length ; i ++){
+            if(this.holdAllRandom){
+                  this.userNumsList[i][0] = this.userGameNum1;
+                  this.userNumsList[i][1] = this.userGameNum2;
+                  this.userNumsList[i][2] = this.userGameNum3;
+                  this.userNumsList[i][3] = this.userGameNum4;
+                  this.userNumsList[i][4] = this.userGameNum5;
+                  this.userNumsList[i][5] = this.userGameNum6;
+              }
+            }
+          }
       },
       changeUserGameNum:function(pos){
         for(var i = 0 ; i < this.userNumsList.length ; i ++){
@@ -630,8 +624,10 @@
         }
 
         if(this.buyGameCount < this.buyGameCountArray.length){
-          this.buyGameCountArray.pop();
-          this.userNumsList.pop();
+          for(var i = this.buyGameCountArray.length - 1 ; i >= cnt ; i --){
+            this.buyGameCountArray.pop();
+            this.userNumsList.pop();
+          }
         }else{
           for(var i = this.buyGameCountArray.length ; i < parseInt(event.target.value,10) ; i ++){
             this.buyGameCountArray.push(i);
@@ -643,8 +639,6 @@
             }
           }
         }
-
-
       },
       startTimer:function(){
         var self = this;
@@ -692,23 +686,28 @@
         }
       },
       checkEndGame: function(){
+
         for(var i = 0 ; i < this.userNumsList.length ; i ++){
-          $('#hold'+i+'_1').parent().css('background', '');
+          if(this.showOnlyWin){
+            $('#hold'+i+'_1').parent().css('background', '').hide();
+          }else{
+            $('#hold'+i+'_1').parent().show().css('background', '');
+          }
         }
         for(var i = 0 ; i < this.winPos1.length ; i ++){
-          $(this.winPos1[i]).parent().css('background', 'blueviolet');
+          $(this.winPos1[i]).parent().show().css('background', 'blueviolet');
         }
         for(var i = 0 ; i < this.winPos2.length ; i ++){
-          $(this.winPos2[i]).parent().css('background', 'red');
+          $(this.winPos2[i]).parent().show().css('background', 'red');
         }
         for(var i = 0 ; i < this.winPos3.length ; i ++){
-          $(this.winPos3[i]).parent().css('background', 'yellow');
+          $(this.winPos3[i]).parent().show().css('background', 'yellow');
         }
         for(var i = 0 ; i < this.winPos4.length ; i ++){
-          $(this.winPos4[i]).parent().css('background', 'blue');
+          $(this.winPos4[i]).parent().show().css('background', 'blue');
         }
         for(var i = 0 ; i < this.winPos5.length ; i ++){
-          $(this.winPos5[i]).parent().css('background', 'green');
+          $(this.winPos5[i]).parent().show().css('background', 'green');
         }
 
         if(this.gameCount >= this.endCount && 0 != this.endCount){

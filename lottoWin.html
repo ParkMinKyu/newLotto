@@ -172,6 +172,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/bok/history.html">로또 통계 <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="/newLotto/lottoWin.html">로또 시뮬레이터</a></li>
+                <li><a href="/newLotto/lottoWin2.html">로또 시뮬레이터V2</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -569,9 +570,9 @@ var app = new Vue({
             }
         },
 	    checkGameData: function(){
-		var tempYear = (Math.round( (this.gameCount/(4*5)/12) ));
+		var tempYear = (Math.round( (this.gameCount/52/5) ));
 	    	this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
-	    	this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+	    	this.gameYear2 = '약 '+ (Math.round( (this.gameCount/52/10) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
 	    	this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
 	        this.bankMoney = Math.round(this.gameCount/(4*5)) * 20000;
 	        var bns = (this.bankMoney * 0.03 / 12);

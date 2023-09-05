@@ -24,6 +24,26 @@
       padding-top: 50px;
       padding-bottom: 50px;
     }
+
+    .winNum{
+      background: #720e9e;
+    }
+
+    .winNum5{
+      background: green;
+    }
+
+    .winNum4{
+      background: blue;
+    }
+
+    .winNum3{
+      background: yellow;
+    }
+
+    .winNum2{
+      background: red;
+    }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-51448530-10"></script>
@@ -333,7 +353,7 @@
           (속도*게임수가 높아 렉이 걸릴 경우 게임중 번호 보기 체크 해제)
       </td>
     </tr>
-    <tr v-if="showGameArea">
+    <tr  v-if="showGameArea">
       <td colspan="3">
 
         번호선택 <label>
@@ -377,10 +397,20 @@
         </select>
         <br>
         <br>
-        <label>
-          <input type="checkbox" v-model="showOnlyWin" checked="checked">당첨게임만보기
-        </label> <br>
-        <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray">
+
+        <div
+                class="input-group"
+                v-for="(bgameCount, idx) in buyGameCountArray"
+                v-bind:class="
+                userNumsList[bgameCount][0] == winNums[0] &&
+                userNumsList[bgameCount][1] == winNums[1] &&
+                userNumsList[bgameCount][2] == winNums[2] &&
+                userNumsList[bgameCount][3] == winNums[3] &&
+                userNumsList[bgameCount][4] == winNums[4] &&
+                userNumsList[bgameCount][5] == winNums[5]
+                ? 'winNum'
+                : classChecker(userNumsList[bgameCount])
+        ">
           GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart">
           <option value="0">랜덤</option>
           <option v-for="num in lottoNums" :value="num">
@@ -512,6 +542,7 @@
       userGameNum6 : 0,
       userNums : [0,0,0,0,0,0],
       userNumsList:[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],
+      userNumsListCopy: [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],
       endCount : 0,
       gameCount : 0,
       oneCount : 0,
@@ -553,11 +584,6 @@
       buyGameCount: 5,
       buyGameCountArray: [0,1,2,3,4],
       holdAllRandom: true,
-      winPos1: [],
-      winPos2: [],
-      winPos3: [],
-      winPos4: [],
-      winPos5: [],
       showOnlyWin: false,
       showGameArea: true
     },
@@ -573,6 +599,27 @@
       });
     },
     methods: {
+      classChecker:function(arr){
+        var cnt = 0;
+        if(arr.contains(this.winNums[0]))cnt++;
+        if(arr.contains(this.winNums[1]))cnt++;
+        if(arr.contains(this.winNums[2]))cnt++;
+        if(arr.contains(this.winNums[3]))cnt++;
+        if(arr.contains(this.winNums[4]))cnt++;
+        if(arr.contains(this.winNums[5]))cnt++;
+
+        switch (cnt){
+          case 3:
+            return 'winNum5'
+          case 4:
+            return 'winNum4'
+          case 5:
+            if(arr.contains(this.winNums[6])){
+              return 'winNum2'
+            }
+            return 'winNum3'
+        }
+      },
       holdAllChecked:function(event){
         if(this.holdAllRandom){
           for(var i = 0 ; i < this.userNumsList.length ; i ++){
@@ -627,15 +674,18 @@
           for(var i = this.buyGameCountArray.length - 1 ; i >= cnt ; i --){
             this.buyGameCountArray.pop();
             this.userNumsList.pop();
+            this.userNumsListCopy.pop();
           }
         }else{
           for(var i = this.buyGameCountArray.length ; i < parseInt(event.target.value,10) ; i ++){
             this.buyGameCountArray.push(i);
             if(this.holdAllRandom){
               this.userNumsList.push([this.userGameNum1,this.userGameNum2,this.userGameNum3,this.userGameNum4,this.userGameNum5,this.userGameNum6]);
+              this.userNumsListCopy.push([0,0,0,0,0,0]);
             }else{
               var arr = [0,0,0,0,0,0]
               this.userNumsList.push(arr);
+              this.userNumsListCopy.push(arr);
             }
           }
         }
@@ -657,6 +707,15 @@
       },
       gameStart:function () {
         var self = this;
+        $('.winNum').removeClass('winNum');
+        for(var i = 0 ; i < this.userNumsList.length ; i ++){
+          this.userNumsListCopy[i][0] = this.userNumsList[i][0];
+          this.userNumsListCopy[i][1] = this.userNumsList[i][1];
+          this.userNumsListCopy[i][2] = this.userNumsList[i][2];
+          this.userNumsListCopy[i][3] = this.userNumsList[i][3];
+          this.userNumsListCopy[i][4] = this.userNumsList[i][4];
+          this.userNumsListCopy[i][5] = this.userNumsList[i][5];
+        }
         self.createGameUserNums();
         if(this.isStart == false){
           self.timeCount= new Date().getTime();
@@ -687,32 +746,9 @@
         }
       },
       checkEndGame: function(){
-
-        for(var i = 0 ; i < this.userNumsList.length ; i ++){
-          if(this.showOnlyWin){
-            $('#hold'+i+'_1').parent().css('background', '').hide();
-          }else{
-            $('#hold'+i+'_1').parent().show().css('background', '');
-          }
-        }
-        for(var i = 0 ; i < this.winPos1.length ; i ++){
-          $(this.winPos1[i]).parent().show().css('background', 'blueviolet');
-        }
-        for(var i = 0 ; i < this.winPos2.length ; i ++){
-          $(this.winPos2[i]).parent().show().css('background', 'red');
-        }
-        for(var i = 0 ; i < this.winPos3.length ; i ++){
-          $(this.winPos3[i]).parent().show().css('background', 'yellow');
-        }
-        for(var i = 0 ; i < this.winPos4.length ; i ++){
-          $(this.winPos4[i]).parent().show().css('background', 'blue');
-        }
-        for(var i = 0 ; i < this.winPos5.length ; i ++){
-          $(this.winPos5[i]).parent().show().css('background', 'green');
-        }
-
         if(this.gameCount >= this.endCount && 0 != this.endCount){
           this.isStart = false;
+          this.showGameArea = true;
           alert('게임이 끝났습니다.');
         }
       },
@@ -734,10 +770,6 @@
       },
       checkGameNums: function(){
         var isWinAlert = false;
-        this.winPos5 = [];
-        this.winPos4 = [];
-        this.winPos3 = [];
-        this.winPos2 = [];
         this.winPos1 = [];
         for(var k = 0 ; k < this.userNumsList.length ; k ++){
           var arr = this.userNumsList[k];
@@ -753,33 +785,30 @@
             case 3:
               ++this.fiveCount;
               this.copyArrays(this.fiveText,arr);
-              this.winPos5.push('#hold'+k+'_1');
               break;
             case 4:
               ++this.fourCount;
               this.copyArrays(this.fourText,arr);
-              this.winPos4.push('#hold'+k+'_1');
               break;
             case 5:
               if(arr.contains(this.winNums[6])){
                 ++this.twoCount;
                 this.copyArrays(this.twoText,arr);
-                this.winPos2.push('#hold'+k+'_1');
               }
               else{
                 ++this.threeCount;
                 this.copyArrays(this.threeText,arr);
-                this.winPos3.push('#hold'+k+'_1');
               }
               break;
             case 6:
               if(this.winStop){
                 this.isStart = false;
                 console.log('#hold'+k+'_1');
-                this.winPos1.push('#hold'+k+'_1');
+                $('#hold'+k+'_1').parent().addClass('winNum');
                 if(!isWinAlert){
                   alert('축하합니다. 1등에 당첨되셨습니다.');
                   isWinAlert = true;
+                  this.showGameArea = true;
                 }
               }
               ++this.oneCount;
@@ -836,6 +865,13 @@
             arr[3] = this.userGameNum4;
             arr[4] = this.userGameNum5;
             arr[5] = this.userGameNum6;
+          }else{
+            arr[0] = this.userNumsListCopy[k][0];
+            arr[1] = this.userNumsListCopy[k][1];
+            arr[2] = this.userNumsListCopy[k][2];
+            arr[3] = this.userNumsListCopy[k][3];
+            arr[4] = this.userNumsListCopy[k][4];
+            arr[5] = this.userNumsListCopy[k][5];
           }
 
           while(i < 6){

@@ -328,11 +328,11 @@
       <!-- <tr id="randHold"> -->
       <td colspan="2">
       	최근 당첨 번호5개<br>
-      	<div class="input-group">{{showWinNums[1][7]}}회차: {{showWinNums[1][0]}},{{showWinNums[1][1]}},{{showWinNums[1][2]}},{{showWinNums[1][3]}},{{showWinNums[1][4]}},{{showWinNums[1][5]}} : {{showWinNums[1][6]}}등</div>
-      	<div class="input-group">{{showWinNums[2][7]}}회차: {{showWinNums[2][0]}},{{showWinNums[2][1]}},{{showWinNums[2][2]}},{{showWinNums[2][3]}},{{showWinNums[2][4]}},{{showWinNums[2][5]}} : {{showWinNums[2][6]}}등</div>
-      	<div class="input-group">{{showWinNums[3][7]}}회차: {{showWinNums[3][0]}},{{showWinNums[3][1]}},{{showWinNums[3][2]}},{{showWinNums[3][3]}},{{showWinNums[3][4]}},{{showWinNums[3][5]}} : {{showWinNums[3][6]}}등</div>
-      	<div class="input-group">{{showWinNums[4][7]}}회차: {{showWinNums[4][0]}},{{showWinNums[4][1]}},{{showWinNums[4][2]}},{{showWinNums[4][3]}},{{showWinNums[4][4]}},{{showWinNums[4][5]}} : {{showWinNums[4][6]}}등</div>
-      	<div class="input-group">{{showWinNums[5][7]}}회차: {{showWinNums[5][0]}},{{showWinNums[5][1]}},{{showWinNums[5][2]}},{{showWinNums[5][3]}},{{showWinNums[5][4]}},{{showWinNums[5][5]}} : {{showWinNums[5][6]}}등</div>
+      	<div class="input-group">{{(showWinNums[1][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[1][0]}},{{showWinNums[1][1]}},{{showWinNums[1][2]}},{{showWinNums[1][3]}},{{showWinNums[1][4]}},{{showWinNums[1][5]}} : {{showWinNums[1][6]}}등</div>
+      	<div class="input-group">{{(showWinNums[2][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[2][0]}},{{showWinNums[2][1]}},{{showWinNums[2][2]}},{{showWinNums[2][3]}},{{showWinNums[2][4]}},{{showWinNums[2][5]}} : {{showWinNums[2][6]}}등</div>
+      	<div class="input-group">{{(showWinNums[3][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[3][0]}},{{showWinNums[3][1]}},{{showWinNums[3][2]}},{{showWinNums[3][3]}},{{showWinNums[3][4]}},{{showWinNums[3][5]}} : {{showWinNums[3][6]}}등</div>
+      	<div class="input-group">{{(showWinNums[4][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[4][0]}},{{showWinNums[4][1]}},{{showWinNums[4][2]}},{{showWinNums[4][3]}},{{showWinNums[4][4]}},{{showWinNums[4][5]}} : {{showWinNums[4][6]}}등</div>
+      	<div class="input-group">{{(showWinNums[5][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[5][0]}},{{showWinNums[5][1]}},{{showWinNums[5][2]}},{{showWinNums[5][3]}},{{showWinNums[5][4]}},{{showWinNums[5][5]}} : {{showWinNums[5][6]}}등</div>
       </td>
       <td>
         <div class="form-group has-success has-feedback">
@@ -754,6 +754,7 @@
         var self = this;
         if(this.isStart == false){
           this.isStart = true;
+          this.showGameArea = false;
           
           $('.winNum').removeClass('winNum');
           for(var i = 0 ; i < this.userNumsList.length ; i ++){
@@ -908,6 +909,7 @@
       },
       gameStop:function(){
         this.isStart = false;
+        this.showGameArea = true;
       },
       createRandomNum: function(){
         return parseInt((Math.random() *45)+1);

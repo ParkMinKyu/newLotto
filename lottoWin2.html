@@ -305,24 +305,34 @@
       <td colspan="2">
         제 {{gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 회차<br>
         1주{{buyGameCount}}게임: {{gameYear}} 경과<br>
-        생성 번호<br>{{userNumsList[0]}}
+        게임 시간: {{gameTime}}
       </td>
       <td>
         투자금: {{allMoney}}<br>
         수익금: {{getMoney}} <br>
-        순이익: {{loseMoney}}<br>
-        소요시간: {{gameTime}}<br>
+        순이익: {{loseMoney}}
       </td>
+    </tr>
+    <tr>
+    	<td colspan="3">
+    		게임 상태
+	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)</div>
+	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)</div>
+	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)</div>
+	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)</div>
+	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)</div>
+	        <div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
+    	</td>
     </tr>
     <tr id="randHold">
       <!-- <tr id="randHold"> -->
       <td colspan="2">
-        게임 상태
-        <div style="background:blueviolet;color: white">1등({{oneCount}})</div>
-        <div style="background:red;color: white">2등({{twoCount}})</div>
-        <div style="background:yellow;color: black">3등({{threeCount}})</div>
-        <div style="background:blue;color: white">4등({{fourCount}})</div>
-        <div style="background:green;color: white">5등({{fiveCount}})</div>
+      	최근 당첨 번호5개<br>
+      	<div class="input-group">{{showWinNums[1][7]}}회차: {{showWinNums[1][0]}},{{showWinNums[1][1]}},{{showWinNums[1][2]}},{{showWinNums[1][3]}},{{showWinNums[1][4]}},{{showWinNums[1][5]}} : {{showWinNums[1][6]}}등</div>
+      	<div class="input-group">{{showWinNums[2][7]}}회차: {{showWinNums[2][0]}},{{showWinNums[2][1]}},{{showWinNums[2][2]}},{{showWinNums[2][3]}},{{showWinNums[2][4]}},{{showWinNums[2][5]}} : {{showWinNums[2][6]}}등</div>
+      	<div class="input-group">{{showWinNums[3][7]}}회차: {{showWinNums[3][0]}},{{showWinNums[3][1]}},{{showWinNums[3][2]}},{{showWinNums[3][3]}},{{showWinNums[3][4]}},{{showWinNums[3][5]}} : {{showWinNums[3][6]}}등</div>
+      	<div class="input-group">{{showWinNums[4][7]}}회차: {{showWinNums[4][0]}},{{showWinNums[4][1]}},{{showWinNums[4][2]}},{{showWinNums[4][3]}},{{showWinNums[4][4]}},{{showWinNums[4][5]}} : {{showWinNums[4][6]}}등</div>
+      	<div class="input-group">{{showWinNums[5][7]}}회차: {{showWinNums[5][0]}},{{showWinNums[5][1]}},{{showWinNums[5][2]}},{{showWinNums[5][3]}},{{showWinNums[5][4]}},{{showWinNums[5][5]}} : {{showWinNums[5][6]}}등</div>
       </td>
       <td>
         <div class="form-group has-success has-feedback">
@@ -330,21 +340,23 @@
             <option v-for="i in 100" :value="i" :selectd=" i == 5">{{i}}</option>
         </select>게임 구매<br>
           (1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
-          게임수: <select v-model="endCount" :disabled="isStart">
+          게임수: {{endCount == 0 ? '무제한' : endCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임정지'}}<br>
+          <select v-model="addGameCount" :disabled="isStart">
             <option value="0">무제한</option>
-            <option value="100">100게임정지</option>
-            <option value="500">500게임정지</option>
-            <option value="1000">1,000게임정지</option>
-            <option value="5000">5,000게임정지</option>
-            <option value="10000">10,000게임정지</option>
-            <option value="50000">50,000게임정지</option>
-            <option value="100000">100,000게임정지</option>
-            <option value="500000">500,000게임정지</option>
-            <option value="1000000">1,000,000게임정지</option>
-            <option value="5000000">5,000,000게임정지</option>
-            <option value="10000000">10,000,000게임정지</option>
-            <option value="50000000">50,000,000게임정지</option>
+            <option value="1">1게임</option>
+            <option value="5">5게임</option>
+            <option value="10">10게임</option>
+            <option value="50">50게임</option>
+            <option value="100">100게임</option>
+            <option value="500">500게임</option>
+            <option value="1000">1,000게임</option>
+            <option value="5000">5,000게임</option>
+            <option value="10000">10,000게임</option>
+            <option value="50000">50,000게임</option>
+            <option value="100000">100,000게임</option>
+            <option value="500000">500,000게임</option>
           </select>
+          <button v-on:click="setEndGame()" :disabled="isStart">추가</button>
           <br>
           <label>
             <input type="checkbox" v-model="showGameArea" checked="checked">게임중번호보기
@@ -353,7 +365,7 @@
           (속도*게임수가 높아 렉이 걸릴 경우 게임중 번호 보기 체크 해제)
       </td>
     </tr>
-    <tr  v-if="showGameArea">
+    <tr  v-if="!isStart">
       <td colspan="3">
 
         번호선택 <label>
@@ -398,19 +410,7 @@
         <br>
         <br>
 
-        <div
-                class="input-group"
-                v-for="(bgameCount, idx) in buyGameCountArray"
-                v-bind:class="
-                userNumsList[bgameCount][0] == winNums[0] &&
-                userNumsList[bgameCount][1] == winNums[1] &&
-                userNumsList[bgameCount][2] == winNums[2] &&
-                userNumsList[bgameCount][3] == winNums[3] &&
-                userNumsList[bgameCount][4] == winNums[4] &&
-                userNumsList[bgameCount][5] == winNums[5]
-                ? 'winNum'
-                : classChecker(userNumsList[bgameCount])
-        ">
+        <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-bind:class="classChecker(userNumsList[bgameCount])">
           GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart">
           <option value="0">랜덤</option>
           <option v-for="num in lottoNums" :value="num">
@@ -450,12 +450,12 @@
         </div>
       </td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>등수<br>(당첨수)</td>
       <td>현재 확률<br>(공식 확률)</td>
       <td>최근당첨번호</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>1등<br>({{oneCount}})</td>
       <td>
         {{onePer}}%<br>
@@ -464,7 +464,7 @@
       </td>
       <td>{{oneText}}</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>2등<br>({{twoCount}})</td>
       <td>
         {{twoPer}}%<br>
@@ -473,7 +473,7 @@
       </td>
       <td>{{twoText}}</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>3등<br>({{threeCount}})</td>
       <td>
         {{threePer}}%<br>
@@ -482,7 +482,7 @@
       </td>
       <td>{{threeText}}</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>4등<br>({{fourCount}})</td>
       <td>
         {{fourPer}}%<br>
@@ -491,7 +491,7 @@
       </td>
       <td>{{fourText}}</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>5등<br>({{fiveCount}})</td>
       <td>
         {{fivePer}}%<br>
@@ -500,7 +500,7 @@
       </td>
       <td>{{fiveText}}</td>
     </tr>
-    <tr>
+    <tr v-if="!isStart">
       <td>꽝<br>({{noCount}})</td>
       <td>{{noPer}}%</td>
       <td></td>
@@ -551,6 +551,7 @@
       fourCount : 0,
       fiveCount : 0,
       noCount : 0,
+      allCheckCount: 0,
       onePer : 0,
       twoPer : 0,
       threePer : 0,
@@ -585,7 +586,9 @@
       buyGameCountArray: [0,1,2,3,4],
       holdAllRandom: true,
       showOnlyWin: false,
-      showGameArea: true
+      showGameArea: true,
+      addGameCount: 0,
+      showWinNums: [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
     },
     beforeMount(){
       var self = this;
@@ -599,6 +602,46 @@
       });
     },
     methods: {
+    	pushShowWinNums:function(arr,rank){
+    		this.copyArrays(this.showWinNums[0],arr);
+    		this.showWinNums[0][6] = rank;
+    		this.showWinNums[0][7] = this.gameCount;
+    		this.copyArrays(this.showWinNums[5],this.showWinNums[4]);
+			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
+			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
+			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
+			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		
+			/* if(this.showWinNums[1][0] == 0){
+    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		}else if(this.showWinNums[2][0] == 0){
+    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
+    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		}else if(this.showWinNums[3][0] == 0){
+    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
+    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
+    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		}else if(this.showWinNums[4][0] == 0){
+    			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
+    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
+    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
+    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		}else if(this.showWinNums[5][0] == 0){
+    			this.copyArrays(this.showWinNums[5],this.showWinNums[4]);
+    			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
+    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
+    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
+    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+    		}else{
+    		} */
+    	},
+      setEndGame:function(){
+    	if(this.addGameCount == 0){
+   			this.endCount = 0;
+   		}else{
+   			this.endCount += parseInt(this.addGameCount,10);
+   		}
+      },
       classChecker:function(arr){
         var cnt = 0;
         if(arr.contains(this.winNums[0]))cnt++;
@@ -618,6 +661,8 @@
               return 'winNum2'
             }
             return 'winNum3'
+          case 6:
+        	  return 'winNum1'
         }
       },
       holdAllChecked:function(event){
@@ -707,41 +752,48 @@
       },
       gameStart:function () {
         var self = this;
-        $('.winNum').removeClass('winNum');
-        for(var i = 0 ; i < this.userNumsList.length ; i ++){
-          this.userNumsListCopy[i][0] = this.userNumsList[i][0];
-          this.userNumsListCopy[i][1] = this.userNumsList[i][1];
-          this.userNumsListCopy[i][2] = this.userNumsList[i][2];
-          this.userNumsListCopy[i][3] = this.userNumsList[i][3];
-          this.userNumsListCopy[i][4] = this.userNumsList[i][4];
-          this.userNumsListCopy[i][5] = this.userNumsList[i][5];
-        }
-        self.createGameUserNums();
-        if(this.isStart == false){
-          self.timeCount= new Date().getTime();
-        }
         if(this.isStart == false){
           this.isStart = true;
+          
+          $('.winNum').removeClass('winNum');
+          for(var i = 0 ; i < this.userNumsList.length ; i ++){
+            this.userNumsListCopy[i][0] = this.userNumsList[i][0];
+            this.userNumsListCopy[i][1] = this.userNumsList[i][1];
+            this.userNumsListCopy[i][2] = this.userNumsList[i][2];
+            this.userNumsListCopy[i][3] = this.userNumsList[i][3];
+            this.userNumsListCopy[i][4] = this.userNumsList[i][4];
+            this.userNumsListCopy[i][5] = this.userNumsList[i][5];
+          }
+          if(this.isStart == false){
+            self.timeCount= new Date().getTime();
+          }
+          
           self.gameInterval = setInterval( function(){
             if(!self.isStart){
               clearInterval(self.gameInterval);
             }
 
-            for(var j = 0 ; j < self.gameSpeed ; j ++){
-              if(!self.isStart){
-                break;
-              }
-              if(self.winRandom){
-                self.createWinNums();
-              }
-              self.gameCount++;
-              self.checkGameData();
+            if(self.isStart){
+            	for(var j = 0 ; j < self.gameSpeed ; j ++){
+                  if(!self.isStart){
+                    break;
+                  }
 
-              if(self.isStart == true){
-                self.createGameUserNums();
-              }
-              self.checkEndGame();
+                  if(self.isStart == true){
+               	  	self.gameCount++;
+                    if(self.winRandom && self.gameCount > 0){
+                      self.createWinNums();
+                    }
+               	  	self.checkGameData();
+                    self.createGameUserNums();
+                    self.checkGameNums();
+                    self.moneyCheck();
+                  }
+                  
+                  self.checkEndGame();
+                }
             }
+            
           },1);
         }
       },
@@ -755,23 +807,12 @@
       checkGameData: function(){
         var tempYear = (Math.round( (this.gameCount/52) ));
         this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
-        this.gameYear2 = '약 '+ (Math.round( (this.gameCount/(4*10)/12) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
-        this.allMoney = (this.gameCount * this.buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
-        this.bankMoney = Math.round(this.gameCount * this.buyGameCount/(4*5)) * 20000;
-        var bns = (this.bankMoney * 0.03 / 12);
-
-        if(this.tmpBonus != bns){
-          this.bankBonus += bns;
-          this.tmpBonus = bns;
-        }
-
-        this.checkGameNums();
-        this.moneyCheck();
       },
       checkGameNums: function(){
         var isWinAlert = false;
         this.winPos1 = [];
         for(var k = 0 ; k < this.userNumsList.length ; k ++){
+        	this.allCheckCount++;
           var arr = this.userNumsList[k];
 
           var matchCount = 0;
@@ -785,19 +826,23 @@
             case 3:
               ++this.fiveCount;
               this.copyArrays(this.fiveText,arr);
+              this.pushShowWinNums(arr,5);
               break;
             case 4:
               ++this.fourCount;
               this.copyArrays(this.fourText,arr);
+              this.pushShowWinNums(arr,4);
               break;
             case 5:
               if(arr.contains(this.winNums[6])){
                 ++this.twoCount;
                 this.copyArrays(this.twoText,arr);
+                this.pushShowWinNums(arr,2);
               }
               else{
                 ++this.threeCount;
                 this.copyArrays(this.threeText,arr);
+                this.pushShowWinNums(arr,3);
               }
               break;
             case 6:
@@ -813,19 +858,20 @@
               }
               ++this.oneCount;
               this.copyArrays(this.oneText,arr);
+              this.pushShowWinNums(arr,1);
               break;
             default :
               ++this.noCount;
               break;
           }
         }
-
-        this.fivePer = ((this.fiveCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
-        this.fourPer = ((this.fourCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
-        this.threePer = ((this.threeCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
-        this.twoPer = ((this.twoCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
-        this.onePer = ((this.oneCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
-        this.noPer = ((this.noCount/(this.gameCount * this.buyGameCount)) * 100).toFixed(6);
+		
+        this.fivePer = ((this.fiveCount/(this.allCheckCount)) * 100).toFixed(6);
+        this.fourPer = ((this.fourCount/(this.allCheckCount)) * 100).toFixed(6);
+        this.threePer = ((this.threeCount/(this.allCheckCount)) * 100).toFixed(6);
+        this.twoPer = ((this.twoCount/(this.allCheckCount)) * 100).toFixed(6);
+        this.onePer = ((this.oneCount/(this.allCheckCount)) * 100).toFixed(6);
+        this.noPer = ((this.noCount/(this.allCheckCount)) * 100).toFixed(6);
 
       },
       copyArrays:function(tar,arr){
@@ -835,8 +881,20 @@
         tar[3] = arr[3];
         tar[4] = arr[4];
         tar[5] = arr[5];
+        if(tar[6] != arr[6]){
+        	tar[6] = arr[6]
+        }
+        if(tar[7] != arr[7]){
+        	tar[7] = arr[7]
+        }
       },
       moneyCheck: function(){
+    	this.allMoney = parseInt(this.allMoney.toString().replace(/[^0-9]/ig,''));
+   	  	if(this.allMoney != 0){
+        	this.allMoney = (this.allMoney + (this.buyGameCount * 1000));
+        }else{
+        	this.allMoney = (this.gameCount * this.buyGameCount * 1000);
+        }
         var five = this.fiveCount * 5000;
         var four = this.fourCount * 50000;
         var three = this.threeCount* 1000000;
@@ -845,7 +903,8 @@
         var total = five + four + three + two + one;
 
         this.getMoney = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
-        this.loseMoney = (((this.gameCount * this.buyGameCount * 1000) - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+        this.loseMoney = ((this.allMoney - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+        this.allMoney = this.allMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
       },
       gameStop:function(){
         this.isStart = false;

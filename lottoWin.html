@@ -552,12 +552,12 @@ var app = new Vue({
 						if(!self.isStart){
 							break;
 						}
-						if(self.winRandom){
+						if(self.winRandom && self.gameCount > 0){
 						    self.createWinNums();
 						}
-						self.gameCount++;						
-						self.checkGameData();
+						self.gameCount++;	
 						self.createUserNums();
+						self.checkGameData();						
 						self.checkEndGame();                        
 					}
 				},1);

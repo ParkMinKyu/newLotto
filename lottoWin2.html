@@ -214,6 +214,7 @@
         <li><a href="#" v-on:click="setSpeed(10)">10배</a></li>
         <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
         <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
+        <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
       </ul>
     </div>
     <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
@@ -258,38 +259,46 @@
     <tr>
       <td colspan="3">
         <div class="checkbox">
-          1등 번호 : <select v-model="winNums[0]" v-on:change="checkWinnums($event,0)"  :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <div v-if="gameCount > 0">현재 1등: <span>{{winNums[0]}}, {{winNums[1]}}, {{winNums[2]}}, {{winNums[3]}}, {{winNums[4]}}, {{winNums[5]}}</span> 보너스: {{winNums[6]}}</div>
+          1등 선택: <select v-model="winNumsTemp[0]" v-on:change="checkWinnums($event,0)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <option value="0">랜덤</option>
           <option v-for="lottoNum in lottoNums">
             {{ lottoNum }}
           </option>
         </select>
-          <select v-model="winNums[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <select v-model="winNumsTemp[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option value="0">랜덤</option>
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNums[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <select v-model="winNumsTemp[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option value="0">랜덤</option>
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNums[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <select v-model="winNumsTemp[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option value="0">랜덤</option>
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNums[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <select v-model="winNumsTemp[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option value="0">랜덤</option>
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNums[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <select v-model="winNumsTemp[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+            <option value="0">랜덤</option>
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
           <br>
-          보너스 : <select v-model="winNums[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          보너스: <select v-model="winNumsTemp[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
+          <option value="999">랜덤</option>
           <option v-for="lottoNum in lottoNums">
             {{ lottoNum }}
           </option>
@@ -297,9 +306,6 @@
           <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button>
           <label>
             <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
-          </label>
-          <label>
-            <input type="checkbox" v-model="winRandom">1등 무작위
           </label>
         </div>
 
@@ -415,37 +421,37 @@
         <br>
 
         <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-bind:class="classChecker(userNumsList[bgameCount])">
-          GAME{{bgameCount + 1}}: <select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart">
+          GAME{{bgameCount + 1}}: <span v-if="isStart">{{userNumsList[bgameCount]}}</span><select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
           <option value="0">랜덤</option>
           <option v-for="num in lottoNums" :value="num">
             {{num}}
           </option>
         </select>
-          <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom || isStart">
+          <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
             <option value="0">랜덤</option>
             <option v-for="num in lottoNums" :value="num">
               {{num}}
             </option>
           </select>
-          <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom || isStart">
+          <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
             <option value="0">랜덤</option>
             <option v-for="num in lottoNums" :value="num">
               {{num}}
             </option>
           </select>
-          <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom || isStart">
+          <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
             <option value="0">랜덤</option>
             <option v-for="num in lottoNums" :value="num">
               {{num}}
             </option>
           </select>
-          <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom || isStart">
+          <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
             <option value="0">랜덤</option>
             <option v-for="num in lottoNums" :value="num">
               {{num}}
             </option>
           </select>
-          <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom || isStart">
+          <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
             <option value="0">랜덤</option>
             <option v-for="num in lottoNums" :value="num">
               {{num}}
@@ -537,7 +543,8 @@
         31,32,33,34,35,36,37,38,39,40,
         41,42,43,44,45
       ],
-      winNums : [1,2,3,4,5,6,999],
+      winNumsTemp : [0,0,0,0,0,0,999],
+      winNums : [0,0,0,0,0,0,999],
       userGameNum1 : 0,
       userGameNum2 : 0,
       userGameNum3 : 0,
@@ -596,7 +603,6 @@
     },
     beforeMount(){
       var self = this;
-      this.createWinNums();
       this.startTimer();
       $.ajax({
         url : 'https://parkminkyu.github.io/bok/lottoHistory.json?d='+ new Date(),
@@ -606,6 +612,25 @@
       });
     },
     methods: {
+      checkWinnums : function(event, idx){
+        var isduple = false;
+        for(var i = 0 ; i < this.winNums.length ; i ++){
+          for(var j = i+1 ; j < this.winNums.length ; j ++){
+            if(this.winNums[i] != 0 && this.winNums[i]==this.winNums[j]){
+              alert("번호가 중복 되었습니다.");
+              isduple = true;
+              break;
+            }
+          }
+        }
+
+        if(isduple){
+          this.winNums[idx] = this.stempNum;
+        }
+      },
+      saveTempNum : function(event){
+        this.stempNum = parseInt(event.target.value);
+      },
     	pushShowWinNums:function(arr,rank){
     		this.copyArrays(this.showWinNums[0],arr);
     		this.showWinNums[0][6] = rank;
@@ -615,29 +640,6 @@
 			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
 			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
 			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		
-			/* if(this.showWinNums[1][0] == 0){
-    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		}else if(this.showWinNums[2][0] == 0){
-    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
-    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		}else if(this.showWinNums[3][0] == 0){
-    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
-    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
-    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		}else if(this.showWinNums[4][0] == 0){
-    			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
-    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
-    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
-    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		}else if(this.showWinNums[5][0] == 0){
-    			this.copyArrays(this.showWinNums[5],this.showWinNums[4]);
-    			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
-    			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
-    			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
-    			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-    		}else{
-    		} */
     	},
       setEndGame:function(){
     	if(this.addGameCount == 0){
@@ -772,8 +774,7 @@
         var self = this;
         if(this.isStart == false){
           this.isStart = true;
-          this.showGameArea = false;
-          
+
           $('.winNum').removeClass('winNum');
           for(var i = 0 ; i < this.userNumsList.length ; i ++){
             this.userNumsListCopy[i][0] = this.userNumsList[i][0];
@@ -783,16 +784,16 @@
             this.userNumsListCopy[i][4] = this.userNumsList[i][4];
             this.userNumsListCopy[i][5] = this.userNumsList[i][5];
           }
-          if(this.isStart == false){
-            self.timeCount= new Date().getTime();
-          }
-          
+
           self.gameInterval = setInterval( function(){
             if(!self.isStart){
               clearInterval(self.gameInterval);
             }
 
             if(self.isStart){
+                if(self.gameCount == 0){
+                  self.timeCount= new Date().getTime();
+                }
             	for(var j = 0 ; j < self.gameSpeed ; j ++){
                   if(!self.isStart){
                     break;
@@ -802,8 +803,8 @@
                     if(self.winRandom && self.gameCount > 0){
                       self.createWinNums();
                     }
-		    self.gameCount++;
-		    self.checkGameData();
+                    self.gameCount++;
+                    self.checkGameData();
                     self.createGameUserNums();
                     self.checkGameNums();
                     self.moneyCheck();
@@ -993,8 +994,20 @@
       },
       createWinNums: function(){
         this.winNums = [0,0,0,0,0,0,999];
+
+        if(parseInt(this.winNumsTemp[0]) != 0) this.winNums[0] = parseInt(this.winNumsTemp[0]);
+        if(parseInt(this.winNumsTemp[1]) != 0) this.winNums[1] = parseInt(this.winNumsTemp[1]);
+        if(parseInt(this.winNumsTemp[2]) != 0) this.winNums[2] = parseInt(this.winNumsTemp[2]);
+        if(parseInt(this.winNumsTemp[3]) != 0) this.winNums[3] = parseInt(this.winNumsTemp[3]);
+        if(parseInt(this.winNumsTemp[4]) != 0) this.winNums[4] = parseInt(this.winNumsTemp[4]);
+        if(parseInt(this.winNumsTemp[5]) != 0) this.winNums[5] = parseInt(this.winNumsTemp[5]);
+
         var i = 0;
         while(i < 6){
+          if(this.winNums[i] != 0){
+            i++;
+            continue;
+          }
           var num = this.createRandomNum();
           while(this.winNums.contains(num)){
             num = this.createRandomNum();
@@ -1002,6 +1015,9 @@
           this.winNums[i++] = num;
         }
         this.winNums.sort(function(a,b){return a - b;});
+
+        if(parseInt(this.winNumsTemp[6]) != 999) this.winNums[6] = parseInt(this.winNumsTemp[6]);
+
         while(this.winNums[6] == 999){
           var num = this.createRandomNum();
           while(this.winNums.contains(num)){
@@ -1147,25 +1163,7 @@
         this.allText = "";
       }
     },
-    checkWinnums : function(event, idx){
-      var isduple = false;
-      for(var i = 0 ; i < this.winNums.length ; i ++){
-        for(var j = i+1 ; j < this.winNums.length ; j ++){
-          if(this.winNums[i]==this.winNums[j]){
-            alert("번호가 중복 되었습니다.");
-            isduple = true;
-            break;
-          }
-        }
-      }
 
-      if(isduple){
-        this.winNums[idx] = this.stempNum;
-      }
-    },
-    saveTempNum : function(event){
-      this.stempNum = parseInt(event.target.value);
-    },
   })
 </script>
 <nav class="navbar navbar-default navbar-fixed-bottom">

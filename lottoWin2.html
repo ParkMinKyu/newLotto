@@ -798,12 +798,12 @@
                     break;
                   }
 
-                  if(self.isStart == true){
-               	  	self.gameCount++;
+                  if(self.isStart == true){               	  	
                     if(self.winRandom && self.gameCount > 0){
                       self.createWinNums();
                     }
-               	  	self.checkGameData();
+		    self.gameCount++;
+		    self.checkGameData();
                     self.createGameUserNums();
                     self.checkGameNums();
                     self.moneyCheck();

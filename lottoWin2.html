@@ -48,6 +48,14 @@
       background: red;
       color: white;
     }
+
+    .winNum > select, .winNum2 > select, .winNum4 > select, .winNum5 > select{
+      color: black;
+    }
+
+    .winNum > select:disabled, .winNum2 > select:disabled, .winNum4 > select:disabled, .winNum5 > select:disabled{
+      color: white;
+    }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-51448530-10"></script>
@@ -800,9 +808,7 @@
                   }
 
                   if(self.isStart == true){               	  	
-                    if(self.winRandom && self.gameCount > 0){
-                      self.createWinNums();
-                    }
+                    self.createWinNums();
                     self.gameCount++;
                     self.checkGameData();
                     self.createGameUserNums();

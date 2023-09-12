@@ -539,6 +539,28 @@
       </td>
     </tr>
   </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
+            </a>
+            <a class="navbar-brand" href="#">게임 결과</a>
+          </div>
+        </div>
+        <div class="modal-body" id="winContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
   var app = new Vue({
@@ -824,10 +846,25 @@
         }
       },
       checkEndGame: function(){
-        if(this.gameCount >= this.endCount && 0 != this.endCount){
+        if((this.gameCount >= this.endCount && 0 != this.endCount) || !this.isStart){
           this.isStart = false;
           this.showGameArea = true;
-          alert('게임이 끝났습니다.');
+
+
+          var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
+          content += '1주 ' + this.buyGameCount + '게임: ' + this.gameYear +  '경과<br>';
+          content += '투자금: ' + this.allMoney + '<br>';
+          content += '수익금: ' + this.getMoney + '<br>';
+          content += '순이익: ' + this.loseMoney + '<br><br>';
+          content += '<div style="font-weight: bold;">1등: ' + this.oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.onePer + '%)/총 당첨금: ' + (this.oneCount*2000000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+          content += '<div >2등: ' + this.twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.twoPer + '%)/총 당첨금: ' + (this.twoCount*50000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+          content += '<div >3등: ' + this.threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.threePer + '%)/총 당첨금: ' + (this.threeCount*1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+          content += '<div >4등: ' + this.fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fourPer + '%)/총 당첨금: ' + (this.fourCount*50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+          content += '<div >5등: ' + this.fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fivePer + '%)/총 당첨금: ' + (this.fiveCount*5000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+          content += '<div>꽝: ' + this.noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.noPer + '%)';
+          $('#winContent').html(content);
+          $('#exampleModal').modal('show');
+
         }
       },
       checkGameData: function(){
@@ -877,7 +914,7 @@
                 console.log('#hold'+k+'_1');
                 $('#hold'+k+'_1').parent().addClass('winNum');
                 if(!isWinAlert){
-                  alert('축하합니다. 1등에 당첨되셨습니다.');
+                  //alert('축하합니다. 1등에 당첨되셨습니다.');
                   isWinAlert = true;
                   this.showGameArea = true;
                 }

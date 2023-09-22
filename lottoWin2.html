@@ -352,11 +352,11 @@
     <tr>
     	<td colspan="3">
     		게임 상태
-	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)</div>
-	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)</div>
-	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)</div>
-	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)</div>
-	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)</div>
+	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a href="#none" v-on:click="showHistory(1)">기록보기</a></div>
+	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a href="#none" v-on:click="showHistory(2)">기록보기</a></div>
+	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a href="#none" v-on:click="showHistory(3)">기록보기</a></div>
+	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a href="#none" v-on:click="showHistory(4)">기록보기</a></div>
+	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a href="#none" v-on:click="showHistory(5)">기록보기</a></div>
 	        <div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
     	</td>
     </tr>
@@ -579,6 +579,30 @@
       </div>
     </div>
   </div>
+  
+   <!-- Modal -->
+  <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
+            </a>
+            <a class="navbar-brand" href="#">최근 {{historyRank}}등 10건 기록 보기</a>
+          </div>
+        </div>
+        <div class="modal-body" id="historyContent">
+			<div v-for="(arr, i) in targetHistoryArr" v-if="i > 0">
+				{{arr[6].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회: {{arr[0]}}, {{arr[1]}}, {{arr[2]}}, {{arr[3]}}, {{arr[4]}}, {{arr[5]}} 
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  
 </div>
 <script>
   var app = new Vue({
@@ -618,10 +642,17 @@
       fivePer : 0,
       noPer : 0,
       oneText :  [0,0,0,0,0,0],
+      oneHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       twoText :  [0,0,0,0,0,0],
+      twoHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       threeText :  [0,0,0,0,0,0],
+      threeHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       fourText :  [0,0,0,0,0,0],
+      fourHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       fiveText :  [0,0,0,0,0,0],
+      fiveHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
+      targetHistoryArr: [],
+      historyRank: 0,
       allMoney : 0,
       gameYear : "",
       gameYear2 : "",
@@ -690,6 +721,45 @@
 			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
 			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
 			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
+			
+			switch(rank){
+				case 5:
+					this.copyArrays(this.fiveHistory[0],arr);
+		    		this.fiveHistory[0][6] = this.gameCount;
+		    		for(var i = this.fiveHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.fiveHistory[i],this.fiveHistory[i - 1]);
+		    		}
+					break;
+				case 4:
+					this.copyArrays(this.fourHistory[0],arr);
+		    		this.fourHistory[0][6] = this.gameCount;
+		    		for(var i = this.fourHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.fourHistory[i],this.fourHistory[i - 1]);
+		    		}
+					break;
+				case 3:
+					this.copyArrays(this.threeHistory[0],arr);
+		    		this.threeHistory[0][6] = this.gameCount;
+		    		for(var i = this.threeHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.threeHistory[i],this.threeHistory[i - 1]);
+		    		}
+					break;
+				case 2:
+					this.copyArrays(this.twoHistory[0],arr);
+		    		this.twoHistory[0][6] = this.gameCount;
+		    		for(var i = this.twoHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.twoHistory[i],this.twoHistory[i - 1]);
+		    		}
+					break;
+				case 1:
+					this.copyArrays(this.oneHistory[0],arr);
+		    		this.oneHistory[0][6] = this.gameCount;
+		    		for(var i = this.oneHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.oneHistory[i],this.oneHistory[i - 1]);
+		    		}
+					break;
+					
+			}
     	},
       setEndGame:function(){
     	if(this.addGameCount == 0){
@@ -1233,9 +1303,35 @@
         this.userGameNum5 = 0;
         this.userGameNum6 = 0;
         this.allText = "";
+      },
+      showHistory: function(rank){
+   	  	this.historyRank = rank;
+      	switch(rank){
+      		case 5:
+      			targetArr = this.fiveHistory;
+      			this.targetHistoryArr = this.fiveHistory;
+      			break;
+      		case 4:
+      			targetArr = this.fourHistory;
+      			this.targetHistoryArr = this.fourHistory;
+      			break;
+      		case 3:
+      			targetArr = this.threeHistory;
+      			this.targetHistoryArr = this.threeHistory;
+      			break;
+      		case 2:
+      			targetArr = this.twoHistory;
+      			this.targetHistoryArr = this.twoHistory;
+      			break;
+      		case 1:
+      			targetArr = this.oneHistory;
+      			this.targetHistoryArr = this.oneHistory;
+      			break;
+      	}
+      	
+          $('#historyModal').modal('show');
       }
     },
-
   })
 </script>
 <nav class="navbar navbar-default navbar-fixed-bottom">

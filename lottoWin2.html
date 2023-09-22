@@ -310,11 +310,29 @@
           <option v-for="lottoNum in lottoNums">
             {{ lottoNum }}
           </option>
-        </select>
-          <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button>
-          <label>
-            <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
-          </label>
+        </select><br>
+        종료: <select v-model="winStopRank" :disabled="isStart">
+            	<option value="1">1</option>
+            	<option value="2">2</option>
+            	<option value="3">3</option>
+            	<option value="4">4</option>
+            	<option value="5">5</option>
+            </select>등 
+            <select v-model="winStopCount" :disabled="isStart">
+           	 <option value="1">1</option>
+           	 <option value="5">5</option>
+           	 <option value="10">10</option>
+           	 <option value="50">50</option>
+           	 <option value="100">100</option>
+           	 <option value="500">500</option>
+           	 <option value="1000">1,000</option>
+           	 <option value="5000">5,000</option>
+           	 <option value="10000">10,000</option>
+           	 <option value="50000">50,000</option>
+           	 <option value="100000">100,000</option>
+           	 <option value="500000">500,000</option>
+           	 <option value="0">무제한</option>
+           	</select>회 당첨시 종료
         </div>
 
       </td>
@@ -618,6 +636,8 @@
       allRealData: [],
       allText: '',
       winStop: true,
+      winStopRank: 1,
+      winStopCount: 1,
       stempNum: 0,
       winRandom: true,
       bankMoney: 0,
@@ -909,26 +929,35 @@
               }
               break;
             case 6:
-              if(this.winStop){
-                this.isStart = false;
-                console.log('#hold'+k+'_1');
-                $('#hold'+k+'_1').parent().addClass('winNum');
-                if(!isWinAlert){
-                  //alert('축하합니다. 1등에 당첨되셨습니다.');
-                  isWinAlert = true;
-                  this.showGameArea = true;
-                }
-              }
-              ++this.oneCount;
-              this.copyArrays(this.oneText,arr);
-              this.pushShowWinNums(arr,1);
+            	++this.oneCount;
+                this.copyArrays(this.oneText,arr);
+                this.pushShowWinNums(arr,1);
               break;
             default :
               ++this.noCount;
               break;
           }
         }
-		
+
+        if(	this.winStop && this.winStopCount != 0 &&
+          		( 
+          				this.winStopRank == 1 && this.winStopCount <= this.oneCount
+         				||	this.winStopRank == 2 && this.winStopCount <= this.twoCount
+         				||	this.winStopRank == 3 && this.winStopCount <= this.threeCount
+         				||	this.winStopRank == 4 && this.winStopCount <= this.fourCount
+         				||	this.winStopRank == 5 && this.winStopCount <= this.fiveCount
+          		)
+          ){
+              this.isStart = false;
+              console.log('#hold'+k+'_1');
+              $('#hold'+k+'_1').parent().addClass('winNum');
+              if(!isWinAlert){
+                //alert('축하합니다. 1등에 당첨되셨습니다.');
+                isWinAlert = true;
+                this.showGameArea = true;
+            	}
+         	}
+        
         this.fivePer = ((this.fiveCount/(this.allCheckCount)) * 100).toFixed(6);
         this.fourPer = ((this.fourCount/(this.allCheckCount)) * 100).toFixed(6);
         this.threePer = ((this.threeCount/(this.allCheckCount)) * 100).toFixed(6);

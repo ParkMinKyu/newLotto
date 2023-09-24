@@ -355,8 +355,8 @@
 	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a href="#none" v-on:click="showHistory(1)">기록보기</a></div>
 	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a href="#none" v-on:click="showHistory(2)">기록보기</a></div>
 	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a href="#none" v-on:click="showHistory(3)">기록보기</a></div>
-	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a href="#none" v-on:click="showHistory(4)">기록보기</a></div>
-	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a href="#none" v-on:click="showHistory(5)">기록보기</a></div>
+	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)</div>
+	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)</div>
 	        <div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
     	</td>
     </tr>
@@ -722,21 +722,7 @@
 			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
 			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
 			
-			switch(rank){
-				case 5:
-					this.copyArrays(this.fiveHistory[0],arr);
-		    		this.fiveHistory[0][6] = this.gameCount;
-		    		for(var i = this.fiveHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.fiveHistory[i],this.fiveHistory[i - 1]);
-		    		}
-					break;
-				case 4:
-					this.copyArrays(this.fourHistory[0],arr);
-		    		this.fourHistory[0][6] = this.gameCount;
-		    		for(var i = this.fourHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.fourHistory[i],this.fourHistory[i - 1]);
-		    		}
-					break;
+			switch(rank){				
 				case 3:
 					this.copyArrays(this.threeHistory[0],arr);
 		    		this.threeHistory[0][6] = this.gameCount;

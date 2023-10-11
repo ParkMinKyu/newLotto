@@ -362,12 +362,28 @@
     </tr>
     <tr>
     	<td colspan="3">
-    		게임 상태
+    		게임 상태&nbsp;&nbsp;
+    		<label>
+	           <input type="checkbox" v-model="saveOne" checked="checked">1등기록
+	        </label>
+	        <label>
+	            <input type="checkbox" v-model="saveTwo" checked="checked">2등기록
+	          </label>
+	          <label>
+            <input type="checkbox" v-model="saveThree" checked="checked">3등기록
+          </label>
+          <label>
+            <input type="checkbox" v-model="saveFour" checked="false">4등기록
+          </label>
+          <label>
+            <input type="checkbox" v-model="saveFive" checked="false">5등기록
+          </label><br>
+          	(체크 되었을 때만 기록됨 4,5등 체크 할 경우 속도 저하 될 수 있음)
 	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a href="#none" v-on:click="showHistory(1)">기록보기</a></div>
 	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a href="#none" v-on:click="showHistory(2)">기록보기</a></div>
 	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a href="#none" v-on:click="showHistory(3)">기록보기</a></div>
-	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)</div>
-	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)</div>
+	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a v-if="saveFour" href="#none" v-on:click="showHistory(4)">기록보기</a></div></div>
+	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a v-if="saveFive" href="#none" v-on:click="showHistory(5)">기록보기</a></div></div>
 	        <div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
     	</td>
     </tr>
@@ -691,7 +707,12 @@
       showOnlyWin: false,
       showGameArea: true,
       addGameCount: 0,
-      showWinNums: [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+      showWinNums: [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],
+      saveOne: true,
+      saveTwo: true,
+      saveThree: true,
+      saveFour: false,
+      saveFive: false
     },
     beforeMount(){
       var self = this;
@@ -733,8 +754,25 @@
 			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
 			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
 			
-			switch(rank){				
+			switch(rank){
+				case 5:
+					if(!this.saveFive)break;
+					this.copyArrays(this.fiveHistory[0],arr);
+		    		this.fiveHistory[0][6] = this.gameCount;
+		    		for(var i = this.fiveHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.fiveHistory[i],this.fiveHistory[i - 1]);
+		    		}
+					break;
+				case 4:
+					if(!this.saveFour)break;
+					this.copyArrays(this.fourHistory[0],arr);
+		    		this.fourHistory[0][6] = this.gameCount;
+		    		for(var i = this.fourHistory.length - 1 ; i > 0 ; i --){
+		    			this.copyArrays(this.fourHistory[i],this.fourHistory[i - 1]);
+		    		}
+					break;
 				case 3:
+					if(!this.saveThree)break;
 					this.copyArrays(this.threeHistory[0],arr);
 		    		this.threeHistory[0][6] = this.gameCount;
 		    		for(var i = this.threeHistory.length - 1 ; i > 0 ; i --){
@@ -742,6 +780,7 @@
 		    		}
 					break;
 				case 2:
+					if(!this.saveTwo)break;
 					this.copyArrays(this.twoHistory[0],arr);
 		    		this.twoHistory[0][6] = this.gameCount;
 		    		for(var i = this.twoHistory.length - 1 ; i > 0 ; i --){
@@ -749,6 +788,7 @@
 		    		}
 					break;
 				case 1:
+					if(!this.saveOne)break;
 					this.copyArrays(this.oneHistory[0],arr);
 		    		this.oneHistory[0][6] = this.gameCount;
 		    		for(var i = this.oneHistory.length - 1 ; i > 0 ; i --){

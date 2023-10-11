@@ -362,7 +362,7 @@
     </tr>
     <tr>
     	<td colspan="3">
-    		게임 상태&nbsp;&nbsp;
+    		게임 상태<br>
     		<label>
 	           <input type="checkbox" v-model="saveOne" checked="checked">1등기록
 	        </label>
@@ -378,7 +378,7 @@
           <label>
             <input type="checkbox" v-model="saveFive" checked="false">5등기록
           </label><br>
-          	(체크 되었을 때만 기록됨 4,5등 체크 할 경우 속도 저하 될 수 있음)
+          	(체크시만 기록 4,5등 기록시 느릴 수 있음)
 	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a href="#none" v-on:click="showHistory(1)">기록보기</a></div>
 	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a href="#none" v-on:click="showHistory(2)">기록보기</a></div>
 	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a href="#none" v-on:click="showHistory(3)">기록보기</a></div>

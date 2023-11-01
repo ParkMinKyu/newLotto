@@ -5,14 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
   <meta charset="UTF-8">
-  <meta property="og:url" content="https://parkminkyu.github.io/newLotto/lottoWin2.html" />
+  <meta property="og:url" content="https://parkminkyu.github.io/newLotto/lottoWin.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="로또 시뮬레이터V2" />
+  <meta property="og:title" content="로또 시뮬레이터" />
   <meta property="og:description" content="로또 시뮬레이터 입니다. 로또 당첨이 얼마나 안되나 체감하고 싶으면 도전하세요." />
   <meta property="og:image" content="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" />
   <meta property="descripiton" content="가상으로 로또 당첨을 확인하는 로또 시뮬레이터 입니다. 로또 1등 당첨이 얼마나 안되나 체감하고 싶으면 도전하세요." />
 
-  <title>로또당첨번호확률계산기V2(로또 시뮬레이터)</title>
+  <title>로또당첨번호확률계산기(로또 시뮬레이터)</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -23,38 +23,6 @@
     body{
       padding-top: 50px;
       padding-bottom: 50px;
-    }
-
-    .winNum{
-      background: #720e9e;
-      color: white;
-    }
-
-    .winNum5{
-      background: green;
-      color: white;
-    }
-
-    .winNum4{
-      background: blue;
-      color: white;
-    }
-
-    .winNum3{
-      background: yellow;
-    }
-
-    .winNum2{
-      background: red;
-      color: white;
-    }
-
-    .winNum > select, .winNum2 > select, .winNum4 > select, .winNum5 > select{
-      color: black;
-    }
-
-    .winNum > select:disabled, .winNum2 > select:disabled, .winNum4 > select:disabled, .winNum5 > select:disabled{
-      color: white;
     }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -80,7 +48,7 @@
 
         var _this = $(this);
         var sns_type = _this.attr('data-service');
-        var href = "https://parkminkyu.github.io/newLotto/lottoWin2.html";
+        var href = "https://parkminkyu.github.io/newLotto/lottoWin.html";
         var title = $("meta[property='og:title']").attr("content");
         var loc = "";
         var img = $("meta[property='og:image']").attr("content");
@@ -163,7 +131,7 @@
 
     function copyToClipboard() {
       var el = document.createElement('textarea');  // Create a <textarea> element
-      el.value = 'https://parkminkyu.github.io/newLotto/lottoWin2.html'; // Set its value to the string that you want copied
+      el.value = 'https://parkminkyu.github.io/newLotto/lottoWin.html'; // Set its value to the string that you want copied
       el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
       el.style.position = 'absolute';
       el.style.left = '-9999px';                      // Move outside the screen to make it invisible
@@ -204,13 +172,13 @@
       <ul class="nav navbar-nav">
         <li><a href="/bok/history.html">로또 통계 <span class="sr-only">(current)</span></a></li>
         <li><a href="/newLotto/lottoWin.html">로또 시뮬레이터</a></li>
-        <li class="active"><a href="/newLotto/lottoWin2.html">로또 시뮬레이터V2</a></li>
+        <li class="active"><a href="/newLotto/lottoWin2.html">로또 시뮬레이터(이전)</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container" id="lottoGame">
-  <h3>재미로 보는 로또 확률 계산기V2</h3>
+  <h3>재미로 보는 로또 확률 계산기</h3>
   <div class="btn-group">
     <div class="btn-group">
       <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -223,17 +191,17 @@
         <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
         <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
         <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
-	<li><a href="#">-고 사양 렉주의-</a></li>
-	<li><a href="#" v-on:click="setSpeed(1000)">1,000배</a></li>
-	<li><a href="#" v-on:click="setSpeed(1500)">1,500배</a></li>
-	<li><a href="#" v-on:click="setSpeed(2000)">2,000배</a></li>
-	<li><a href="#" v-on:click="setSpeed(2500)">2,500배</a></li>
-	<li><a href="#" v-on:click="setSpeed(3000)">3,000배</a></li>
-	<li><a href="#" v-on:click="setSpeed(3500)">3,500배</a></li>
-	<li><a href="#" v-on:click="setSpeed(4000)">4,000배</a></li>
-	<li><a href="#" v-on:click="setSpeed(4500)">4,500배</a></li>
-	<li><a href="#" v-on:click="setSpeed(5000)">5,000배</a></li>	
-	<li><a href="#">-더 느릴 수 있음-</a></li>
+        <li><a href="#">-고 사양(렉주의)-</a></li>
+        <li><a href="#" v-on:click="setSpeed(1000)">1,000배</a></li>
+        <li><a href="#" v-on:click="setSpeed(1500)">1,500배</a></li>
+        <li><a href="#" v-on:click="setSpeed(2000)">2,000배</a></li>
+        <li><a href="#" v-on:click="setSpeed(2500)">2,500배</a></li>
+        <li><a href="#" v-on:click="setSpeed(3000)">3,000배</a></li>
+        <li><a href="#" v-on:click="setSpeed(3500)">3,500배</a></li>
+        <li><a href="#" v-on:click="setSpeed(4000)">4,000배</a></li>
+        <li><a href="#" v-on:click="setSpeed(4500)">4,500배</a></li>
+        <li><a href="#" v-on:click="setSpeed(5000)">5,000배</a></li>
+        <li><a href="#">-더 느릴 수있음-</a></li>
       </ul>
     </div>
     <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
@@ -278,231 +246,146 @@
     <tr>
       <td colspan="3">
         <div class="checkbox">
-          <div v-if="gameCount > 0">현재 1등: <span>{{winNums[0]}}, {{winNums[1]}}, {{winNums[2]}}, {{winNums[3]}}, {{winNums[4]}}, {{winNums[5]}}</span> 보너스: {{winNums[6]}}</div>
-          1등 선택: <select v-model="winNumsTemp[0]" v-on:change="checkWinnums($event,0)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-          <option value="0">랜덤</option>
+          1등 번호 : <select v-model="winNums[0]" v-on:change="checkWinnums($event,0)"  :disabled="isStart" v-on:focus="saveTempNum($event)">
           <option v-for="lottoNum in lottoNums">
             {{ lottoNum }}
           </option>
         </select>
-          <select v-model="winNumsTemp[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-            <option value="0">랜덤</option>
+          <select v-model="winNums[1]" v-on:change="checkWinnums($event,1)" :disabled="isStart" v-on:focus="saveTempNum($event)">
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNumsTemp[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-            <option value="0">랜덤</option>
+          <select v-model="winNums[2]" v-on:change="checkWinnums($event,2)" :disabled="isStart" v-on:focus="saveTempNum($event)">
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNumsTemp[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-            <option value="0">랜덤</option>
+          <select v-model="winNums[3]" v-on:change="checkWinnums($event,3)" :disabled="isStart" v-on:focus="saveTempNum($event)">
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNumsTemp[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-            <option value="0">랜덤</option>
+          <select v-model="winNums[4]" v-on:change="checkWinnums($event,4)" :disabled="isStart" v-on:focus="saveTempNum($event)">
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
-          <select v-model="winNumsTemp[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-            <option value="0">랜덤</option>
+          <select v-model="winNums[5]" v-on:change="checkWinnums($event,5)" :disabled="isStart" v-on:focus="saveTempNum($event)">
             <option v-for="lottoNum in lottoNums">
               {{ lottoNum }}
             </option>
           </select>
           <br>
-          보너스: <select v-model="winNumsTemp[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
-          <option value="999">랜덤</option>
+          보너스 : <select v-model="winNums[6]" v-on:change="checkWinnums($event,6)" :disabled="isStart" v-on:focus="saveTempNum($event)">
           <option v-for="lottoNum in lottoNums">
             {{ lottoNum }}
           </option>
-        </select><br>
-        종료: <select v-model="winStopRank" :disabled="isStart">
-            	<option value="1">1</option>
-            	<option value="2">2</option>
-            	<option value="3">3</option>
-            	<option value="4">4</option>
-            	<option value="5">5</option>
-            </select>등 
-            <select v-model="winStopCount" :disabled="isStart">
-           	 <option value="1">1</option>
-           	 <option value="5">5</option>
-           	 <option value="10">10</option>
-           	 <option value="50">50</option>
-           	 <option value="100">100</option>
-           	 <option value="500">500</option>
-           	 <option value="1000">1,000</option>
-           	 <option value="5000">5,000</option>
-           	 <option value="10000">10,000</option>
-           	 <option value="50000">50,000</option>
-           	 <option value="100000">100,000</option>
-           	 <option value="500000">500,000</option>
-           	 <option value="0">무제한</option>
-           	</select>회 당첨시 종료
+        </select>
+          <button v-on:click="createWinNums()" class="btn btn-default btn-sm">1등자동생성</button>
+          <label>
+            <input type="checkbox" v-model="winStop" checked>1등 당첨시 종료
+          </label>
+          <label>
+            <input type="checkbox" v-model="winRandom">1등 무작위
+          </label>
         </div>
 
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        제 {{gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 회차<br>
-        1주{{buyGameCount}}게임: {{gameYear}} 경과<br>
-        게임 시간: {{gameTime}}
+        게임수 : {{gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}<br>
+        1주5게임시 : {{gameYear}}<br>
+        1주10게임시 : {{gameYear2}}<br>
+        생성 번호<br>{{userNums}}
       </td>
       <td>
         투자금: {{allMoney}}<br>
         수익금: {{getMoney}} <br>
-        순이익: {{loseMoney}}
+        순이익: {{loseMoney}}<br>
+        소요시간: {{gameTime}}<br>
+        <select v-model="endCount">
+          <option value="0">무제한</option>
+          <option value="1000">1,000게임정지</option>
+          <option value="5000">5,000게임정지</option>
+          <option value="10000">10,000게임정지</option>
+          <option value="50000">50,000게임정지</option>
+          <option value="100000">100,000게임정지</option>
+          <option value="500000">500,000게임정지</option>
+          <option value="1000000">1,000,000게임정지</option>
+          <option value="5000000">5,000,000게임정지</option>
+          <option value="10000000">10,000,000게임정지</option>
+          <option value="50000000">50,000,000게임정지</option>
+        </select>
       </td>
     </tr>
-    <tr>
-    	<td colspan="3">
-    		게임 상태
-	        <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a v-if="saveOne" href="#none" v-on:click="showHistory(1)">기록보기</a></div>
-	        <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a v-if="saveTwo" href="#none" v-on:click="showHistory(2)">기록보기</a></div>
-	        <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a v-if="saveThree" href="#none" v-on:click="showHistory(3)">기록보기</a></div>
-	        <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a v-if="saveFour" href="#none" v-on:click="showHistory(4)">기록보기</a></div></div>
-	        <div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a v-if="saveFive" href="#none" v-on:click="showHistory(5)">기록보기</a></div></div>
-	        <div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
-    	</td>
-    </tr>
-    <tr id="randHold">
-      <!-- <tr id="randHold"> -->
-      <td colspan="2">
-      	최근 당첨 번호5개<br>
-      	<div class="input-group" :class="getWinClassColor(showWinNums[1][6])">{{(showWinNums[1][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[1][0]}},{{showWinNums[1][1]}},{{showWinNums[1][2]}},{{showWinNums[1][3]}},{{showWinNums[1][4]}},{{showWinNums[1][5]}} : {{showWinNums[1][6]}}등</div>
-      	<div class="input-group" :class="getWinClassColor(showWinNums[2][6])">{{(showWinNums[2][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[2][0]}},{{showWinNums[2][1]}},{{showWinNums[2][2]}},{{showWinNums[2][3]}},{{showWinNums[2][4]}},{{showWinNums[2][5]}} : {{showWinNums[2][6]}}등</div>
-      	<div class="input-group" :class="getWinClassColor(showWinNums[3][6])">{{(showWinNums[3][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[3][0]}},{{showWinNums[3][1]}},{{showWinNums[3][2]}},{{showWinNums[3][3]}},{{showWinNums[3][4]}},{{showWinNums[3][5]}} : {{showWinNums[3][6]}}등</div>
-      	<div class="input-group" :class="getWinClassColor(showWinNums[4][6])">{{(showWinNums[4][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[4][0]}},{{showWinNums[4][1]}},{{showWinNums[4][2]}},{{showWinNums[4][3]}},{{showWinNums[4][4]}},{{showWinNums[4][5]}} : {{showWinNums[4][6]}}등</div>
-      	<div class="input-group" :class="getWinClassColor(showWinNums[5][6])">{{(showWinNums[5][7]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회차: {{showWinNums[5][0]}},{{showWinNums[5][1]}},{{showWinNums[5][2]}},{{showWinNums[5][3]}},{{showWinNums[5][4]}},{{showWinNums[5][5]}} : {{showWinNums[5][6]}}등</div>
-      </td>
+    <tr v-if="!isStart" id="randHold">
       <td>
-        <div class="form-group has-success has-feedback">
-          1회당 <select v-model="buyGameCount" v-on:change="setBuyGameCount($event)" style="width: 50px" :disabled="isStart">
-            <option v-for="i in 100" :value="i" :selectd=" i == 5">{{i}}</option>
-        </select>게임 구매<br>
-          (1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
-          게임수: {{endCount == 0 ? '무제한' : endCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임정지'}}<br>
-          <select v-model="addGameCount" :disabled="isStart">
-            <option value="0">무제한</option>
-            <option value="1">1게임</option>
-            <option value="5">5게임</option>
-            <option value="10">10게임</option>
-            <option value="50">50게임</option>
-            <option value="100">100게임</option>
-            <option value="500">500게임</option>
-            <option value="1000">1,000게임</option>
-            <option value="5000">5,000게임</option>
-            <option value="10000">10,000게임</option>
-            <option value="50000">50,000게임</option>
-            <option value="100000">100,000게임</option>
-            <option value="500000">500,000게임</option>
-          </select>
-          <button v-on:click="setEndGame()" :disabled="isStart">추가</button>
-          <br>
-          <label>
-            <input type="checkbox" v-model="showGameArea" checked="checked">게임중번호보기
-          </label>
-          <br>
-          (속도*게임수가 높아 렉이 걸릴 경우 게임 구매 수량은 낮춰서 실행)
+        고정번호 선택
       </td>
-    </tr>
-    <tr  v-if="showGameArea">
-      <td colspan="3">
-
-        번호선택 <label>
-        <input type="checkbox" v-model="holdAllRandom" v-on:change="holdAllChecked($event)" checked="checked" v-bind:disabled="isStart">선택 번호 모든게임에 고정
-      </label> <br>
-        <select id="hold1" v-model="userGameNum1" v-on:change="changeUserGameNum(0)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <select id="hold2" v-model="userGameNum2" v-on:change="changeUserGameNum(1)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <select id="hold3" v-model="userGameNum3" v-on:change="changeUserGameNum(2)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <select id="hold4" v-model="userGameNum4" v-on:change="changeUserGameNum(3)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <select id="hold5" v-model="userGameNum5" v-on:change="changeUserGameNum(4)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <select id="hold6" v-model="userGameNum6" v-on:change="changeUserGameNum(5)" v-bind:disabled="!holdAllRandom || isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-        <br>
-        <br>
-
-        <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-bind:class="classChecker(userNumsList[bgameCount])">
-          GAME{{bgameCount + 1}}: <span v-if="isStart">{{userNumsList[bgameCount]}}</span><select :id="'hold'+idx+'_1'" v-model="userNumsList[bgameCount][0]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-          <option value="0">랜덤</option>
-          <option v-for="num in lottoNums" :value="num">
-            {{num}}
-          </option>
-        </select>
-          <select id="hold2" v-model="userNumsList[bgameCount][1]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-            <option value="0">랜덤</option>
-            <option v-for="num in lottoNums" :value="num">
-              {{num}}
-            </option>
-          </select>
-          <select id="hold3" v-model="userNumsList[bgameCount][2]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-            <option value="0">랜덤</option>
-            <option v-for="num in lottoNums" :value="num">
-              {{num}}
-            </option>
-          </select>
-          <select id="hold4" v-model="userNumsList[bgameCount][3]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-            <option value="0">랜덤</option>
-            <option v-for="num in lottoNums" :value="num">
-              {{num}}
-            </option>
-          </select>
-          <select id="hold5" v-model="userNumsList[bgameCount][4]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-            <option value="0">랜덤</option>
-            <option v-for="num in lottoNums" :value="num">
-              {{num}}
-            </option>
-          </select>
-          <select id="hold6" v-model="userNumsList[bgameCount][5]" v-bind:disabled="holdAllRandom || isStart" v-if="!isStart">
-            <option value="0">랜덤</option>
-            <option v-for="num in lottoNums" :value="num">
-              {{num}}
-            </option>
-          </select>
+      <td colspan="2">
+        <div class="form-group has-success has-feedback">
+          <div class="input-group">
+            <select id="hold1" v-model="userGameNum1">
+              <option value="0">고정 번호1</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+            <select id="hold2" v-model="userGameNum2">
+              <option value="0">고정 번호2</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+            <select id="hold3" v-model="userGameNum3">
+              <option value="0">고정 번호3</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+            <select id="hold4" v-model="userGameNum4">
+              <option value="0">고정 번호4</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+            <select id="hold5" v-model="userGameNum5">
+              <option value="0">고정 번호5</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+            <select id="hold6" v-model="userGameNum6">
+              <option value="0">고정 번호6</option>
+              <option v-for="num in lottoNums" :value="num">
+                {{num}}
+              </option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-default" v-on:click="resetUserNum()">초기화</button>
+            <button type="button" class="btn btn-sm btn-default" v-on:click="createUserNum()">고정번호생성</button>
+            <button type="button" class="btn btn-sm btn-primary" v-on:click="userNumChecker()">이 번호 샀더라면...</button>
+          </div>
+          <br>
+          <div v-html="allText"></div>
         </div>
       </td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
+      <td colspan="3">
+        적금시(2만/약{{Math.round(gameCount/(4*5)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
+        적금 이자(연3%): {{bankBonus.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원
+      </td>
+    </tr>
+    <tr>
       <td>등수<br>(당첨수)</td>
       <td>현재 확률<br>(공식 확률)</td>
       <td>최근당첨번호</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>1등<br>({{oneCount}})</td>
       <td>
         {{onePer}}%<br>
@@ -511,7 +394,7 @@
       </td>
       <td>{{oneText}}</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>2등<br>({{twoCount}})</td>
       <td>
         {{twoPer}}%<br>
@@ -520,7 +403,7 @@
       </td>
       <td>{{twoText}}</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>3등<br>({{threeCount}})</td>
       <td>
         {{threePer}}%<br>
@@ -529,7 +412,7 @@
       </td>
       <td>{{threeText}}</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>4등<br>({{fourCount}})</td>
       <td>
         {{fourPer}}%<br>
@@ -538,7 +421,7 @@
       </td>
       <td>{{fourText}}</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>5등<br>({{fiveCount}})</td>
       <td>
         {{fivePer}}%<br>
@@ -547,7 +430,7 @@
       </td>
       <td>{{fiveText}}</td>
     </tr>
-    <tr v-if="!isStart">
+    <tr>
       <td>꽝<br>({{noCount}})</td>
       <td>{{noPer}}%</td>
       <td></td>
@@ -568,52 +451,6 @@
       </td>
     </tr>
   </table>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-              <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
-            </a>
-            <a class="navbar-brand" href="#">게임 결과</a>
-          </div>
-        </div>
-        <div class="modal-body" id="winContent">
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-   <!-- Modal -->
-  <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-              <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
-            </a>
-            <a class="navbar-brand" href="#">최근 {{historyRank}}등 10건 기록 보기</a>
-          </div>
-        </div>
-        <div class="modal-body" id="historyContent">
-			<div v-for="(arr, i) in targetHistoryArr" v-if="i > 0">
-				{{arr[6].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}회: {{arr[0]}}, {{arr[1]}}, {{arr[2]}}, {{arr[3]}}, {{arr[4]}}, {{arr[5]}} 
-			</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  
 </div>
 <script>
   var app = new Vue({
@@ -626,8 +463,7 @@
         31,32,33,34,35,36,37,38,39,40,
         41,42,43,44,45
       ],
-      winNumsTemp : [0,0,0,0,0,0,999],
-      winNums : [0,0,0,0,0,0,999],
+      winNums : [1,2,3,4,5,6,999],
       userGameNum1 : 0,
       userGameNum2 : 0,
       userGameNum3 : 0,
@@ -635,8 +471,6 @@
       userGameNum5 : 0,
       userGameNum6 : 0,
       userNums : [0,0,0,0,0,0],
-      userNumsList:[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],
-      userNumsListCopy: [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],
       endCount : 0,
       gameCount : 0,
       oneCount : 0,
@@ -645,7 +479,6 @@
       fourCount : 0,
       fiveCount : 0,
       noCount : 0,
-      allCheckCount: 0,
       onePer : 0,
       twoPer : 0,
       threePer : 0,
@@ -653,17 +486,10 @@
       fivePer : 0,
       noPer : 0,
       oneText :  [0,0,0,0,0,0],
-      oneHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       twoText :  [0,0,0,0,0,0],
-      twoHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       threeText :  [0,0,0,0,0,0],
-      threeHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       fourText :  [0,0,0,0,0,0],
-      fourHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
       fiveText :  [0,0,0,0,0,0],
-      fiveHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
-      targetHistoryArr: [],
-      historyRank: 0,
       allMoney : 0,
       gameYear : "",
       gameYear2 : "",
@@ -678,28 +504,15 @@
       allRealData: [],
       allText: '',
       winStop: true,
-      winStopRank: 1,
-      winStopCount: 1,
       stempNum: 0,
-      winRandom: true,
+      winRandom: false,
       bankMoney: 0,
       bankBonus: 0,
-      tmpBonus: 0,
-      buyGameCount: 5,
-      buyGameCountArray: [0,1,2,3,4],
-      holdAllRandom: true,
-      showOnlyWin: false,
-      showGameArea: true,
-      addGameCount: 0,
-      showWinNums: [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],
-      saveOne: true,
-      saveTwo: true,
-      saveThree: true,
-      saveFour: true,
-      saveFive: true
+      tmpBonus: 0
     },
     beforeMount(){
       var self = this;
+      this.createWinNums();
       this.startTimer();
       $.ajax({
         url : 'https://parkminkyu.github.io/bok/lottoHistory.json?d='+ new Date(),
@@ -709,193 +522,6 @@
       });
     },
     methods: {
-      checkWinnums : function(event, idx){
-        var isduple = false;
-        for(var i = 0 ; i < this.winNums.length ; i ++){
-          for(var j = i+1 ; j < this.winNums.length ; j ++){
-            if(this.winNums[i] != 0 && this.winNums[i]==this.winNums[j]){
-              alert("번호가 중복 되었습니다.");
-              isduple = true;
-              break;
-            }
-          }
-        }
-
-        if(isduple){
-          this.winNums[idx] = this.stempNum;
-        }
-      },
-      saveTempNum : function(event){
-        this.stempNum = parseInt(event.target.value);
-      },
-    	pushShowWinNums:function(arr,rank){
-    		this.copyArrays(this.showWinNums[0],arr);
-    		this.showWinNums[0][6] = rank;
-    		this.showWinNums[0][7] = this.gameCount;
-    		this.copyArrays(this.showWinNums[5],this.showWinNums[4]);
-			this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
-			this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
-			this.copyArrays(this.showWinNums[2],this.showWinNums[1]);
-			this.copyArrays(this.showWinNums[1],this.showWinNums[0]);
-			
-			switch(rank){
-				case 5:
-					if(!this.saveFive)break;
-					this.copyArrays(this.fiveHistory[0],arr);
-		    		this.fiveHistory[0][6] = this.gameCount;
-		    		for(var i = this.fiveHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.fiveHistory[i],this.fiveHistory[i - 1]);
-		    		}
-					break;
-				case 4:
-					if(!this.saveFour)break;
-					this.copyArrays(this.fourHistory[0],arr);
-		    		this.fourHistory[0][6] = this.gameCount;
-		    		for(var i = this.fourHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.fourHistory[i],this.fourHistory[i - 1]);
-		    		}
-					break;
-				case 3:
-					if(!this.saveThree)break;
-					this.copyArrays(this.threeHistory[0],arr);
-		    		this.threeHistory[0][6] = this.gameCount;
-		    		for(var i = this.threeHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.threeHistory[i],this.threeHistory[i - 1]);
-		    		}
-					break;
-				case 2:
-					if(!this.saveTwo)break;
-					this.copyArrays(this.twoHistory[0],arr);
-		    		this.twoHistory[0][6] = this.gameCount;
-		    		for(var i = this.twoHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.twoHistory[i],this.twoHistory[i - 1]);
-		    		}
-					break;
-				case 1:
-					if(!this.saveOne)break;
-					this.copyArrays(this.oneHistory[0],arr);
-		    		this.oneHistory[0][6] = this.gameCount;
-		    		for(var i = this.oneHistory.length - 1 ; i > 0 ; i --){
-		    			this.copyArrays(this.oneHistory[i],this.oneHistory[i - 1]);
-		    		}
-					break;
-					
-			}
-    	},
-      setEndGame:function(){
-    	if(this.addGameCount == 0){
-   			this.endCount = 0;
-   		}else{
-   			this.endCount += parseInt(this.addGameCount,10);
-   		}
-      },
-      classChecker:function(arr){
-        var cnt = 0;
-        if(arr.contains(this.winNums[0]))cnt++;
-        if(arr.contains(this.winNums[1]))cnt++;
-        if(arr.contains(this.winNums[2]))cnt++;
-        if(arr.contains(this.winNums[3]))cnt++;
-        if(arr.contains(this.winNums[4]))cnt++;
-        if(arr.contains(this.winNums[5]))cnt++;
-        switch (cnt){
-            case 3:
-              return 'winNum5'
-            case 4:
-              return 'winNum4'
-            case 5:
-              if(arr.contains(this.winNums[6])){
-                return 'winNum2'
-              }
-              return 'winNum3'
-            case 6:
-          	  return 'winNum'
-          }
-        
-      },
-      getWinClassColor:function(rank){
-    	  switch (rank){
-            case 5:
-              return 'winNum5'
-            case 4:
-              return 'winNum4'
-            case 3:
-              return 'winNum3'
-            case 2:
-           	  return 'winNum2'
-            case 1:
-          	  return 'winNum'
-          }  
-      },
-      holdAllChecked:function(event){
-        if(this.holdAllRandom){
-          for(var i = 0 ; i < this.userNumsList.length ; i ++){
-            if(this.holdAllRandom){
-                  this.userNumsList[i][0] = this.userGameNum1;
-                  this.userNumsList[i][1] = this.userGameNum2;
-                  this.userNumsList[i][2] = this.userGameNum3;
-                  this.userNumsList[i][3] = this.userGameNum4;
-                  this.userNumsList[i][4] = this.userGameNum5;
-                  this.userNumsList[i][5] = this.userGameNum6;
-              }
-            }
-          }
-      },
-      changeUserGameNum:function(pos){
-        for(var i = 0 ; i < this.userNumsList.length ; i ++){
-          if(this.holdAllRandom){
-            switch(pos){
-              case 0:
-                this.userNumsList[i][pos] = this.userGameNum1;
-                break;
-              case 1:
-                this.userNumsList[i][pos] = this.userGameNum2;
-                break;
-              case 2:
-                this.userNumsList[i][pos] = this.userGameNum3;
-                break;
-              case 3:
-                this.userNumsList[i][pos] = this.userGameNum4;
-                break;
-              case 4:
-                this.userNumsList[i][pos] = this.userGameNum5;
-                break;
-              case 5:
-                this.userNumsList[i][pos] = this.userGameNum6;
-                break;
-            }
-          }
-        }
-      },
-      setBuyGameCount:function(event){
-        var cnt = parseInt(event.target.value,10);
-        if(cnt < 1){
-          this.buyGameCount = 1;
-          return false;
-        }else if(cnt > 100){
-          this.buyGameCount = 100;
-          return false;
-        }
-
-        if(this.buyGameCount < this.buyGameCountArray.length){
-          for(var i = this.buyGameCountArray.length - 1 ; i >= cnt ; i --){
-            this.buyGameCountArray.pop();
-            this.userNumsList.pop();
-            this.userNumsListCopy.pop();
-          }
-        }else{
-          for(var i = this.buyGameCountArray.length ; i < parseInt(event.target.value,10) ; i ++){
-            this.buyGameCountArray.push(i);
-            if(this.holdAllRandom){
-              this.userNumsList.push([this.userGameNum1,this.userGameNum2,this.userGameNum3,this.userGameNum4,this.userGameNum5,this.userGameNum6]);
-              this.userNumsListCopy.push([0,0,0,0,0,0]);
-            }else{
-              var arr = [0,0,0,0,0,0]
-              this.userNumsList.push(arr);
-              this.userNumsListCopy.push(arr);
-            }
-          }
-        }
-      },
       startTimer:function(){
         var self = this;
         setTimeout(function(){
@@ -914,147 +540,97 @@
       gameStart:function () {
         var self = this;
         if(this.isStart == false){
+          self.timeCount= new Date().getTime();
+        }
+        if(this.isStart == false){
           this.isStart = true;
-
-          $('.winNum').removeClass('winNum');
-          for(var i = 0 ; i < this.userNumsList.length ; i ++){
-            this.userNumsListCopy[i][0] = this.userNumsList[i][0];
-            this.userNumsListCopy[i][1] = this.userNumsList[i][1];
-            this.userNumsListCopy[i][2] = this.userNumsList[i][2];
-            this.userNumsListCopy[i][3] = this.userNumsList[i][3];
-            this.userNumsListCopy[i][4] = this.userNumsList[i][4];
-            this.userNumsListCopy[i][5] = this.userNumsList[i][5];
-          }
-
           self.gameInterval = setInterval( function(){
             if(!self.isStart){
               clearInterval(self.gameInterval);
             }
-
-            if(self.isStart){
-                if(self.gameCount == 0){
-                  self.timeCount= new Date().getTime();
-                }
-            	for(var j = 0 ; j < self.gameSpeed ; j ++){
-                  if(!self.isStart){
-                    break;
-                  }
-
-                  if(self.isStart == true){               	  	
-                    self.createWinNums();
-                    self.gameCount++;
-                    self.checkGameData();
-                    self.createGameUserNums();
-                    self.checkGameNums();
-                    self.moneyCheck();
-                  }
-                  
-                  self.checkEndGame();
-                }
+            for(var j = 0 ; j < self.gameSpeed ; j ++){
+              if(!self.isStart){
+                break;
+              }
+              if(self.winRandom && self.gameCount > 0){
+                self.createWinNums();
+              }
+              self.gameCount++;
+              self.createUserNums();
+              self.checkGameData();
+              self.checkEndGame();
             }
-            
           },1);
         }
       },
       checkEndGame: function(){
-        if((this.gameCount >= this.endCount && 0 != this.endCount) || !this.isStart){
+        if(this.gameCount >= this.endCount && 0 != this.endCount){
           this.isStart = false;
-          this.showGameArea = true;
-
-
-          var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
-          content += '1주 ' + this.buyGameCount + '게임: ' + this.gameYear +  '경과<br>';
-          content += '투자금: ' + this.allMoney + '<br>';
-          content += '수익금: ' + this.getMoney + '<br>';
-          content += '순이익: ' + this.loseMoney + '<br><br>';
-          content += '<div style="font-weight: bold;">1등: ' + this.oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.onePer + '%)/총 당첨금: ' + (this.oneCount*2000000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
-          content += '<div >2등: ' + this.twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.twoPer + '%)/총 당첨금: ' + (this.twoCount*50000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
-          content += '<div >3등: ' + this.threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.threePer + '%)/총 당첨금: ' + (this.threeCount*1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
-          content += '<div >4등: ' + this.fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fourPer + '%)/총 당첨금: ' + (this.fourCount*50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
-          content += '<div >5등: ' + this.fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fivePer + '%)/총 당첨금: ' + (this.fiveCount*5000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
-          content += '<div>꽝: ' + this.noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.noPer + '%)';
-          $('#winContent').html(content);
-          $('#exampleModal').modal('show');
-
+          alert('게임이 끝났습니다.');
         }
       },
       checkGameData: function(){
-        var tempYear = (Math.round( (this.gameCount/52) ));
+        var tempYear = (Math.round( (this.gameCount/52/5) ));
         this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+        this.gameYear2 = '약 '+ (Math.round( (this.gameCount/52/10) )).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+        this.allMoney = (this.gameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원'
+        this.bankMoney = Math.round(this.gameCount/(4*5)) * 20000;
+        var bns = (this.bankMoney * 0.03 / 12);
+
+        if(this.tmpBonus != bns){
+          this.bankBonus += bns;
+          this.tmpBonus = bns;
+        }
+
+        this.checkGameNums();
+        this.moneyCheck();
       },
       checkGameNums: function(){
-        var isWinAlert = false;
-        this.winPos1 = [];
-        for(var k = 0 ; k < this.userNumsList.length ; k ++){
-        	this.allCheckCount++;
-          var arr = this.userNumsList[k];
-
-          var matchCount = 0;
-          for(var i = 0 ; i < 6 ; i ++){
-            if(arr.contains(this.winNums[i])){
-              matchCount++;
-            }
-          }
-
-          switch (matchCount){
-            case 3:
-              ++this.fiveCount;
-              this.copyArrays(this.fiveText,arr);
-              this.pushShowWinNums(arr,5);
-              break;
-            case 4:
-              ++this.fourCount;
-              this.copyArrays(this.fourText,arr);
-              this.pushShowWinNums(arr,4);
-              break;
-            case 5:
-              if(arr.contains(this.winNums[6])){
-                ++this.twoCount;
-                this.copyArrays(this.twoText,arr);
-                this.pushShowWinNums(arr,2);
-              }
-              else{
-                ++this.threeCount;
-                this.copyArrays(this.threeText,arr);
-                this.pushShowWinNums(arr,3);
-              }
-              break;
-            case 6:
-            	++this.oneCount;
-                this.copyArrays(this.oneText,arr);
-                this.pushShowWinNums(arr,1);
-              break;
-            default :
-              ++this.noCount;
-              break;
+        var matchCount = 0;
+        for(var i = 0 ; i < 6 ; i ++){
+          if(this.userNums.contains(this.winNums[i])){
+            matchCount++;
           }
         }
 
-        if(	this.winStop && this.winStopCount != 0 &&
-          		( 
-          				this.winStopRank == 1 && this.winStopCount <= this.oneCount
-         				||	this.winStopRank == 2 && this.winStopCount <= this.twoCount
-         				||	this.winStopRank == 3 && this.winStopCount <= this.threeCount
-         				||	this.winStopRank == 4 && this.winStopCount <= this.fourCount
-         				||	this.winStopRank == 5 && this.winStopCount <= this.fiveCount
-          		)
-          ){
+        switch (matchCount){
+          case 3:
+            ++this.fiveCount;
+            this.copyArrays(this.fiveText,this.userNums);
+            break;
+          case 4:
+            ++this.fourCount;
+            this.copyArrays(this.fourText,this.userNums);
+            break;
+          case 5:
+            if(this.userNums.contains(this.winNums[6])){
+              ++this.twoCount;
+              this.copyArrays(this.twoText,this.userNums);
+            }
+            else{
+              ++this.threeCount;
+              this.copyArrays(this.threeText,this.userNums);
+            }
+            break;
+          case 6:
+            if(this.winStop){
               this.isStart = false;
-              console.log('#hold'+k+'_1');
-              $('#hold'+k+'_1').parent().addClass('winNum');
-              if(!isWinAlert){
-                //alert('축하합니다. 1등에 당첨되셨습니다.');
-                isWinAlert = true;
-                this.showGameArea = true;
-            	}
-         	}
-        
-        this.fivePer = ((this.fiveCount/(this.allCheckCount)) * 100).toFixed(6);
-        this.fourPer = ((this.fourCount/(this.allCheckCount)) * 100).toFixed(6);
-        this.threePer = ((this.threeCount/(this.allCheckCount)) * 100).toFixed(6);
-        this.twoPer = ((this.twoCount/(this.allCheckCount)) * 100).toFixed(6);
-        this.onePer = ((this.oneCount/(this.allCheckCount)) * 100).toFixed(6);
-        this.noPer = ((this.noCount/(this.allCheckCount)) * 100).toFixed(6);
+              alert('축하합니다. 1등에 당첨되셨습니다.');
+            }
+            ++this.oneCount;
+            this.copyArrays(this.oneText,this.userNums);
+            break;
+          default :
+            ++this.noCount;
+            break;
+        }
+
+        this.fivePer = (this.fiveCount/this.gameCount * 100).toFixed(6);
+        this.fourPer = (this.fourCount/this.gameCount * 100).toFixed(6);
+        this.threePer = (this.threeCount/this.gameCount * 100).toFixed(6);
+        this.twoPer = (this.twoCount/this.gameCount * 100).toFixed(6);
+        this.onePer = (this.oneCount/this.gameCount * 100).toFixed(6);
+        this.noPer = (this.noCount/this.gameCount * 100).toFixed(6);
 
       },
       copyArrays:function(tar,arr){
@@ -1064,20 +640,8 @@
         tar[3] = arr[3];
         tar[4] = arr[4];
         tar[5] = arr[5];
-        if(tar[6] != arr[6]){
-        	tar[6] = arr[6]
-        }
-        if(tar[7] != arr[7]){
-        	tar[7] = arr[7]
-        }
       },
       moneyCheck: function(){
-    	this.allMoney = parseInt(this.allMoney.toString().replace(/[^0-9]/ig,''));
-   	  	if(this.allMoney != 0){
-        	this.allMoney = (this.allMoney + (this.buyGameCount * 1000));
-        }else{
-        	this.allMoney = (this.gameCount * this.buyGameCount * 1000);
-        }
         var five = this.fiveCount * 5000;
         var four = this.fourCount * 50000;
         var three = this.threeCount* 1000000;
@@ -1086,91 +650,40 @@
         var total = five + four + three + two + one;
 
         this.getMoney = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
-        this.loseMoney = ((this.allMoney - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
-        this.allMoney = this.allMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+        this.loseMoney = (((this.gameCount * 1000) - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
       },
       gameStop:function(){
         this.isStart = false;
-        this.showGameArea = true;
       },
       createRandomNum: function(){
         return parseInt((Math.random() *45)+1);
       },
-      createGameUserNums: function(){
-        for(var k = 0 ; k < this.userNumsList.length ; k ++){
-          var arr = this.userNumsList[k];
-
-          var i = 0;
-          if(this.holdAllRandom){
-            arr[0] = this.userGameNum1;
-            arr[1] = this.userGameNum2;
-            arr[2] = this.userGameNum3;
-            arr[3] = this.userGameNum4;
-            arr[4] = this.userGameNum5;
-            arr[5] = this.userGameNum6;
-          }else{
-            arr[0] = this.userNumsListCopy[k][0];
-            arr[1] = this.userNumsListCopy[k][1];
-            arr[2] = this.userNumsListCopy[k][2];
-            arr[3] = this.userNumsListCopy[k][3];
-            arr[4] = this.userNumsListCopy[k][4];
-            arr[5] = this.userNumsListCopy[k][5];
-          }
-
-          while(i < 6){
-            if(arr[i] != 0){
-              i++;
-              continue;
-            }
-            var num = this.createRandomNum();
-            while(arr.contains(num)){
-              num = this.createRandomNum();
-            }
-            arr[i++] = num;
-          }
-          arr.sort(function(a,b){return a - b;});
-        }
-      },
-      createUserNums: function(arr){
+      createUserNums: function(){
         var i = 0;
-        if(this.holdAllRandom){
-          arr[0] = this.userGameNum1;
-          arr[1] = this.userGameNum2;
-          arr[2] = this.userGameNum3;
-          arr[3] = this.userGameNum4;
-          arr[4] = this.userGameNum5;
-          arr[5] = this.userGameNum6;
-        }
+        this.userNums[0] = this.userGameNum1;
+        this.userNums[1] = this.userGameNum2;
+        this.userNums[2] = this.userGameNum3;
+        this.userNums[3] = this.userGameNum4;
+        this.userNums[4] = this.userGameNum5;
+        this.userNums[5] = this.userGameNum6;
 
         while(i < 6){
-          if(arr[i] != 0){
+          if(this.userNums[i] != 0){
             i++;
             continue;
           }
           var num = this.createRandomNum();
-          while(arr.contains(num)){
+          while(this.userNums.contains(num)){
             num = this.createRandomNum();
           }
-          arr[i++] = num;
+          this.userNums[i++] = num;
         }
-        arr.sort(function(a,b){return a - b;});
+        this.userNums.sort(function(a,b){return a - b;});
       },
       createWinNums: function(){
         this.winNums = [0,0,0,0,0,0,999];
-
-        if(parseInt(this.winNumsTemp[0]) != 0) this.winNums[0] = parseInt(this.winNumsTemp[0]);
-        if(parseInt(this.winNumsTemp[1]) != 0) this.winNums[1] = parseInt(this.winNumsTemp[1]);
-        if(parseInt(this.winNumsTemp[2]) != 0) this.winNums[2] = parseInt(this.winNumsTemp[2]);
-        if(parseInt(this.winNumsTemp[3]) != 0) this.winNums[3] = parseInt(this.winNumsTemp[3]);
-        if(parseInt(this.winNumsTemp[4]) != 0) this.winNums[4] = parseInt(this.winNumsTemp[4]);
-        if(parseInt(this.winNumsTemp[5]) != 0) this.winNums[5] = parseInt(this.winNumsTemp[5]);
-
         var i = 0;
         while(i < 6){
-          if(this.winNums[i] != 0){
-            i++;
-            continue;
-          }
           var num = this.createRandomNum();
           while(this.winNums.contains(num)){
             num = this.createRandomNum();
@@ -1178,9 +691,6 @@
           this.winNums[i++] = num;
         }
         this.winNums.sort(function(a,b){return a - b;});
-
-        if(parseInt(this.winNumsTemp[6]) != 999) this.winNums[6] = parseInt(this.winNumsTemp[6]);
-
         while(this.winNums[6] == 999){
           var num = this.createRandomNum();
           while(this.winNums.contains(num)){
@@ -1324,29 +834,26 @@
         this.userGameNum5 = 0;
         this.userGameNum6 = 0;
         this.allText = "";
-      },
-      showHistory: function(rank){
-   	  	this.historyRank = rank;
-      	switch(rank){
-      		case 5:
-      			this.targetHistoryArr = this.fiveHistory;
-      			break;
-      		case 4:
-      			this.targetHistoryArr = this.fourHistory;
-      			break;
-      		case 3:
-      			this.targetHistoryArr = this.threeHistory;
-      			break;
-      		case 2:
-      			this.targetHistoryArr = this.twoHistory;
-      			break;
-      		case 1:
-      			this.targetHistoryArr = this.oneHistory;
-      			break;
-      	}
-      	
-          $('#historyModal').modal('show');
       }
+    },
+    checkWinnums : function(event, idx){
+      var isduple = false;
+      for(var i = 0 ; i < this.winNums.length ; i ++){
+        for(var j = i+1 ; j < this.winNums.length ; j ++){
+          if(this.winNums[i]==this.winNums[j]){
+            alert("번호가 중복 되었습니다.");
+            isduple = true;
+            break;
+          }
+        }
+      }
+
+      if(isduple){
+        this.winNums[idx] = this.stempNum;
+      }
+    },
+    saveTempNum : function(event){
+      this.stempNum = parseInt(event.target.value);
     },
   })
 </script>

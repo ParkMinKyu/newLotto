@@ -384,7 +384,7 @@
     <td>
         <div class="form-group has-success has-feedback">
             1회당 <select v-model="buyGameCount" v-on:change="setBuyGameCount($event)" style="width: 50px" :disabled="isStart">
-            <option v-for="i in 350" :value="i" :selectd=" i == 5">{{i}}</option>
+            <option v-for="i in 100" :value="i" :selectd=" i == 5">{{i}}</option>
         </select>게임 구매<br>
             (1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
             게임수: {{endCount == 0 ? '무제한' : endCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임정지'}}<br>

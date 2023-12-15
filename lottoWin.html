@@ -384,7 +384,7 @@
     <td>
         <div class="form-group has-success has-feedback">
             1회당 <select v-model="buyGameCount" v-on:change="setBuyGameCount($event)" style="width: 50px" :disabled="isStart">
-            <option v-for="i in 100" :value="i" :selectd=" i == 5">{{i}}</option>
+            <option v-for="i in 350" :value="i" :selectd=" i == 5">{{i}}</option>
         </select>게임 구매<br>
             (1주: {{(buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원)<br>
             게임수: {{endCount == 0 ? '무제한' : endCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임정지'}}<br>
@@ -410,6 +410,12 @@
             </label>
             <br>
             (속도*게임수가 높아 렉이 걸릴 경우 게임 구매 수량은 낮춰서 실행)
+    </td>
+</tr>
+<tr>
+    <td colspan="3">
+        <iframe src="https://coupa.ng/cc4GkP" width="100%" height="36" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+        <iframe src="https://ads-partners.coupang.com/widgets.html?id=596727&template=carousel&trackingCode=AF6210416&subId=&width=100&height=140" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
     </td>
 </tr>
 <tr  v-if="showGameArea">
@@ -497,12 +503,12 @@
         </div>
     </td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>등수<br>(당첨수)</td>
     <td>현재 확률<br>(공식 확률)</td>
     <td>최근당첨번호</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>1등<br>({{oneCount}})</td>
     <td>
         {{onePer}}%<br>
@@ -511,7 +517,7 @@
     </td>
     <td>{{oneText}}</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>2등<br>({{twoCount}})</td>
     <td>
         {{twoPer}}%<br>
@@ -520,7 +526,7 @@
     </td>
     <td>{{twoText}}</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>3등<br>({{threeCount}})</td>
     <td>
         {{threePer}}%<br>
@@ -529,7 +535,7 @@
     </td>
     <td>{{threeText}}</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>4등<br>({{fourCount}})</td>
     <td>
         {{fourPer}}%<br>
@@ -538,7 +544,7 @@
     </td>
     <td>{{fourText}}</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>5등<br>({{fiveCount}})</td>
     <td>
         {{fivePer}}%<br>
@@ -547,16 +553,10 @@
     </td>
     <td>{{fiveText}}</td>
 </tr>
-<tr v-if="!isStart">
+<tr v-if="showGameArea">
     <td>꽝<br>({{noCount}})</td>
     <td>{{noPer}}%</td>
     <td></td>
-</tr>
-<tr>
-    <td colspan="3">
-        <iframe src="https://coupa.ng/cc4GkP" width="100%" height="36" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
-        <iframe src="https://ads-partners.coupang.com/widgets.html?id=596727&template=carousel&trackingCode=AF6210416&subId=&width=100&height=140" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
-    </td>
 </tr>
 <tr>
     <td colspan="3">
@@ -871,8 +871,8 @@
                 if(cnt < 1){
                     this.buyGameCount = 1;
                     return false;
-                }else if(cnt > 100){
-                    this.buyGameCount = 100;
+                }else if(cnt > 350){
+                    this.buyGameCount = 350;
                     return false;
                 }
 

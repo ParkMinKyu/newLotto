@@ -355,9 +355,11 @@
                 게임 시간: {{gameTime}}
             </td>
             <td>
-                투자금: {{allMoney}}<br>
-                수익금: {{getMoney}} <br>
-                순이익: {{loseMoney}}
+                총 투자금: {{allMoney}}<br>
+                총 수익금: {{getMoney}}<br>
+                총 순이익: {{loseMoney}}<br>
+                게임당 수익: {{getOneGameMoney}}<br> 
+                게임당 순익: {{getLoseMoney}}
             </td>
         </tr>
         <tr>
@@ -367,11 +369,11 @@
                 <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a v-if="saveTwo" href="#none" v-on:click="showHistory(2)">기록보기</a></div>
                 <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a v-if="saveThree" href="#none" v-on:click="showHistory(3)">기록보기</a></div>
                 <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a v-if="saveFour" href="#none" v-on:click="showHistory(4)">기록보기</a></div></div>
-<div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a v-if="saveFive" href="#none" v-on:click="showHistory(5)">기록보기</a></div></div>
-<div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
-</td>
-</tr>
-<tr id="randHold">
+				<div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a v-if="saveFive" href="#none" v-on:click="showHistory(5)">기록보기</a></div></div>
+				<div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
+	</td>
+	</tr>
+	<tr id="randHold">
     <!-- <tr id="randHold"> -->
     <td colspan="2">
         최근 당첨 번호5개<br>
@@ -702,7 +704,9 @@
             saveTwo: true,
             saveThree: true,
             saveFour: true,
-            saveFive: true
+            saveFive: true,
+            getOneGameMoney: 0,
+            getLoseMoney: 0
         },
         beforeMount(){
             var self = this;
@@ -970,9 +974,11 @@
 
                     var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
                     content += '1주 ' + this.buyGameCount + '게임: ' + this.gameYear +  '경과<br>';
-                    content += '투자금: ' + this.allMoney + '<br>';
-                    content += '수익금: ' + this.getMoney + '<br>';
-                    content += '순이익: ' + this.loseMoney + '<br><br>';
+                    content += '총 투자금: ' + this.allMoney + '<br>';
+                    content += '총 수익금: ' + this.getMoney + '<br>';
+                    content += '총 순이익: ' + this.loseMoney + '<br>';
+                    content += '게임당 수익: ' + this.getOneGameMoney + '<br>';
+                    content += '게임당 순익: ' + this.getLoseMoney + '<br><br>';
                     content += '<div style="font-weight: bold;">1등: ' + this.oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.onePer + '%)/총 당첨금: ' + (this.oneCount*2000000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
                     content += '<div >2등: ' + this.twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.twoPer + '%)/총 당첨금: ' + (this.twoCount*50000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
                     content += '<div >3등: ' + this.threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.threePer + '%)/총 당첨금: ' + (this.threeCount*1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
@@ -1093,6 +1099,8 @@
 
                 this.getMoney = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
                 this.loseMoney = ((this.allMoney - total) * -1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+                this.getOneGameMoney = (total/ (this.gameCount * this.buyGameCount)).toFixed(1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+                this.getLoseMoney = ((this.allMoney - total) * -1 / (this.gameCount * this.buyGameCount)).toFixed(1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
                 this.allMoney = this.allMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
             },
             gameStop:function(){

@@ -462,8 +462,8 @@
             <option v-for="num in lottoNums" :value="num">
                 {{num}}
             </option>
-        </select>&nbsp;<button v-on:click="createUserNum()" :disabled="isStart">자동생성</button>&nbsp;<button v-on:click="userNumChecker()" :disabled="isStart">이 번호 샀더라면...</button>
-        <br>
+        </select>&nbsp;<button v-on:click="createUserNum()" :disabled="!holdAllRandom || isStart">자동생성</button>&nbsp;<button v-on:click="userNumChecker()" :disabled="!holdAllRandom || isStart">이 번호 샀더라면...</button>&nbsp;<button v-on:click="createUserNum(true)" :disabled="isStart">번호 초기화</button>
+        <br>        
         <br>
 
         <div class="input-group" v-for="(bgameCount, idx) in buyGameCountArray" v-bind:class="classChecker(userNumsList[bgameCount])">
@@ -1279,8 +1279,14 @@
 
                 }
             },
-            createUserNum:function(){
+            createUserNum:function(isReset = false){
                 this.userNums = [0,0,0,0,0,0];
+
+                if(isReset){
+                    this.resetUserNum();
+                    return false;
+                }
+
                 var i = 0;
                 while(i < 6){
                     var num = this.createRandomNum();

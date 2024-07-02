@@ -506,6 +506,12 @@
         </div>
     </td>
 </tr>
+<tr>
+    <td colspan="3">
+      적금시({{ (buyGameCount * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}원/약{{Math.round(gameCount/4).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}개월): {{bankMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원<br>
+      적금 이자(연3%): {{bankBonus.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}원
+    </td>
+</tr>
 <tr v-if="showGameArea">
     <td>등수<br>(당첨수)</td>
     <td>현재 확률<br>(공식 확률)</td>
@@ -990,7 +996,15 @@
             },
             checkGameData: function(){
                 var tempYear = (Math.round( (this.gameCount/52) ));
-                this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년'
+                this.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년';
+                this.bankMoney = Math.round(this.gameCount/4) * ( this.buyGameCount * 1000);
+
+                var bns = (this.bankMoney * 0.03 / 12);
+
+                if(this.tmpBonus != bns){
+                    this.bankBonus += bns;
+                    this.tmpBonus = bns;
+                }
             },
             checkGameNums: function(isHistory = false){
                 var isWinAlert = false;

@@ -1244,6 +1244,11 @@
                 this.userNums[3] = this.userGameNum4;
                 this.userNums[4] = this.userGameNum5;
                 this.userNums[5] = this.userGameNum6;
+                let tmpOneArray = [];
+                let tmpTwoArray = [];
+                let tmpThreeArray = [];
+                let tmpFourArray = [];
+                let tmpFiveArray = [];
                 if(this.userNums.filter( v => v == 0).length > 0){
                     alert("고정번호 선택 후 눌러주세요");
                 }else {
@@ -1261,14 +1266,33 @@
                         var fiveTmp = this.fiveCount;
                         var thisRank = 7;
 
-                        var data = this.allRealData[i];
-                        console.log(data);
+                        var data = this.allRealData[i];                        
                         this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
                         self.gameCount++;
                         self.checkGameData();
                         self.createGameUserNums();
                         self.checkGameNums(true);
                         self.moneyCheck();
+
+                        if(oneTmp < this.oneCount){
+                            tmpOneArray.push(data);
+                        }
+
+                        if(twoTmp < this.twoCount){
+                            tmpTwoArray.push(data);
+                        }
+
+                        if(threeTmp < this.threeCount){
+                            tmpThreeArray.push(data);
+                        }
+
+                        if(fourTmp < this.fourCount){
+                            tmpFourArray.push(data);
+                        }
+
+                        if(fiveTmp < this.fiveCount){
+                            tmpFiveArray.push(data);
+                        }
                     }
                     this.isStart = false;
                     this.showGameArea = true;
@@ -1283,10 +1307,30 @@
                     content += '게임당 수익: ' + this.getOneGameMoney + '<br>';
                     content += '게임당 순익: ' + this.getLoseMoney + '<br><br>';
                     content += '<div style="font-weight: bold;">1등: ' + this.oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.onePer + '%)/총 당첨금: ' + (this.oneCount*2000000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+                    for(let i = 0 ; i < tmpOneArray.length ; i ++){
+                        let tdata = tmpOneArray[i];
+                        content += '<div class="' + this.getWinClassColor(1) + '">' + tdata.drwNo + ' 회차: ' + tdata.drwtNo1 + ', ' + tdata.drwtNo2 + ', ' + tdata.drwtNo3 + ', ' + tdata.drwtNo4 + ', ' + tdata.drwtNo5 + ', ' + tdata.drwtNo6 + ' + ' + tdata.bnusNo + '</div>';
+                    }
                     content += '<div >2등: ' + this.twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.twoPer + '%)/총 당첨금: ' + (this.twoCount*50000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+                    for(let i = 0 ; i < tmpTwoArray.length ; i ++){
+                        let tdata = tmpTwoArray[i];
+                        content += '<div class="' + this.getWinClassColor(2) + '">' + tdata.drwNo + ' 회차: ' + tdata.drwtNo1 + ', ' + tdata.drwtNo2 + ', ' + tdata.drwtNo3 + ', ' + tdata.drwtNo4 + ', ' + tdata.drwtNo5 + ', ' + tdata.drwtNo6 + ' + ' + tdata.bnusNo + '</div>';
+                    }
                     content += '<div >3등: ' + this.threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.threePer + '%)/총 당첨금: ' + (this.threeCount*1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+                    for(let i = 0 ; i < tmpThreeArray.length ; i ++){
+                        let tdata = tmpThreeArray[i];
+                        content += '<div class="' + this.getWinClassColor(3) + '">' + tdata.drwNo + ' 회차: ' + tdata.drwtNo1 + ', ' + tdata.drwtNo2 + ', ' + tdata.drwtNo3 + ', ' + tdata.drwtNo4 + ', ' + tdata.drwtNo5 + ', ' + tdata.drwtNo6 + ' + ' + tdata.bnusNo + '</div>';
+                    }
                     content += '<div >4등: ' + this.fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fourPer + '%)/총 당첨금: ' + (this.fourCount*50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+                    for(let i = 0 ; i < tmpFourArray.length ; i ++){
+                        let tdata = tmpFourArray[i];
+                        content += '<div class="' + this.getWinClassColor(4) + '">' + tdata.drwNo + ' 회차: ' + tdata.drwtNo1 + ', ' + tdata.drwtNo2 + ', ' + tdata.drwtNo3 + ', ' + tdata.drwtNo4 + ', ' + tdata.drwtNo5 + ', ' + tdata.drwtNo6 + ' + ' + tdata.bnusNo + '</div>';
+                    }
                     content += '<div >5등: ' + this.fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.fivePer + '%)/총 당첨금: ' + (this.fiveCount*5000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원</div>';
+                    for(let i = 0 ; i < tmpFiveArray.length ; i ++){
+                        let tdata = tmpFiveArray[i];
+                        content += '<div class="' + this.getWinClassColor(5) + '">' + tdata.drwNo + ' 회차: ' + tdata.drwtNo1 + ', ' + tdata.drwtNo2 + ', ' + tdata.drwtNo3 + ', ' + tdata.drwtNo4 + ', ' + tdata.drwtNo5 + ', ' + tdata.drwtNo6 + ' + ' + tdata.bnusNo + '</div>';
+                    }
                     content += '<div>꽝: ' + this.noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '건 (' + this.noPer + '%)';
                     $('#winContent').html(content);
                     $('#exampleModal').modal('show');

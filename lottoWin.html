@@ -365,14 +365,15 @@
         </tr>
         <tr>
             <td colspan="3">
-                게임 상태
+                게임 상태 <a href="#none" v-on:click="showHistory(0)">번호별 출현 횟수보기</a>
                 <div style="font-size: 16px;">1등: {{oneCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{onePer}}%)<a v-if="saveOne" href="#none" v-on:click="showHistory(1)">기록보기</a></div>
                 <div style="font-size: 16px;">2등: {{twoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{twoPer}}%)<a v-if="saveTwo" href="#none" v-on:click="showHistory(2)">기록보기</a></div>
                 <div style="font-size: 16px;">3등: {{threeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{threePer}}%)<a v-if="saveThree" href="#none" v-on:click="showHistory(3)">기록보기</a></div>
                 <div style="font-size: 16px;">4등: {{fourCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fourPer}}%)<a v-if="saveFour" href="#none" v-on:click="showHistory(4)">기록보기</a></div></div>
 				<div style="font-size: 16px;">5등: {{fiveCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{fivePer}}%)<a v-if="saveFive" href="#none" v-on:click="showHistory(5)">기록보기</a></div></div>
 				<div style="font-size: 16px;">꽝: {{noCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}} 건 ({{noPer}}%)</div>
-	</td>
+	        </td>
+        </tr>
 	</tr>
 	<tr id="randHold">
     <!-- <tr id="randHold"> -->
@@ -628,8 +629,157 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="numberHistoryModal" tabindex="-1" role="dialog" aria-labelledby="numberHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img alt="로또정보" src="https://lh3.ggpht.com/C7ttGx9vouVNPdAT8ciPKtD9HRBL0JZABvLnGqkGhMtoiyOq1PMyE_OOXsdQdazqmXw" width="20">
+                    </a>
+                    <a class="navbar-brand" href="#">번호별 출현 기록 보기(보너스 포함)</a>
+                </div>
+            </div>
+            <div class="modal-body" id="numberHistoryContent">
+                <table class="table table-bordered">
+                    <tr class="winNum5">
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[2].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[4].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[5].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[6].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[7].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[8].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[9].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>11</td>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[10].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[11].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[12].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[13].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[14].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>16</td>
+                        <td>17</td>
+                        <td>18</td>
+                        <td>19</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[15].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[16].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[17].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[18].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[19].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>21</td>
+                        <td>22</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[20].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[21].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[22].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[23].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[24].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>26</td>
+                        <td>27</td>
+                        <td>28</td>
+                        <td>29</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[25].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[26].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[27].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[28].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[29].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>31</td>
+                        <td>32</td>
+                        <td>33</td>
+                        <td>34</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[30].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[31].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[32].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[33].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[34].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>36</td>
+                        <td>37</td>
+                        <td>38</td>
+                        <td>39</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[35].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[36].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[37].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[38].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[39].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                    <tr class="winNum5">
+                        <td>41</td>
+                        <td>42</td>
+                        <td>43</td>
+                        <td>44</td>
+                        <td>45</td>
+                    </tr>
+                    <tr>
+                        <td>{{numberRank[40].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[41].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[42].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[43].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                        <td>{{numberRank[44].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var app = new Vue({
         el: '#lottoGame',
@@ -678,6 +828,7 @@
             fiveText :  [0,0,0,0,0,0],
             fiveHistory :  [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],
             targetHistoryArr: [],
+            numberRank: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             historyRank: 0,
             allMoney : 0,
             gameYear : "",
@@ -1215,6 +1366,8 @@
                     this.winNums[i++] = num;
                 }
 
+                this.winNums.filter(v => this.numberRank[v -1]++ );
+
                 this.printWinNums();
             },
             printWinNums:function(){
@@ -1237,6 +1390,10 @@
                 this.noCount = 0;
                 this.allCheckCount = 0;
                 this.allMoney = 0;
+                this.bgameCount = 1;
+                this.bankMoney = 0;
+                this.bankBonus = 0;
+                this.setBuyGameCount({target:{value:1}})
 
                 this.userNums[0] = this.userGameNum1;
                 this.userNums[1] = this.userGameNum2;
@@ -1268,6 +1425,7 @@
 
                         var data = this.allRealData[i];                        
                         this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
+                        this.winNums.filter(v => this.numberRank[v -1]++ );
                         self.gameCount++;
                         self.checkGameData();
                         self.createGameUserNums();
@@ -1299,7 +1457,7 @@
 
 
                     var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
-                    content += '동일번호로 1게임씩 샀을경우 실제 당첨 내역<br>';
+                    content += '동일번호로 1게임씩 샀을경우 실제 당첨 내역<br>';                    
                     content += '1주 ' + this.buyGameCount + '게임: ' + this.gameYear +  '경과<br>';
                     content += '총 투자금: ' + this.allMoney + '<br>';
                     content += '총 수익금: ' + this.getMoney + '<br>';
@@ -1388,6 +1546,10 @@
                         break;
                     case 1:
                         this.targetHistoryArr = this.oneHistory;
+                        break;
+                    case 0:
+                        $('#numberHistoryModal').modal('show');
+                        return false;
                         break;
                 }
 

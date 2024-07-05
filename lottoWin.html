@@ -1131,6 +1131,8 @@
                     this.isStart = false;
                     this.showGameArea = true;
 
+                    this.sortNumberRanking();
+
                     var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
                     content += '1주 ' + this.buyGameCount + '게임: ' + this.gameYear +  '경과<br>';
                     content += '총 투자금: ' + this.allMoney + '<br>';
@@ -1369,20 +1371,7 @@
                     }
                     this.winNums[i++] = num;
                 }
-                
-                this.sortNumberRanking();
 
-                this.printWinNums();
-            },
-            printWinNums:function(){
-                var text = this.winNums.join(", ");
-                return text.substr(0,text.lastIndexOf(',')) + " 보너스 : " + text.substr(text.lastIndexOf(', ')+1);
-                //printWinNumsText : "1, 2, 3, 4, 5, 6 보너스 : 7"
-            },
-            setSpeed:function(speed){
-                this.gameSpeed = speed;
-            },
-            sortNumberRanking:function(){
                 this.numberRank.filter(n => {
                     if(
                         n.number == this.winNums[0] 
@@ -1397,6 +1386,17 @@
                     }
                 });
 
+                this.printWinNums();
+            },
+            printWinNums:function(){
+                var text = this.winNums.join(", ");
+                return text.substr(0,text.lastIndexOf(',')) + " 보너스 : " + text.substr(text.lastIndexOf(', ')+1);
+                //printWinNumsText : "1, 2, 3, 4, 5, 6 보너스 : 7"
+            },
+            setSpeed:function(speed){
+                this.gameSpeed = speed;
+            },
+            sortNumberRanking:function(){
                 this.numberRank.sort( (a,b) => b.count-a.count );
             },
             userNumChecker:function(){
@@ -1447,9 +1447,19 @@
 
                         var data = this.allRealData[i];                        
                         this.winNums = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6, data.bnusNo];
-                        
-                        this.sortNumberRanking();
-
+                        this.numberRank.filter(n => {
+                            if(
+                                n.number == this.winNums[0] 
+                                || n.number == this.winNums[1] 
+                                || n.number == this.winNums[2] 
+                                || n.number == this.winNums[3] 
+                                || n.number == this.winNums[4] 
+                                || n.number == this.winNums[5] 
+                                || n.number == this.winNums[6] 
+                            ){
+                                n.count++;
+                            }
+                        });
                         self.gameCount++;
                         self.checkGameData();
                         self.createGameUserNums();
@@ -1479,6 +1489,7 @@
                     this.isStart = false;
                     this.showGameArea = true;
 
+                    this.sortNumberRanking();
 
                     var content ='<h5>총 ' + this.gameCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '회차/(' + this.allCheckCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '게임)</h5>';
                     content += '동일번호로 1게임씩 샀을경우 실제 당첨 내역<br>';

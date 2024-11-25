@@ -223,17 +223,10 @@
                 <li><a href="#" v-on:click="setSpeed(50)">50배</a></li>
                 <li><a href="#" v-on:click="setSpeed(100)">100배</a></li>
                 <li><a href="#" v-on:click="setSpeed(500)">500배</a></li>
-                <li><a href="#">-고 사양 렉주의-</a></li>
                 <li><a href="#" v-on:click="setSpeed(1000)">1,000배</a></li>
-                <li><a href="#" v-on:click="setSpeed(1500)">1,500배</a></li>
-                <li><a href="#" v-on:click="setSpeed(2000)">2,000배</a></li>
-                <li><a href="#" v-on:click="setSpeed(2500)">2,500배</a></li>
-                <li><a href="#" v-on:click="setSpeed(3000)">3,000배</a></li>
-                <li><a href="#" v-on:click="setSpeed(3500)">3,500배</a></li>
-                <li><a href="#" v-on:click="setSpeed(4000)">4,000배</a></li>
-                <li><a href="#" v-on:click="setSpeed(4500)">4,500배</a></li>
-                <li><a href="#" v-on:click="setSpeed(5000)">5,000배</a></li>
-                <li><a href="#">-더 느릴 수 있음-</a></li>
+                <li><a href="#">-더 빠른 간편 모드(BETA)-</a></li>                
+                <li><a href="#" v-on:click="setSpeed(10000)">10,000배</a></li>
+                <li><a href="#">-올 랜덤 1등 기록만 저장-</a></li>
             </ul>
         </div>
         <button v-on:click="gameStart" class="btn btn-primary btn-sm">시작</button>
@@ -901,7 +894,12 @@
             pushShowWinNums:function(arr,rank){
                 this.copyArrays(this.showWinNums[0],arr);
                 this.showWinNums[0][6] = rank;
-                this.showWinNums[0][7] = this.gameCount;
+                if(arr.length == 8){
+                    this.showWinNums[0][7] = arr[6];
+                }else{
+                    this.showWinNums[0][7] = this.gameCount;
+                }
+                
                 this.copyArrays(this.showWinNums[5],this.showWinNums[4]);
                 this.copyArrays(this.showWinNums[4],this.showWinNums[3]);
                 this.copyArrays(this.showWinNums[3],this.showWinNums[2]);
@@ -1083,8 +1081,54 @@
             },
             gameStart:function () {
                 var self = this;
+                
                 if(this.isStart == false){
+                    self.timeCount = new Date().getTime()
                     this.isStart = true;
+
+                    if(this.gameSpeed == 10000){
+                        let worker = new Worker('js/worker.js');
+
+                        worker.onmessage = function(event){
+                            console.log(event.data)
+
+                            self.oneCount = event.data.rank[0];
+                            self.twoCount = event.data.rank[1];
+                            self.threeCount = event.data.rank[2];
+                            self.fourCount = event.data.rank[3];
+                            self.fiveCount = event.data.rank[4];
+                            self.noCount = event.data.rank[5];
+
+                            self.gameCount = Math.ceil((self.oneCount + self.twoCount + self.threeCount + self.fourCount + self.fiveCount + self.noCount) / self.buyGameCount);
+                            self.allCheckCount = self.oneCount + self.twoCount + self.threeCount + self.fourCount + self.fiveCount + self.noCount;
+                            self.allMoney = self.allCheckCount * 1000;
+                            let tempYear = (Math.round( (self.gameCount/52) ));
+                            self.gameYear = '약 '+ tempYear.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '년';
+                            self.winNums = event.data.winNums;
+
+                            for( let i = 1 ; i < event.data.historys.length ; i ++ ){
+                                self.pushShowWinNums(event.data.historys[i], event.data.historys[i][7]);
+                            }
+                            
+
+                            self.fivePer = ((self.fiveCount/(self.allCheckCount)) * 100).toFixed(6);
+                            self.fourPer = ((self.fourCount/(self.allCheckCount)) * 100).toFixed(6);
+                            self.threePer = ((self.threeCount/(self.allCheckCount)) * 100).toFixed(6);
+                            self.twoPer = ((self.twoCount/(self.allCheckCount)) * 100).toFixed(6);
+                            self.onePer = ((self.oneCount/(self.allCheckCount)) * 100).toFixed(6);
+                            self.noPer = ((self.noCount/(self.allCheckCount)) * 100).toFixed(6);
+
+                            self.moneyCheck();
+
+                            if(event.data.rank[0] >= self.winStopCount ){                                
+                                self.isStart = false;
+                                self.checkEndGame();
+                            }
+                        }
+
+                        worker.postMessage({winStopCount: self.winStopCount, buyCount: self.buyGameCount});
+                        return false;
+                    }
 
                     $('.winNum').removeClass('winNum');
                     for(var i = 0 ; i < this.userNumsList.length ; i ++){
@@ -1394,7 +1438,12 @@
                 //printWinNumsText : "1, 2, 3, 4, 5, 6 보너스 : 7"
             },
             setSpeed:function(speed){
-                this.gameSpeed = speed;
+                if(this.isStart && speed >= 10000){
+                    alert('10,000배는 초기화후 시작해 주세요.');
+                }else{
+                    this.gameSpeed = speed;
+                }
+                
             },
             sortNumberRanking:function(){
                 this.numberRank.sort( (a,b) => b.count-a.count );

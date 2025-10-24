@@ -23,7 +23,95 @@
         }
         h1 {
             color: #333;
+            margin-right: auto; /* 타이틀을 왼쪽으로 */
+            margin-left: 20px;
         }
+
+        /* --- [수정] 햄버거 메뉴 및 사이드바 스타일 --- */
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        #hamburger-menu {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 40px;
+            height: 35px;
+            z-index: 1003;
+        }
+        #hamburger-menu .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #side-nav {
+            position: fixed;
+            top: 0;
+            left: -280px; /* 초기에는 숨겨짐 */
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1002;
+            transition: left 0.3s ease-in-out;
+            padding: 60px 20px 20px;
+        }
+
+        #side-nav.open {
+            left: 0;
+        }
+
+        #nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1001;
+        }
+
+        #nav-overlay.show {
+            display: block;
+        }
+
+        #side-nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        #side-nav-buttons button, #side-nav-buttons a {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            color: white;
+            border: none;
+            text-decoration: none; /* 링크 밑줄 제거 */
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+            text-align: center;
+        }
+
+        #nav-menu-button { background-color: #6c757d; }
+        #nav-restart-button { background-color: #28a745; }
+        #nav-bok-link { background-color: #ffc107; color: #333; } /* 운세 보기, 글자색 조정 */
+        #nav-lotto-link { background-color: #17a2b8; } /* 로또 당첨 번호 */
 
         /* --- 모드 선택 화면 스타일 --- */
         #mode-selection {
@@ -266,7 +354,7 @@
             z-index: 10;
         }
 
-        /* 모달 및 기타 UI 스타일 */
+        /* --- [수정] 모달 및 기타 UI 스타일 --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -279,12 +367,12 @@
         }
         .modal-content {
             background-color: white;
-            padding: 30px 40px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             text-align: center;
             width: 90%;
-            max-width: 450px;
+            max-width: 550px; /* 너비 확장 */
             animation: slide-down 0.5s ease-out;
         }
         @keyframes slide-down {
@@ -297,12 +385,13 @@
         #final-record-text {
             font-size: 1.1em;
             color: #555;
+            margin-bottom: 0;
         }
         #best-lotto-record {
             font-size: 1.4em;
             font-weight: bold;
             color: #007bff;
-            margin: 20px 0;
+            margin: 15px 0;
             padding: 15px;
             background-color: #e7f3ff;
             border-radius: 8px;
@@ -327,6 +416,25 @@
         }
         #modal-restart-button { background-color: #28a745; color: white; }
         #modal-menu-button { background-color: #6c757d; color: white; }
+
+        /* [추가] 모달 내 확률 섹션 스타일 */
+        #modal-probability-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        #modal-probability-section h2 {
+            font-size: 1.1em;
+            margin-top: 0;
+        }
+        #modal-probability-section p {
+            margin-top: -5px;
+            font-size: 0.8em;
+        }
+        #modal-probability-section #goal-grid {
+             grid-template-columns: 1fr; /* 모달에서는 한 줄로 표시 */
+        }
 
         #confetti-canvas {
             position: fixed;
@@ -458,6 +566,8 @@
                 position: sticky; /* 스크롤 따라다니도록 */
                 top: 20px;
             }
+            #hamburger-menu { display: none; } /* PC 화면에서는 햄버거 메뉴 숨김 */
+            h1 { margin-left: 0; }
         }
 
         @media (max-width: 768px) {
@@ -467,19 +577,41 @@
             .card { width: 80px; height: 80px; font-size: 35px; } /* 공 크기 반응형 조정 */
             h1 { font-size: 1.8em; }
             h2 { font-size: 1.2em; }
-            .modal-content { width: 95%; padding: 20px; }
+            .modal-content { width: 95%; padding: 15px; max-width: 95%;}
             #best-lotto-record { font-size: 1.2em; }
             .goal-item { flex-direction: column; align-items: flex-start; } /* 그리드 아이템 반응형 */
             .goal-item .attempts-count { text-align: left; width: auto; margin-top: 4px; }
             #chat-sidebar { height: 300px; }
+            #modal-probability-section #goal-grid {
+                 grid-template-columns: 1fr 1fr; /* 모바일 모달에서는 다시 두 줄로 */
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- [추가] 사이드 메뉴와 오버레이 -->
+<div id="nav-overlay"></div>
+<nav id="side-nav">
+    <div id="side-nav-buttons">
+        <button id="nav-menu-button">모드 선택으로</button>
+        <button id="nav-restart-button">게임 다시 시작</button>
+        <a href="https://parkminkyu.github.io/bok/history.html" target="_blank" id="nav-bok-link">오늘의 운세 보기</a>
+        <a href="https://parkminkyu.github.io/newLotto/lottoWin.html" target="_blank" id="nav-lotto-link">로또 당첨 번호</a>
+    </div>
+</nav>
+
 <div id="main-layout">
     <div id="game-wrapper">
-        <h1>로또 운빨 체험</h1>
+        <!-- [수정] 헤더 영역으로 타이틀과 햄버거 메뉴를 묶음 -->
+        <div id="header">
+            <h1>로또 운빨 체험</h1>
+            <button id="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+        </div>
 
         <div id="mode-selection">
             <h2>게임 모드를 선택하세요</h2>
@@ -504,7 +636,7 @@
 
             <div id="game-board"></div>
 
-            <div style="    max-width: 600px;width: 100%;">
+            <div style="max-width: 600px;width: 100%;">
                 <iframe src="https://ads-partners.coupang.com/widgets.html?id=935668&template=carousel&trackingCode=AF6210416&subId=&width=100%&height=140&tsource=" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
             </div>
 
@@ -514,13 +646,12 @@
                 <p style="font-size: 0.85em; color: #666; margin-top: -10px; margin-bottom: 20px;">
                     현재까지의 누적 성공 확률을 로또 등수와 비교하여 보여줍니다.
                 </p>
-
-                <div id="goal-grid"></div>
                 <div id="probability-graph-container">
                     <div id="probability-graph-bar"></div>
                     <div id="graph-labels"></div>
                     <div id="graph-pointer">▼</div>
                 </div>
+                <div id="goal-grid"></div>
             </div>
             <button id="back-to-menu-button">모드 선택으로</button>
         </div>
@@ -530,6 +661,8 @@
                 <h2>최종 결과</h2>
                 <p id="final-record-text"></p>
                 <p id="best-lotto-record"></p>
+                <!-- [추가] 모달 내에 확률 섹션이 들어갈 컨테이너 -->
+                <div id="modal-probability-section"></div>
                 <div id="result-buttons">
                     <button id="modal-restart-button">다시 시작</button>
                     <button id="modal-menu-button">모드 선택으로</button>
@@ -566,6 +699,15 @@
     const modalRestartButton = document.getElementById('modal-restart-button');
     const modalMenuButton = document.getElementById('modal-menu-button');
     const confettiCanvas = document.getElementById('confetti-canvas');
+    const probabilitySectionEl = document.getElementById('probability-section'); // [추가]
+    const modalProbabilitySectionEl = document.getElementById('modal-probability-section'); // [추가]
+    // [추가] 햄버거 메뉴 관련 DOM 요소
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const sideNav = document.getElementById('side-nav');
+    const navOverlay = document.getElementById('nav-overlay');
+    const navMenuButton = document.getElementById('nav-menu-button');
+    const navRestartButton = document.getElementById('nav-restart-button');
+
 
     // --- 게임 상태 변수 ---
     let currentLevel = 2;
@@ -585,7 +727,13 @@
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
-        setupGame(fixedCardCount, true);
+        // [수정] 원래대로 처음에는 고정 모드(공 2개)로 바로 시작하도록 변경
+        gameContainerEl.style.display = 'flex';
+        modeSelectionEl.style.display = 'none';
+        gameMode = 'fixed';
+        fixedCardCount = 2;
+        currentLevel = 2;
+        setupGame(currentLevel, true);
     });
 
     // --- 이벤트 리스너 ---
@@ -618,11 +766,11 @@
     });
 
     backToMenuButton.addEventListener('click', () => {
-        gameContainerEl.style.display = 'none';
-        modeSelectionEl.style.display = 'flex';
+        goToMenu();
     });
 
     function restartGame() {
+        closeSideNav();
         resultModal.style.display = 'none';
         const startLevel = gameMode === 'classic' ? 2 : fixedCardCount;
         currentLevel = startLevel;
@@ -630,13 +778,43 @@
     }
     modalRestartButton.addEventListener('click', restartGame);
     restartButton.addEventListener('click', restartGame);
+    navRestartButton.addEventListener('click', restartGame);
 
-    function goToMenu() {
+
+    function goToMenu(isInitial = false) {
+        closeSideNav();
         resultModal.style.display = 'none';
         gameContainerEl.style.display = 'none';
         modeSelectionEl.style.display = 'flex';
+
+        // 모드 선택 화면이 열릴 때 현재 모드 설정을 반영
+        if (gameMode === 'classic') {
+            classicModeBtn.classList.add('selected');
+            fixedModeBtn.classList.remove('selected');
+            fixedCountSection.style.display = 'none';
+        } else {
+            classicModeBtn.classList.remove('selected');
+            fixedModeBtn.classList.add('selected');
+            fixedCountSection.style.display = 'block';
+            cardCountInput.value = fixedCardCount;
+        }
     }
     modalMenuButton.addEventListener('click', goToMenu);
+    navMenuButton.addEventListener('click', goToMenu);
+
+
+    // --- [추가] 사이드 메뉴 기능 ---
+    function openSideNav() {
+        sideNav.classList.add('open');
+        navOverlay.classList.add('show');
+    }
+    function closeSideNav() {
+        sideNav.classList.remove('open');
+        navOverlay.classList.remove('show');
+    }
+    hamburgerMenu.addEventListener('click', openSideNav);
+    navOverlay.addEventListener('click', closeSideNav);
+
 
     function updateGoalGrid() {
         const goalGridEl = document.getElementById('goal-grid');
@@ -882,7 +1060,9 @@
         }
     }
 
+    // [수정]
     function showResultModal(isLegend = false) {
+        // 모달 내용 채우기
         if (isLegend) {
             finalRecordText.innerHTML = `<strong>당신은 전설이 되었습니다!</strong>`;
             bestLottoRecord.innerHTML = `이것은 인간의 영역을 넘어선 확률입니다.<br>모든 도전을 완료하셨습니다!`;
@@ -911,6 +1091,14 @@
             finalRecordText.textContent = '성공한 기록이 없습니다.';
             bestLottoRecord.textContent = '다음엔 꼭 성공해보세요!';
         }
+
+        // [추가] 메인 화면의 확률 섹션을 복제하여 모달에 추가
+        modalProbabilitySectionEl.innerHTML = ''; // 이전 내용 초기화
+        const clonedSection = probabilitySectionEl.cloneNode(true);
+        clonedSection.removeAttribute('id'); // ID 중복 방지
+        modalProbabilitySectionEl.appendChild(clonedSection);
+
+        // 모달 표시
         resultModal.style.display = 'flex';
     }
 

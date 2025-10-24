@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- [수정] SEO 및 컨셉에 맞는 타이틀, 설명, 키워드 추가 -->
+    <title>로또 운빨 체험: 당신의 행운은 어디까지?</title>
+    <meta name="description" content="간단한 공 뽑기 게임을 통해 로또 당첨 확률이 실제로 얼마나 낮은지 체감해보세요. 당신의 행운으로 1등 확률을 돌파할 수 있을까요?">
+    <meta name="keywords" content="로또, 로또 시뮬레이터, 확률 게임, 행운 테스트, 뽑기 게임, lotto, probability game, lucky pick">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+
+        /* --- 모드 선택 화면 스타일 --- */
+        #mode-selection {
+            display: none; /* 초기에는 숨겨짐 */
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        #mode-selection h2 {
+            margin: 0 0 10px 0;
+        }
+        .mode-button, #start-game-button, #back-to-menu-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .mode-button {
+            background-color: #f0f2f5;
+            color: #555;
+        }
+        .mode-button.selected {
+            background-color: #e7f3ff;
+            border-color: #4a90e2;
+            color: #4a90e2;
+        }
+        #fixed-count-section {
+            width: 100%;
+            display: none; /* 평소엔 숨김 */
+        }
+        #card-count-input {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+        }
+        #start-game-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        #back-to-menu-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            margin-top: 10px;
+        }
+
+        /* --- 게임 컨테이너 --- */
+        #game-container {
+            display: flex; /* 초기에는 보이도록 설정 */
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        #game-board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            max-width: 800px;
+        }
+
+        /* [최종] 로또 공 모양 스타일 */
+        .card {
+            width: 100px;
+            height: 100px;
+            background-image: linear-gradient(135deg, #898ffe 0%, #c166ff 100%);
+            color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            user-select: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.4);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.4);
+        }
+        .card.flipped, .card.wrong, .card.revealed-zero {
+            cursor: default;
+            color: white;
+            font-size: 50px;
+        }
+        .card.flipped {
+            background-image: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+            transform: scale(1.15);
+            z-index: 10;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+        }
+        .card.wrong {
+            background-image: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            opacity: 0.9;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+        }
+        .card.revealed-zero {
+            background-image: linear-gradient(135deg, #b0bec5 0%, #90a4ae 100%);
+            color: #eceff1;
+            opacity: 0.7;
+        }
+
+        #message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            min-height: 80px;
+            color: #555;
+            line-height: 1.5;
+        }
+        #cumulative-prob {
+            display: block;
+            font-size: 0.9em;
+            color: #17a2b8;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            margin-top: 15px;
+            display: none;
+        }
+        #probability-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        /* 목표 횟수 그리드 스타일 */
+        #goal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        .goal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid; /* 등수별 색상 강조 */
+        }
+        .goal-item.goal-5 { border-color: #4a90e2; }
+        .goal-item.goal-4 { border-color: #28a745; }
+        .goal-item.goal-3 { border-color: #f5a623; }
+        .goal-item.goal-2 { border-color: #d0021b; }
+        .goal-item.goal-1 { border-color: #8e44ad; }
+        .goal-item .rank-text {
+            font-weight: bold;
+        }
+        .goal-item .attempts-count {
+            position: relative;
+            width: 110px;
+            text-align: right;
+        }
+        .goal-item.achieved {
+            background-color: #d1e7dd; /* 달성 시 초록 계열로 변경 */
+            border-color: #198754;
+        }
+        .goal-item .progress-text { /* 현재/목표 횟수 텍스트 */
+            font-weight: normal;
+            color: #6c757d;
+        }
+        .achievement-mark {
+            color: #198754; /* 달성 마크 색상 변경 */
+            font-weight: bold;
+        }
+
+        /* 한 줄 로그 스케일 그래프 스타일 */
+        #probability-graph-container {
+            width: 100%;
+            position: relative;
+            padding-top: 20px;
+            height: 60px;
+        }
+        #probability-graph-bar {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            position: relative;
+            background-color: #e9ecef;
+        }
+        #graph-labels {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            margin-top: 5px;
+        }
+        .label-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.8em;
+            color: #666;
+            line-height: 1.2;
+            transform: translateX(-50%);
+        }
+        .label-item span { font-weight: bold; }
+        .label-item small { font-size: 0.9em; color: #999; }
+        #graph-pointer {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            font-size: 20px;
+            color: #d0021b;
+            transform: translateX(-50%);
+            transition: left 0.5s ease-out;
+            z-index: 10;
+        }
+
+        /* 모달 및 기타 UI 스타일 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            animation: slide-down 0.5s ease-out;
+        }
+        @keyframes slide-down {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            margin-bottom: 15px;
+        }
+        #final-record-text {
+            font-size: 1.1em;
+            color: #555;
+        }
+        #best-lotto-record {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #007bff;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 8px;
+        }
+        #result-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        #result-buttons button {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            transition: transform 0.2s;
+        }
+        #result-buttons button:hover {
+            transform: scale(1.05);
+        }
+        #modal-restart-button { background-color: #28a745; color: white; }
+        #modal-menu-button { background-color: #6c757d; color: white; }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1001;
+        }
+        #timer-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+            overflow: hidden;
+        }
+        #timer-bar {
+            width: 100%;
+            height: 100%;
+            background-color: #28a745;
+            border-radius: 4px;
+            transition: width 2s linear;
+        }
+
+        #level-info {
+            font-size: 1.1em;
+            color: #555;
+            padding: 8px 12px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        #level-info .round,
+        #level-info .level,
+        #level-info .mission { margin: 0 4px; }
+        #level-info .round { font-weight: bold; color: #007bff; }
+        #level-info .level { font-weight: bold; color: #28a745; }
+
+        #rank-milestone-message {
+            display: block;
+            margin-top: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            animation: fadeInOut 2s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(10px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 반응형 레이아웃 및 채팅방 스타일 --- */
+        #main-layout {
+            display: flex;
+            flex-direction: column; /* 모바일에서는 수직으로 쌓임 (기본값) */
+            width: 100%;
+            max-width: 1200px;
+            gap: 20px;
+        }
+        #game-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #chat-sidebar {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 400px; /* 채팅방 높이 고정 */
+        }
+        #chat-sidebar h2 {
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1em;
+        }
+        #chat-messages {
+            flex-grow: 1; /* 남는 공간을 모두 차지 */
+            overflow-y: auto; /* 메시지 길어지면 스크롤 */
+            font-size: 0.9em;
+            text-align: left;
+        }
+        #chat-messages p {
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+        #chat-messages span {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        #chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        #chat-input {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+        }
+        #chat-send-btn {
+            padding: 8px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media (min-width: 1024px) {
+            #main-layout {
+                flex-direction: row; /* PC에서는 수평으로 배치 */
+                align-items: flex-start;
+            }
+            #game-wrapper {
+                flex-grow: 1;
+            }
+            #chat-sidebar {
+                width: 100%; /* PC에서 채팅방 너비 고정 */
+                height: 755px; /* 화면보다 커지지 않게 */
+                position: sticky; /* 스크롤 따라다니도록 */
+                top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            #game-container, #mode-selection { width: 100%; padding: 15px; }
+            #game-board { gap: 8px; }
+            .card { width: 80px; height: 80px; font-size: 35px; } /* 공 크기 반응형 조정 */
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.2em; }
+            .modal-content { width: 95%; padding: 20px; }
+            #best-lotto-record { font-size: 1.2em; }
+            .goal-item { flex-direction: column; align-items: flex-start; } /* 그리드 아이템 반응형 */
+            .goal-item .attempts-count { text-align: left; width: auto; margin-top: 4px; }
+            #chat-sidebar { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-layout">
+    <div id="game-wrapper">
+        <h1>로또 운빨 체험</h1>
+
+        <div id="mode-selection">
+            <h2>게임 모드를 선택하세요</h2>
+            <button class="mode-button" id="classic-mode-btn">클래식 모드 (점점 어려워짐)</button>
+            <button class="mode-button selected" id="fixed-mode-btn">고정 모드 (같은 난이도 반복)</button>
+            <div id="fixed-count-section">
+                <label for="card-count-input">공 개수 (2~100):</label>
+                <input type="number" id="card-count-input" value="3" min="2" max="100">
+            </div>
+            <button id="start-game-button">게임 시작</button>
+        </div>
+
+        <div id="game-container">
+            <div id="message">
+                <span id="level-info"></span>
+                <span id="rank-milestone-message"></span>
+                <span id="cumulative-prob"></span>
+                <div id="timer-bar-container">
+                    <div id="timer-bar"></div>
+                </div>
+            </div>
+
+            <div id="game-board"></div>
+
+            <div style="    max-width: 600px;width: 100%;">
+                <iframe src="https://ads-partners.coupang.com/widgets.html?id=935668&template=carousel&trackingCode=AF6210416&subId=&width=100%&height=140&tsource=" width="100%" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
+            </div>
+
+            <button id="restart-button">다시 시작</button>
+            <div id="probability-section">
+                <h2>달성 확률 위치</h2>
+                <p style="font-size: 0.85em; color: #666; margin-top: -10px; margin-bottom: 20px;">
+                    현재까지의 누적 성공 확률을 로또 등수와 비교하여 보여줍니다.
+                </p>
+
+                <div id="goal-grid"></div>
+                <div id="probability-graph-container">
+                    <div id="probability-graph-bar"></div>
+                    <div id="graph-labels"></div>
+                    <div id="graph-pointer">▼</div>
+                </div>
+            </div>
+            <button id="back-to-menu-button">모드 선택으로</button>
+        </div>
+
+        <div id="result-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h2>최종 결과</h2>
+                <p id="final-record-text"></p>
+                <p id="best-lotto-record"></p>
+                <div id="result-buttons">
+                    <button id="modal-restart-button">다시 시작</button>
+                    <button id="modal-menu-button">모드 선택으로</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-sidebar">
+        <script async src="//client.uchat.io/uchat.js"></script>
+        <u-chat room='LottoLife' style="display:inline-block; width:100%; height:100%;"></u-chat>
+    </div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+    // --- DOM 요소 ---
+    const modeSelectionEl = document.getElementById('mode-selection');
+    const gameContainerEl = document.getElementById('game-container');
+    const gameBoard = document.getElementById('game-board');
+    const levelInfoEl = document.getElementById('level-info');
+    const cumulativeProbEl = document.getElementById('cumulative-prob');
+    const restartButton = document.getElementById('restart-button');
+    const classicModeBtn = document.getElementById('classic-mode-btn');
+    const fixedModeBtn = document.getElementById('fixed-mode-btn');
+    const fixedCountSection = document.getElementById('fixed-count-section');
+    const cardCountInput = document.getElementById('card-count-input');
+    const startGameButton = document.getElementById('start-game-button');
+    const backToMenuButton = document.getElementById('back-to-menu-button');
+    const resultModal = document.getElementById('result-modal');
+    const finalRecordText = document.getElementById('final-record-text');
+    const bestLottoRecord = document.getElementById('best-lotto-record');
+    const modalRestartButton = document.getElementById('modal-restart-button');
+    const modalMenuButton = document.getElementById('modal-menu-button');
+    const confettiCanvas = document.getElementById('confetti-canvas');
+
+    // --- 게임 상태 변수 ---
+    let currentLevel = 2;
+    let currentRound = 1;
+    let isClickable = true;
+    let cumulativeProbability = 1;
+    let gameMode = 'fixed';
+    let fixedCardCount = 2;
+
+    // --- 확률 데이터 ---
+    const lottoProbabilityData = [
+        { prob: 2.22,      text: "5등" },
+        { prob: 0.136,      text: "4등" },
+        { prob: 0.0028,   text: "3등" },
+        { prob: 0.0000737, text: "2등" },
+        { prob: 0.0000123, text: "1등" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setupGame(fixedCardCount, true);
+    });
+
+    // --- 이벤트 리스너 ---
+    classicModeBtn.addEventListener('click', () => {
+        gameMode = 'classic';
+        classicModeBtn.classList.add('selected');
+        fixedModeBtn.classList.remove('selected');
+        fixedCountSection.style.display = 'none';
+    });
+
+    fixedModeBtn.addEventListener('click', () => {
+        gameMode = 'fixed';
+        fixedModeBtn.classList.add('selected');
+        classicModeBtn.classList.remove('selected');
+        fixedCountSection.style.display = 'block';
+    });
+
+    startGameButton.addEventListener('click', () => {
+        modeSelectionEl.style.display = 'none';
+        gameContainerEl.style.display = 'flex';
+        if (gameMode === 'classic') {
+            currentLevel = 2;
+        } else {
+            fixedCardCount = parseInt(cardCountInput.value, 10);
+            if (fixedCardCount < 2 || isNaN(fixedCardCount)) fixedCardCount = 2;
+            if (fixedCardCount > 100) fixedCardCount = 100;
+            currentLevel = fixedCardCount;
+        }
+        setupGame(currentLevel, true);
+    });
+
+    backToMenuButton.addEventListener('click', () => {
+        gameContainerEl.style.display = 'none';
+        modeSelectionEl.style.display = 'flex';
+    });
+
+    function restartGame() {
+        resultModal.style.display = 'none';
+        const startLevel = gameMode === 'classic' ? 2 : fixedCardCount;
+        currentLevel = startLevel;
+        setupGame(startLevel, true);
+    }
+    modalRestartButton.addEventListener('click', restartGame);
+    restartButton.addEventListener('click', restartGame);
+
+    function goToMenu() {
+        resultModal.style.display = 'none';
+        gameContainerEl.style.display = 'none';
+        modeSelectionEl.style.display = 'flex';
+    }
+    modalMenuButton.addEventListener('click', goToMenu);
+
+    function updateGoalGrid() {
+        const goalGridEl = document.getElementById('goal-grid');
+        goalGridEl.innerHTML = '';
+
+        // 현재 성공 횟수 (currentRound는 1부터 시작하므로 1을 빼줌)
+        const currentSuccesses = Math.max(0, currentRound - 1);
+        const singleTryProb = 1 / currentLevel;
+
+        lottoProbabilityData.forEach((lotto, index) => {
+            const lottoProb = lotto.prob / 100;
+            // 목표 달성에 필요한 총 성공 횟수
+            const requiredAttempts = Math.ceil(Math.log(lottoProb) / Math.log(singleTryProb));
+            const isAchieved = cumulativeProbability <= lottoProb;
+
+            if (requiredAttempts > 0) {
+                const goalItem = document.createElement('div');
+                goalItem.className = `goal-item goal-${5 - index}`;
+
+                let attemptsText;
+
+                if (isAchieved) {
+                    // 목표를 달성한 경우
+                    goalItem.classList.add('achieved');
+                    attemptsText = `<span class="achievement-mark">달성!</span>`;
+                } else {
+                    // 아직 달성하지 못한 경우
+                    attemptsText = `
+                        <span class="attempts-count-number">${currentSuccesses.toLocaleString()}</span>
+                        <span class="progress-text"> / ${requiredAttempts.toLocaleString()}회</span>
+                    `;
+                }
+
+                goalItem.innerHTML = `
+                    <span class="rank-text">${lotto.text} 도달</span>
+                    <span class="attempts-count">
+                        ${attemptsText}
+                    </span>
+                `;
+                goalGridEl.appendChild(goalItem);
+            }
+        });
+    }
+
+
+    function setupGame(level, isNewGame = false) {
+        gameBoard.innerHTML = '';
+        const levelText = gameMode === 'classic' ? `레벨 ${level - 1}` : `공 ${level}개 고정 모드`;
+
+        levelInfoEl.innerHTML = `
+            <span class="round">Round ${currentRound}</span> |
+            <span class="level">${levelText}</span> |
+            <span class="mission">공 ${level}개 중 '1'을 찾아보세요!</span>
+        `;
+        isClickable = true;
+
+        const graphBar = document.getElementById('probability-graph-bar');
+        const labelsContainer = document.getElementById('graph-labels');
+        labelsContainer.innerHTML = '';
+
+        const colors = {
+            "시작": "#e9ecef", "5등": "#4a90e2", "4등": "#28a745", "3등": "#f5a623",
+            "2등": "#d0021b", "1등": "#8e44ad", "전설": "#ffd700"
+        };
+        const rankPoints = [
+            { prob: 1.0, text: "시작" },
+            ...lottoProbabilityData.map(d => ({ prob: d.prob / 100, text: d.text })),
+            { prob: 1e-12, text: "전설" }
+        ];
+
+        const maxProb = rankPoints[0].prob;
+        const minProb = rankPoints[rankPoints.length - 1].prob;
+        const maxLog = Math.log(maxProb);
+        const minLog = Math.log(minProb);
+        const scale = maxLog - minLog;
+
+        let gradientStops = [];
+        rankPoints.forEach(point => {
+            const pointLog = Math.log(Math.max(point.prob, 1e-12));
+            let percentage = (1 - (pointLog - minLog) / scale) * 100;
+            percentage = Math.max(0, Math.min(100, percentage));
+            gradientStops.push(`${colors[point.text]} ${percentage}%`);
+
+            const label = document.createElement('div');
+            label.className = 'label-item';
+            let rankText = point.text;
+            let probText = formatProbability(point.prob);
+
+            label.innerHTML = `<span>${rankText}</span>`;
+            label.style.left = `${percentage}%`;
+            labelsContainer.appendChild(label);
+        });
+
+        graphBar.style.background = `linear-gradient(to right, ${gradientStops.join(', ')})`;
+
+        restartButton.style.display = 'none';
+        if (isNewGame) {
+            currentRound = 1;
+            cumulativeProbability = 1;
+        }
+
+        updateGoalGrid();
+        updateCumulativeProbDisplay();
+        updateProbabilityGraph();
+
+        let cards = Array(level).fill(0);
+        const correctIndex = Math.floor(Math.random() * level);
+        cards[correctIndex] = 1;
+        for (let i = 0; i < level; i++) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.value = cards[i];
+            card.addEventListener('click', handleCardClick);
+            gameBoard.appendChild(card);
+        }
+    }
+
+    function handleCardClick(event) {
+        if (!isClickable) return;
+        const clickedCard = event.target;
+        const isCorrect = clickedCard.dataset.value === '1';
+        isClickable = false;
+
+        if (!isCorrect) {
+             clickedCard.classList.add('wrong');
+        }
+        revealAllCards();
+
+        if (isCorrect) {
+            const oldProb = cumulativeProbability;
+            const probability = (1 / currentLevel);
+            cumulativeProbability *= probability;
+            const probabilityPercent = (probability * 100).toFixed(2);
+            levelInfoEl.innerHTML = `정답입니다! <br><strong>${probabilityPercent}%</strong>의 확률을 뚫으셨습니다!`;
+
+            updateCumulativeProbDisplay();
+            updateProbabilityGraph(true, oldProb);
+            updateGoalGrid(); // 정답 시 그리드 업데이트
+
+            const legendProb = 1e-12;
+            if (cumulativeProbability <= legendProb) {
+                setTimeout(() => showResultModal(true), 1000);
+                return;
+            }
+
+            const timerContainer = document.getElementById('timer-bar-container');
+            const timerBar = document.getElementById('timer-bar');
+            timerContainer.style.display = 'block';
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '100%';
+            setTimeout(() => {
+                timerBar.style.transition = 'width 2s linear';
+                timerBar.style.width = '0%';
+            }, 50);
+
+            setTimeout(() => {
+                timerContainer.style.display = 'none';
+                document.getElementById('rank-milestone-message').innerHTML = '';
+                currentRound++;
+                if (gameMode === 'classic') {
+                    currentLevel++;
+                    setupGame(currentLevel);
+                } else {
+                    setupGame(fixedCardCount);
+                }
+            }, 2000);
+        } else {
+            levelInfoEl.innerHTML = `아쉽네요! '1'은 저기 있었어요.`;
+            setTimeout(() => showResultModal(false), 1000);
+        }
+    }
+
+    function updateProbabilityGraph(isSuccess = false, oldProb = 1) {
+        const pointer = document.getElementById('graph-pointer');
+        const milestoneMessageEl = document.getElementById('rank-milestone-message');
+
+        const rankPoints = [
+            ...lottoProbabilityData.map(d => ({ prob: d.prob / 100, text: d.text })),
+             { prob: 1e-12, text: "전설" }
+        ];
+
+        if (isSuccess) {
+            for (const point of rankPoints) {
+                 if (oldProb > point.prob && cumulativeProbability <= point.prob) {
+                     milestoneMessageEl.innerHTML = `🏆 ${point.text} 확률 돌파!`;
+                     break;
+                }
+            }
+        }
+
+        const maxProb = 1.0;
+        const minProb = 1e-12;
+        const maxLog = Math.log(maxProb);
+        const minLog = Math.log(minProb);
+        const scale = maxLog - minLog;
+
+        let currentProb = Math.max(cumulativeProbability, minProb);
+        const currentLog = Math.log(currentProb);
+
+        let percentage = (1 - (currentLog - minLog) / scale) * 100;
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        pointer.style.left = `${percentage}%`;
+    }
+
+    // --- 보조 함수 ---
+    function revealAllCards() {
+        document.querySelectorAll('.card').forEach((card) => {
+            const cardValue = card.dataset.value;
+            card.textContent = cardValue;
+            if (cardValue === '1') {
+                card.classList.add('flipped');
+            } else {
+                if (!card.classList.contains('wrong')) {
+                    card.classList.add('revealed-zero');
+                }
+            }
+        });
+    }
+
+    function updateCumulativeProbDisplay() {
+        if (currentRound === 1 && cumulativeProbability === 1) {
+            cumulativeProbEl.innerHTML = '';
+        } else {
+            const formatted = formatProbability(cumulativeProbability);
+            cumulativeProbEl.innerHTML = `현재까지 누적 성공 확률: <strong>${formatted}</strong>`;
+        }
+    }
+
+    function formatProbability(prob) {
+        const percent = prob * 100;
+        if (percent >= 1) {
+            return `${percent.toFixed(1)}%`;
+        } else {
+            const s = percent.toPrecision(2);
+            if (s.includes('e')) {
+                 const [base, exponent] = s.split('e');
+                 const numZeros = Math.abs(parseInt(exponent, 10));
+                 const val = '0.' + '0'.repeat(numZeros - 1) + base.replace('.', '');
+                 return `${val}%`;
+            }
+            return `${s}%`;
+        }
+    }
+
+    function showResultModal(isLegend = false) {
+        if (isLegend) {
+            finalRecordText.innerHTML = `<strong>당신은 전설이 되었습니다!</strong>`;
+            bestLottoRecord.innerHTML = `이것은 인간의 영역을 넘어선 확률입니다.<br>모든 도전을 완료하셨습니다!`;
+            const confetti = new Confetti(confettiCanvas);
+            confetti.start();
+        } else if (currentRound > 1) {
+            finalRecordText.innerHTML = `최종 기록: <strong>Round ${currentRound - 1}</strong> / 누적 확률: <strong>${formatProbability(cumulativeProbability)}</strong>`;
+            let bestRecordFound = false;
+
+            for (const lotto of [...lottoProbabilityData].reverse()) {
+                const lottoProb = lotto.prob / 100;
+                if (cumulativeProbability <= lottoProb) {
+                     bestLottoRecord.innerHTML = `축하합니다!<br><strong>로또 ${lotto.text} 당첨</strong> 확률을 넘어섰습니다!`;
+                     bestRecordFound = true;
+                     break;
+                }
+            }
+            if (!bestRecordFound) {
+                bestLottoRecord.textContent = '로또 5등 확률에도 미치지 못했지만, 대단한 도전이었습니다!';
+            }
+            if(currentRound > 1) {
+                const confetti = new Confetti(confettiCanvas);
+                confetti.start();
+            }
+        } else {
+            finalRecordText.textContent = '성공한 기록이 없습니다.';
+            bestLottoRecord.textContent = '다음엔 꼭 성공해보세요!';
+        }
+        resultModal.style.display = 'flex';
+    }
+
+    class Confetti {
+        constructor(canvas) {
+            this.canvas = canvas;
+            this.ctx = this.canvas.getContext('2d');
+            this.particles = [];
+            this.particleCount = 200;
+            this.duration = 3000;
+            this.colors = ["#f5a623", "#d0021b", "#4a90e2", "#ffffff", "#f8e71c"];
+        }
+        start() {
+            this.particles = [];
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+            for (let i = 0; i < this.particleCount; i++) {
+                this.particles.push({
+                    x: Math.random() * this.canvas.width,
+                    y: -Math.random() * this.canvas.height,
+                    size: Math.random() * 5 + 2,
+                    color: this.colors[Math.floor(Math.random() * this.colors.length)],
+                    speedX: (Math.random() - 0.5) * 10,
+                    speedY: Math.random() * 5 + 5,
+                    opacity: 1
+                });
+            }
+            this.animate(performance.now());
+        }
+        animate(startTime) {
+            const elapsed = performance.now() - startTime;
+            if (elapsed > this.duration) {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                return;
+            }
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.opacity = 1 - (elapsed / this.duration);
+                this.ctx.globalAlpha = p.opacity;
+                this.ctx.fillStyle = p.color;
+                this.ctx.beginPath();
+                this.ctx.rect(p.x, p.y, p.size, p.size);
+                this.ctx.fill();
+            });
+            requestAnimationFrame(() => this.animate(startTime));
+        }
+    }
+</script>
+
+</body>
+</html>

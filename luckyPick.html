@@ -207,7 +207,7 @@
         .card {
             width: 100px;
             height: 100px;
-            background-image: linear-gradient(135deg, #898ffe 0%, #c166ff 100%);
+            background-image: linear-gradient(135deg, #e9ecef 0%, #bdc3c7 100%); /* [수정] 기본 공 색상 (시작 등급) */
             color: transparent;
             display: flex;
             justify-content: center;
@@ -226,11 +226,16 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.4);
         }
 
-        /* [추가] 등급별 공 색상 */
-        .card.ball-tier-4 { background-image: linear-gradient(135deg, #4a90e2 0%, #898ffe 100%); }
-        .card.ball-tier-3 { background-image: linear-gradient(135deg, #28a745 0%, #4a90e2 100%); }
-        .card.ball-tier-2 { background-image: linear-gradient(135deg, #f5a623 0%, #28a745 100%); }
-        .card.ball-tier-1 { background-image: linear-gradient(45deg, #d0021b, #f5a623, #8e44ad, #4a90e2); background-size: 400% 400%; animation: rainbow-flow 5s ease infinite; }
+        /* [수정] 등급별 공 색상을 그래프 색상과 통일 */
+        .card.ball-tier-5 { background-image: linear-gradient(135deg, #4a90e2 0%, #63b3ed 100%); } /* 5등 - 파랑 */
+        .card.ball-tier-4 { background-image: linear-gradient(135deg, #28a745 0%, #48bb78 100%); } /* 4등 - 초록 */
+        .card.ball-tier-3 { background-image: linear-gradient(135deg, #f5a623 0%, #f6ad55 100%); } /* 3등 - 주황 */
+        .card.ball-tier-2 { background-image: linear-gradient(135deg, #d0021b 0%, #e53e3e 100%); } /* 2등 - 빨강 */
+        .card.ball-tier-1 { background-image: linear-gradient(135deg, #8e44ad 0%, #a78bfa 100%); } /* 1등 - 보라 */
+        .card.ball-tier-mythic { background-image: linear-gradient(135deg, #00c4e4 0%, #81e6d9 100%); animation: rainbow-flow 2s ease infinite; } /* 신화 */
+        .card.ball-tier-cosmic { background-image: linear-gradient(45deg, #ff4f81, #f9d423); background-size: 200% 200%; animation: rainbow-flow 3s ease infinite; } /* 우주 */
+        .card.ball-tier-transcendent { background-image: linear-gradient(45deg, #f9d423, #898ffe); background-size: 200% 200%; animation: rainbow-flow 3s ease infinite;} /* 초월 */
+        .card.ball-tier-legend { background-image: linear-gradient(45deg, #ffd700, #ff8c00, #f56565, #ffd700); background-size: 400% 400%; animation: rainbow-flow 4s ease infinite;} /* 전설 */
 
 
         .card.flipped, .card.wrong, .card.revealed-zero {
@@ -308,11 +313,17 @@
             border-radius: 6px;
             border-left: 4px solid; /* 등수별 색상 강조 */
         }
+        /* [수정] 달성 확률 위치 테두리 색상을 그래프 색상과 통일 */
         .goal-item.goal-5 { border-color: #4a90e2; }
         .goal-item.goal-4 { border-color: #28a745; }
         .goal-item.goal-3 { border-color: #f5a623; }
         .goal-item.goal-2 { border-color: #d0021b; }
         .goal-item.goal-1 { border-color: #8e44ad; }
+        .goal-item.goal-mythic { border-color: #00c4e4; }
+        .goal-item.goal-cosmic { border-color: #ff4f81; }
+        .goal-item.goal-transcendent { border-color: #f9d423; }
+        .goal-item.goal-legend { border-color: #ffd700; }
+
         .goal-item .rank-text {
             font-weight: bold;
         }
@@ -514,57 +525,74 @@
             font-size: 1.1em;
             color: #007bff;
         }
+
+        /* [수정] '도전 중' 표시 스타일 전체 (그래프 색상과 통일) */
         #level-info .current-goal {
             font-size: 0.9em;
-            color: #28a745;
-            background-color: #d1e7dd;
-            padding: 2px 8px;
+            padding: 3px 8px; /* 패딩 조정 */
             border-radius: 12px;
             transition: all 0.5s ease-in-out;
-        }
-        #level-info .sub-info {
-            font-size: 0.8em;
-            color: #6c757d;
-            margin-top: 4px;
-        }
-        #level-info .level,
-        #level-info .mission {
-            margin: 0;
-            font-weight: normal;
-            color: inherit;
+            color: #333; /* 기본 글자색 (시작) */
+            background-color: #e9ecef; /* 기본 배경색 (시작) */
+            border: 1px solid #ddd; /* 기본 테두리 (시작) */
         }
 
-        /* [추가] 등급별 '도전 중' 문구 스타일 */
-        #level-info .current-goal.goal-1 {
-            background-color: #8e44ad; /* 1등 */
+        #level-info .current-goal.goal-5 { /* 5등 */
+            background-color: #4a90e2;
             color: white;
+            border: none;
+        }
+        #level-info .current-goal.goal-4 { /* 4등 */
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        #level-info .current-goal.goal-3 { /* 3등 */
+            background-color: #f5a623;
+            color: white;
+            border: none;
+        }
+        #level-info .current-goal.goal-2 { /* 2등 */
+            background-color: #d0021b;
+            color: white;
+            border: none;
+        }
+        #level-info .current-goal.goal-1 { /* 1등 */
+            background-color: #8e44ad;
+            color: white;
+            border: none;
             box-shadow: 0 0 8px rgba(142, 68, 173, 0.7);
         }
-        #level-info .current-goal.goal-mythic {
-            background-color: #00c4e4; /* 신화 */
+        #level-info .current-goal.goal-mythic { /* 신화 */
+            background-color: #00c4e4;
             color: white;
+            border: none;
             box-shadow: 0 0 10px rgba(0, 196, 228, 0.8);
             animation: pulse-animation 1.5s infinite;
         }
-        #level-info .current-goal.goal-cosmic {
-            background-image: linear-gradient(45deg, #ff4f81, #f9d423); /* 우주 */
+        #level-info .current-goal.goal-cosmic { /* 우주 */
+            background-image: linear-gradient(45deg, #ff4f81, #f9d423);
             color: white;
+            border: none;
             box-shadow: 0 0 12px rgba(255, 79, 129, 0.8);
             animation: pulse-animation 1.2s infinite;
         }
-        #level-info .current-goal.goal-transcendent {
-            background-image: linear-gradient(45deg, #f9d423, #898ffe); /* 초월 */
+        #level-info .current-goal.goal-transcendent { /* 초월 */
+            background-image: linear-gradient(45deg, #f9d423, #898ffe);
             color: white;
+            border: none;
             box-shadow: 0 0 15px rgba(249, 212, 35, 0.9);
             animation: pulse-animation 1s infinite;
         }
-        #level-info .current-goal.goal-legend {
-            background-image: linear-gradient(45deg, #ffd700, #ff8c00); /* 전설 */
+        #level-info .current-goal.goal-legend { /* 전설 */
+            background-image: linear-gradient(45deg, #ffd700, #ff8c00);
             color: white;
+            border: none;
             font-weight: bold;
             box-shadow: 0 0 18px rgba(255, 215, 0, 1);
             animation: pulse-animation 0.8s infinite;
         }
+
 
         /* [추가] 반짝이는 애니메이션 */
         @keyframes pulse-animation {
@@ -701,6 +729,7 @@
         }
     </style>
 
+
 </head>
 <body>
 
@@ -834,7 +863,7 @@
     let fixedCardCount = 2;
     let currentGoal = { text: '', className: '' };
 
-    // --- [수정] 등급 데이터를 공통으로 관리 ---
+    // --- 등급 데이터를 공통으로 관리 ---
     const lottoProbabilityData = [
         { prob: 2.22 / 100,      text: "5등" },
         { prob: 0.136 / 100,      text: "4등" },
@@ -894,22 +923,16 @@
         goToMenu();
     });
 
-    // luckyPick.html 파일의 <script> 태그 안에서 restartGame 함수를 찾아 아래 코드로 교체하세요.
-
     function restartGame() {
         closeSideNav();
         resultModal.style.display = 'none';
-
-        // [수정] 게임 상태를 완전히 초기화
         currentRound = 1;
         cumulativeProbability = 1;
-        document.getElementById('rank-milestone-message').innerHTML = ''; // [추가] 돌파 메시지 초기화
-
+        document.getElementById('rank-milestone-message').innerHTML = ''; // 돌파 메시지 초기화
         const startLevel = gameMode === 'classic' ? 2 : fixedCardCount;
         currentLevel = startLevel;
         setupGame(startLevel, true);
     }
-
     modalRestartButton.addEventListener('click', restartGame);
     restartButton.addEventListener('click', restartGame);
     navRestartButton.addEventListener('click', restartGame);
@@ -949,17 +972,25 @@
     pcMenuButton.addEventListener('click', openSideNav);
     navOverlay.addEventListener('click', closeSideNav);
 
-    // 도전 목표 텍스트와 클래스를 업데이트하는 함수
+    // [수정] 도전 목표 텍스트와 클래스를 업데이트하는 함수 (그래프 색상 기준)
     function updateCurrentGoalText() {
         currentGoal.text = '최고 등급 달성!';
-        currentGoal.className = 'goal-legend'; // 기본값
+        currentGoal.className = 'goal-legend'; // 최종 목표 기본값
 
+        // CSS 클래스 이름을 그래프 색상과 매칭
         const rankClasses = ['goal-5', 'goal-4', 'goal-3', 'goal-2', 'goal-1', 'goal-mythic', 'goal-cosmic', 'goal-transcendent', 'goal-legend'];
 
+        // 게임 시작 시(아직 5등도 달성 못했을 때)
+        if (cumulativeProbability > fullRankData[0].prob) {
+            currentGoal.text = `${fullRankData[0].text} 도전 중`;
+            currentGoal.className = 'goal-start goal-5'; // 시작 등급 클래스
+            return;
+        }
+
         for (let i = 0; i < fullRankData.length; i++) {
-            const goal = fullRankData[i];
-            if (cumulativeProbability > goal.prob) {
-                currentGoal.text = `${goal.text} 도전 중`;
+            // 다음 목표를 찾음
+            if (cumulativeProbability > fullRankData[i].prob) {
+                currentGoal.text = `${fullRankData[i].text} 도전 중`;
                 currentGoal.className = rankClasses[i] || '';
                 break;
             }
@@ -973,6 +1004,8 @@
         const currentSuccesses = Math.max(0, currentRound - 1);
         const singleTryProb = 1 / currentLevel;
 
+        const rankClasses = ['goal-5', 'goal-4', 'goal-3', 'goal-2', 'goal-1', 'goal-mythic', 'goal-cosmic', 'goal-transcendent', 'goal-legend'];
+
         fullRankData.forEach((goal, index) => {
             const goalProb = goal.prob;
             const requiredAttempts = Math.ceil(Math.log(goalProb) / Math.log(singleTryProb));
@@ -980,11 +1013,7 @@
 
             if (requiredAttempts > 0) {
                 const goalItem = document.createElement('div');
-                if (index < 5) {
-                    goalItem.className = `goal-item goal-${5 - index}`;
-                } else {
-                    goalItem.className = 'goal-item goal-1';
-                }
+                goalItem.className = `goal-item ${rankClasses[index] || 'goal-1'}`;
 
                 let attemptsText;
                 if (isAchieved) {
@@ -1008,8 +1037,6 @@
         });
     }
 
-
-    // luckyPick.html 파일의 <script> 태그 안에서 setupGame 함수를 찾아 아래 코드로 교체하세요.
 
     function setupGame(level, isNewGame = false) {
         if (isNewGame) {
@@ -1042,7 +1069,7 @@
         labelsContainer.innerHTML = '';
 
         const colors = {
-            "시작": "#e9ecef", "5등": "#4a90e2", "4등": "#28a745", "3등": "#f5a623",
+            "시작": "#e9ecef", "5등": "#17a2b8", "4등": "#28a745", "3등": "#f5a623",
             "2등": "#d0021b", "1등": "#8e44ad",
             "신화": "#00c4e4", "우주": "#ff4f81", "초월": "#f9d423",
             "전설": "#ffd700"
@@ -1082,29 +1109,29 @@
         const correctIndex = Math.floor(Math.random() * level);
         cards[correctIndex] = 1;
 
-        // [수정] 등급에 따라 공 색상을 결정하는 로직 변경
+        // [수정] 도전 목표 등급과 공 스타일 등급을 그래프 색상 기준으로 일치
         const ballRankClasses = {
-            'goal-5': '', // 5등 도전 시 기본 공 색상
+            'goal-start': '', // 시작 (5등 도전) -> 기본 공
+            'goal-5': 'ball-tier-5',
             'goal-4': 'ball-tier-4',
             'goal-3': 'ball-tier-3',
             'goal-2': 'ball-tier-2',
             'goal-1': 'ball-tier-1',
-            'goal-mythic': 'ball-tier-1',
-            'goal-cosmic': 'ball-tier-1',
-            'goal-transcendent': 'ball-tier-1',
-            'goal-legend': 'ball-tier-1'
+            'goal-mythic': 'ball-tier-mythic',
+            'goal-cosmic': 'ball-tier-cosmic',
+            'goal-transcendent': 'ball-tier-transcendent',
+            'goal-legend': 'ball-tier-legend'
         };
         const ballClass = ballRankClasses[currentGoal.className] || '';
 
         for (let i = 0; i < level; i++) {
             const card = document.createElement('div');
-            card.className = `card ${ballClass}`; // 수정된 클래스 적용
+            card.className = `card ball-tier-5 ${ballClass}`; // 수정된 클래스 적용
             card.dataset.value = cards[i];
             card.addEventListener('click', handleCardClick);
             gameBoard.appendChild(card);
         }
     }
-
 
     function handleCardClick(event) {
         if (!isClickable) return;
@@ -1308,6 +1335,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>

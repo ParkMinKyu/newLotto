@@ -24,14 +24,14 @@
         h1 {
             color: #333;
             margin-right: auto; /* 타이틀을 왼쪽으로 */
-            margin-left: 20px;
         }
 
         /* --- [수정] 햄버거 메뉴 및 사이드바 스타일 --- */
         #header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start; /* 좌측 정렬 */
+            gap: 20px; /* 요소 간 간격 */
             width: 100%;
             max-width: 800px;
             margin-bottom: 20px;
@@ -57,21 +57,36 @@
             transition: all 0.3s ease-in-out;
         }
 
+        /* [추가] PC용 메뉴 버튼 */
+        #pc-menu-button {
+            display: none; /* 모바일에서는 숨김 */
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+
         #side-nav {
             position: fixed;
             top: 0;
-            left: -280px; /* 초기에는 숨겨짐 */
+            left: 0; /* left 속성 초기화 */
             width: 250px;
             height: 100%;
             background-color: white;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             z-index: 1002;
-            transition: left 0.3s ease-in-out;
             padding: 60px 20px 20px;
+            transform: translateX(-100%); /* [수정] 메뉴를 화면 밖으로 완전히 이동 */
+            transition: transform 0.3s ease-in-out; /* [수정] transition 대상 변경 */
         }
 
         #side-nav.open {
-            left: 0;
+            transform: translateX(0); /* [수정] 메뉴가 열릴 때 원래 위치로 */
         }
 
         #nav-overlay {
@@ -271,7 +286,7 @@
         /* 목표 횟수 그리드 스타일 */
         #goal-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr; /* 4개에서 3개로 변경 */
             gap: 8px;
             margin: 15px 0;
             font-size: 0.9em;
@@ -340,6 +355,7 @@
             color: #666;
             line-height: 1.2;
             transform: translateX(-50%);
+            white-space: nowrap; /* [수정] 글자 줄바꿈 방지 */
         }
         .label-item span { font-weight: bold; }
         .label-item small { font-size: 0.9em; color: #999; }
@@ -435,6 +451,7 @@
         #modal-probability-section #goal-grid {
              grid-template-columns: 1fr; /* 모달에서는 한 줄로 표시 */
         }
+
 
         #confetti-canvas {
             position: fixed;
@@ -566,8 +583,20 @@
                 position: sticky; /* 스크롤 따라다니도록 */
                 top: 20px;
             }
-            #hamburger-menu { display: none; } /* PC 화면에서는 햄버거 메뉴 숨김 */
+            /* [수정] PC/모바일 메뉴 버튼 표시 전환 */
+            #hamburger-menu { display: none; }
+            #pc-menu-button { display: block; }
             h1 { margin-left: 0; }
+        }
+
+
+        @media (max-width: 1023px) { /* 1024px 미만일 때 적용되도록 수정 */
+            #header {
+                justify-content: space-between; /* 모바일에서는 양쪽 정렬 */
+                margin-left: 10px;
+                margin-right: 10px;
+                gap: 10px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -575,15 +604,16 @@
             #game-container, #mode-selection { width: 100%; padding: 15px; }
             #game-board { gap: 8px; }
             .card { width: 80px; height: 80px; font-size: 35px; } /* 공 크기 반응형 조정 */
-            h1 { font-size: 1.8em; }
+            h1 { font-size: 1.5em; } /* 글자 크기 조정 */
             h2 { font-size: 1.2em; }
             .modal-content { width: 95%; padding: 15px; max-width: 95%;}
             #best-lotto-record { font-size: 1.2em; }
             .goal-item { flex-direction: column; align-items: flex-start; } /* 그리드 아이템 반응형 */
             .goal-item .attempts-count { text-align: left; width: auto; margin-top: 4px; }
             #chat-sidebar { height: 300px; }
-            #modal-probability-section #goal-grid {
-                 grid-template-columns: 1fr 1fr; /* 모바일 모달에서는 다시 두 줄로 */
+            #modal-probability-section #goal-grid,
+            #goal-grid { /* #goal-grid 추가 */
+                 grid-template-columns: 1fr 1fr; /* 모바일에서는 다시 두 줄로 */
             }
         }
     </style>
@@ -603,9 +633,10 @@
 
 <div id="main-layout">
     <div id="game-wrapper">
-        <!-- [수정] 헤더 영역으로 타이틀과 햄버거 메뉴를 묶음 -->
+        <!-- [수정] 헤더 영역에 PC용 메뉴 버튼 추가 -->
         <div id="header">
             <h1>로또 운빨 체험</h1>
+            <button id="pc-menu-button">메뉴 열기</button>
             <button id="hamburger-menu">
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -699,10 +730,12 @@
     const modalRestartButton = document.getElementById('modal-restart-button');
     const modalMenuButton = document.getElementById('modal-menu-button');
     const confettiCanvas = document.getElementById('confetti-canvas');
-    const probabilitySectionEl = document.getElementById('probability-section'); // [추가]
-    const modalProbabilitySectionEl = document.getElementById('modal-probability-section'); // [추가]
-    // [추가] 햄버거 메뉴 관련 DOM 요소
+    const probabilitySectionEl = document.getElementById('probability-section');
+    const modalProbabilitySectionEl = document.getElementById('modal-probability-section');
+
+    // 메뉴 관련 DOM 요소
     const hamburgerMenu = document.getElementById('hamburger-menu');
+    const pcMenuButton = document.getElementById('pc-menu-button');
     const sideNav = document.getElementById('side-nav');
     const navOverlay = document.getElementById('nav-overlay');
     const navMenuButton = document.getElementById('nav-menu-button');
@@ -717,17 +750,25 @@
     let gameMode = 'fixed';
     let fixedCardCount = 2;
 
-    // --- 확률 데이터 ---
+    // --- [수정] 등급 데이터를 공통으로 관리 ---
     const lottoProbabilityData = [
-        { prob: 2.22,      text: "5등" },
-        { prob: 0.136,      text: "4등" },
-        { prob: 0.0028,   text: "3등" },
-        { prob: 0.0000737, text: "2등" },
-        { prob: 0.0000123, text: "1등" }
+        { prob: 2.22 / 100,      text: "5등" },
+        { prob: 0.136 / 100,      text: "4등" },
+        { prob: 0.0028 / 100,   text: "3등" },
+        { prob: 0.0000737 / 100, text: "2등" },
+        { prob: 0.0000123 / 100, text: "1등" }
     ];
 
+    const fullRankData = [
+        ...lottoProbabilityData,
+        { prob: 1e-8, text: "신화" },
+        { prob: 1e-9, text: "우주" },
+        { prob: 1e-11, text: "초월" },
+        { prob: 1e-12, text: "전설" }
+    ];
+
+
     document.addEventListener('DOMContentLoaded', () => {
-        // [수정] 원래대로 처음에는 고정 모드(공 2개)로 바로 시작하도록 변경
         gameContainerEl.style.display = 'flex';
         modeSelectionEl.style.display = 'none';
         gameMode = 'fixed';
@@ -787,7 +828,6 @@
         gameContainerEl.style.display = 'none';
         modeSelectionEl.style.display = 'flex';
 
-        // 모드 선택 화면이 열릴 때 현재 모드 설정을 반영
         if (gameMode === 'classic') {
             classicModeBtn.classList.add('selected');
             fixedModeBtn.classList.remove('selected');
@@ -803,7 +843,7 @@
     navMenuButton.addEventListener('click', goToMenu);
 
 
-    // --- [추가] 사이드 메뉴 기능 ---
+    // 사이드 메뉴 기능
     function openSideNav() {
         sideNav.classList.add('open');
         navOverlay.classList.add('show');
@@ -813,6 +853,7 @@
         navOverlay.classList.remove('show');
     }
     hamburgerMenu.addEventListener('click', openSideNav);
+    pcMenuButton.addEventListener('click', openSideNav);
     navOverlay.addEventListener('click', closeSideNav);
 
 
@@ -820,28 +861,27 @@
         const goalGridEl = document.getElementById('goal-grid');
         goalGridEl.innerHTML = '';
 
-        // 현재 성공 횟수 (currentRound는 1부터 시작하므로 1을 빼줌)
         const currentSuccesses = Math.max(0, currentRound - 1);
         const singleTryProb = 1 / currentLevel;
 
-        lottoProbabilityData.forEach((lotto, index) => {
-            const lottoProb = lotto.prob / 100;
-            // 목표 달성에 필요한 총 성공 횟수
-            const requiredAttempts = Math.ceil(Math.log(lottoProb) / Math.log(singleTryProb));
-            const isAchieved = cumulativeProbability <= lottoProb;
+        fullRankData.forEach((goal, index) => {
+            const goalProb = goal.prob;
+            const requiredAttempts = Math.ceil(Math.log(goalProb) / Math.log(singleTryProb));
+            const isAchieved = cumulativeProbability <= goalProb;
 
             if (requiredAttempts > 0) {
                 const goalItem = document.createElement('div');
-                goalItem.className = `goal-item goal-${5 - index}`;
+                if (index < 5) {
+                    goalItem.className = `goal-item goal-${5 - index}`;
+                } else {
+                    goalItem.className = 'goal-item goal-1';
+                }
 
                 let attemptsText;
-
                 if (isAchieved) {
-                    // 목표를 달성한 경우
                     goalItem.classList.add('achieved');
                     attemptsText = `<span class="achievement-mark">달성!</span>`;
                 } else {
-                    // 아직 달성하지 못한 경우
                     attemptsText = `
                         <span class="attempts-count-number">${currentSuccesses.toLocaleString()}</span>
                         <span class="progress-text"> / ${requiredAttempts.toLocaleString()}회</span>
@@ -849,7 +889,7 @@
                 }
 
                 goalItem.innerHTML = `
-                    <span class="rank-text">${lotto.text} 도달</span>
+                    <span class="rank-text">${goal.text.replace(' 로또', '')} 도달</span>
                     <span class="attempts-count">
                         ${attemptsText}
                     </span>
@@ -858,7 +898,6 @@
             }
         });
     }
-
 
     function setupGame(level, isNewGame = false) {
         gameBoard.innerHTML = '';
@@ -877,40 +916,37 @@
 
         const colors = {
             "시작": "#e9ecef", "5등": "#4a90e2", "4등": "#28a745", "3등": "#f5a623",
-            "2등": "#d0021b", "1등": "#8e44ad", "전설": "#ffd700"
+            "2등": "#d0021b", "1등": "#8e44ad",
+            "신화": "#00c4e4", "우주": "#ff4f81", "초월": "#f9d423",
+            "전설": "#ffd700"
         };
         const rankPoints = [
             { prob: 1.0, text: "시작" },
-            ...lottoProbabilityData.map(d => ({ prob: d.prob / 100, text: d.text })),
-            { prob: 1e-12, text: "전설" }
+            ...fullRankData
         ];
 
         const maxProb = rankPoints[0].prob;
         const minProb = rankPoints[rankPoints.length - 1].prob;
         const maxLog = Math.log(maxProb);
-        const minLog = Math.log(minProb);
+        const minLog = Math.log(Math.max(minProb, 1e-13));
         const scale = maxLog - minLog;
 
         let gradientStops = [];
         rankPoints.forEach(point => {
-            const pointLog = Math.log(Math.max(point.prob, 1e-12));
+            const pointLog = Math.log(Math.max(point.prob, 1e-13));
             let percentage = (1 - (pointLog - minLog) / scale) * 100;
             percentage = Math.max(0, Math.min(100, percentage));
             gradientStops.push(`${colors[point.text]} ${percentage}%`);
 
             const label = document.createElement('div');
             label.className = 'label-item';
-            let rankText = point.text;
-            let probText = formatProbability(point.prob);
-
-            label.innerHTML = `<span>${rankText}</span>`;
+            label.innerHTML = `<span>${point.text}</span>`;
             label.style.left = `${percentage}%`;
             labelsContainer.appendChild(label);
         });
 
         graphBar.style.background = `linear-gradient(to right, ${gradientStops.join(', ')})`;
 
-        restartButton.style.display = 'none';
         if (isNewGame) {
             currentRound = 1;
             cumulativeProbability = 1;
@@ -945,16 +981,12 @@
 
         if (isCorrect) {
             const oldProb = cumulativeProbability;
-            const probability = (1 / currentLevel);
-            cumulativeProbability *= probability;
-            const probabilityPercent = (probability * 100).toFixed(2);
-            levelInfoEl.innerHTML = `정답입니다! <br><strong>${probabilityPercent}%</strong>의 확률을 뚫으셨습니다!`;
-
+            cumulativeProbability *= (1 / currentLevel);
             updateCumulativeProbDisplay();
             updateProbabilityGraph(true, oldProb);
-            updateGoalGrid(); // 정답 시 그리드 업데이트
+            updateGoalGrid();
 
-            const legendProb = 1e-12;
+            const legendProb = fullRankData[fullRankData.length - 1].prob;
             if (cumulativeProbability <= legendProb) {
                 setTimeout(() => showResultModal(true), 1000);
                 return;
@@ -991,10 +1023,7 @@
         const pointer = document.getElementById('graph-pointer');
         const milestoneMessageEl = document.getElementById('rank-milestone-message');
 
-        const rankPoints = [
-            ...lottoProbabilityData.map(d => ({ prob: d.prob / 100, text: d.text })),
-             { prob: 1e-12, text: "전설" }
-        ];
+        const rankPoints = fullRankData;
 
         if (isSuccess) {
             for (const point of rankPoints) {
@@ -1006,21 +1035,18 @@
         }
 
         const maxProb = 1.0;
-        const minProb = 1e-12;
+        const minProb = rankPoints[rankPoints.length - 1].prob;
         const maxLog = Math.log(maxProb);
-        const minLog = Math.log(minProb);
+        const minLog = Math.log(Math.max(minProb, 1e-13));
         const scale = maxLog - minLog;
 
-        let currentProb = Math.max(cumulativeProbability, minProb);
+        let currentProb = Math.max(cumulativeProbability, minProb, 1e-13);
         const currentLog = Math.log(currentProb);
-
         let percentage = (1 - (currentLog - minLog) / scale) * 100;
         percentage = Math.max(0, Math.min(100, percentage));
-
         pointer.style.left = `${percentage}%`;
     }
 
-    // --- 보조 함수 ---
     function revealAllCards() {
         document.querySelectorAll('.card').forEach((card) => {
             const cardValue = card.dataset.value;
@@ -1039,8 +1065,7 @@
         if (currentRound === 1 && cumulativeProbability === 1) {
             cumulativeProbEl.innerHTML = '';
         } else {
-            const formatted = formatProbability(cumulativeProbability);
-            cumulativeProbEl.innerHTML = `현재까지 누적 성공 확률: <strong>${formatted}</strong>`;
+            cumulativeProbEl.innerHTML = `현재까지 누적 성공 확률: <strong>${formatProbability(cumulativeProbability)}</strong>`;
         }
     }
 
@@ -1053,52 +1078,47 @@
             if (s.includes('e')) {
                  const [base, exponent] = s.split('e');
                  const numZeros = Math.abs(parseInt(exponent, 10));
-                 const val = '0.' + '0'.repeat(numZeros - 1) + base.replace('.', '');
-                 return `${val}%`;
+                 return `${'0.' + '0'.repeat(numZeros - 1) + base.replace('.', '')}%`;
             }
             return `${s}%`;
         }
     }
 
-    // [수정]
     function showResultModal(isLegend = false) {
-        // 모달 내용 채우기
         if (isLegend) {
             finalRecordText.innerHTML = `<strong>당신은 전설이 되었습니다!</strong>`;
             bestLottoRecord.innerHTML = `이것은 인간의 영역을 넘어선 확률입니다.<br>모든 도전을 완료하셨습니다!`;
-            const confetti = new Confetti(confettiCanvas);
-            confetti.start();
+            new Confetti(confettiCanvas).start();
         } else if (currentRound > 1) {
             finalRecordText.innerHTML = `최종 기록: <strong>Round ${currentRound - 1}</strong> / 누적 확률: <strong>${formatProbability(cumulativeProbability)}</strong>`;
             let bestRecordFound = false;
 
-            for (const lotto of [...lottoProbabilityData].reverse()) {
-                const lottoProb = lotto.prob / 100;
-                if (cumulativeProbability <= lottoProb) {
-                     bestLottoRecord.innerHTML = `축하합니다!<br><strong>로또 ${lotto.text} 당첨</strong> 확률을 넘어섰습니다!`;
+            const finalRankPoints = [...fullRankData].reverse().map(d => ({...d, text: d.text.includes('등') ? `로또 ${d.text}`: d.text}));
+
+            for (const point of finalRankPoints) {
+                if (cumulativeProbability <= point.prob) {
+                     bestLottoRecord.innerHTML = `축하합니다!<br><strong>${point.text} 달성</strong> 확률을 넘어섰습니다!`;
                      bestRecordFound = true;
                      break;
                 }
             }
+
             if (!bestRecordFound) {
                 bestLottoRecord.textContent = '로또 5등 확률에도 미치지 못했지만, 대단한 도전이었습니다!';
             }
-            if(currentRound > 1) {
-                const confetti = new Confetti(confettiCanvas);
-                confetti.start();
+            if (currentRound > 1) {
+                new Confetti(confettiCanvas).start();
             }
         } else {
             finalRecordText.textContent = '성공한 기록이 없습니다.';
             bestLottoRecord.textContent = '다음엔 꼭 성공해보세요!';
         }
 
-        // [추가] 메인 화면의 확률 섹션을 복제하여 모달에 추가
-        modalProbabilitySectionEl.innerHTML = ''; // 이전 내용 초기화
+        modalProbabilitySectionEl.innerHTML = '';
         const clonedSection = probabilitySectionEl.cloneNode(true);
-        clonedSection.removeAttribute('id'); // ID 중복 방지
+        clonedSection.removeAttribute('id');
         modalProbabilitySectionEl.appendChild(clonedSection);
 
-        // 모달 표시
         resultModal.style.display = 'flex';
     }
 
@@ -1149,6 +1169,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>

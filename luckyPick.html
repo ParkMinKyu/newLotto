@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- [수정] SEO 및 컨셉에 맞는 타이틀, 설명, 키워드 추가 -->
     <title>로또 운빨 체험: 당신의 행운은 어디까지?</title>
     <meta name="description" content="간단한 공 뽑기 게임을 통해 로또 당첨 확률이 실제로 얼마나 낮은지 체감해보세요. 당신의 행운으로 1등 확률을 돌파할 수 있을까요?">
     <meta name="keywords" content="로또, 로또 시뮬레이터, 확률 게임, 행운 테스트, 뽑기 게임, lotto, probability game, lucky pick">
@@ -200,7 +199,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            margin: 20px 0;
+            margin: 15px 0;
             max-width: 800px;
         }
 
@@ -217,7 +216,7 @@
             font-weight: bold;
             border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, background-image 0.5s;
             user-select: none;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.4);
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
@@ -226,6 +225,14 @@
             transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.4);
         }
+
+        /* [추가] 등급별 공 색상 */
+        .card.ball-tier-4 { background-image: linear-gradient(135deg, #4a90e2 0%, #898ffe 100%); }
+        .card.ball-tier-3 { background-image: linear-gradient(135deg, #28a745 0%, #4a90e2 100%); }
+        .card.ball-tier-2 { background-image: linear-gradient(135deg, #f5a623 0%, #28a745 100%); }
+        .card.ball-tier-1 { background-image: linear-gradient(45deg, #d0021b, #f5a623, #8e44ad, #4a90e2); background-size: 400% 400%; animation: rainbow-flow 5s ease infinite; }
+
+
         .card.flipped, .card.wrong, .card.revealed-zero {
             cursor: default;
             color: white;
@@ -236,11 +243,13 @@
             transform: scale(1.15);
             z-index: 10;
             box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+            animation: none; /* 정답일 경우 애니메이션 중지 */
         }
         .card.wrong {
             background-image: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             opacity: 0.9;
             box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+            animation: none; /* 오답일 경우 애니메이션 중지 */
         }
         .card.revealed-zero {
             background-image: linear-gradient(135deg, #b0bec5 0%, #90a4ae 100%);
@@ -248,13 +257,13 @@
             opacity: 0.7;
         }
 
-        #message {
-            font-size: 1.2em;
-            margin-top: 20px;
-            min-height: 80px;
-            color: #555;
-            line-height: 1.5;
+        @keyframes rainbow-flow {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
         }
+
+
         #cumulative-prob {
             display: block;
             font-size: 0.9em;
@@ -274,8 +283,8 @@
             display: none;
         }
         #probability-section {
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 5px;
+            padding: 15px;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -288,7 +297,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr; /* 4개에서 3개로 변경 */
             gap: 8px;
-            margin: 15px 0;
             font-size: 0.9em;
         }
         .goal-item {
@@ -330,7 +338,6 @@
         #probability-graph-container {
             width: 100%;
             position: relative;
-            padding-top: 20px;
             height: 60px;
         }
         #probability-graph-bar {
@@ -361,7 +368,7 @@
         .label-item small { font-size: 0.9em; color: #999; }
         #graph-pointer {
             position: absolute;
-            top: 10px;
+            top: -20px;
             left: 0;
             font-size: 20px;
             color: #d0021b;
@@ -379,7 +386,9 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 1010; /* [수정] 햄버거 메뉴보다 높은 z-index 값으로 변경 */
+            padding: 20px 0; /* [추가] 상하 여백 추가 */
+            box-sizing: border-box; /* [추가] 패딩 포함 크기 계산 */
         }
         .modal-content {
             background-color: white;
@@ -390,7 +399,10 @@
             width: 90%;
             max-width: 550px; /* 너비 확장 */
             animation: slide-down 0.5s ease-out;
+            max-height: 100%; /* [추가] 최대 높이를 부모(overlay)에 맞춤 */
+            overflow-y: auto; /* [추가] 내용이 길어지면 세로 스크롤 생성 */
         }
+
         @keyframes slide-down {
             from { transform: translateY(-30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -477,18 +489,89 @@
             transition: width 2s linear;
         }
 
+        #message {
+            min-height: auto; /* min-height 재조정 */
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 5px;
+        }
         #level-info {
-            font-size: 1.1em;
-            color: #555;
-            padding: 8px 12px;
+            font-size: 1.2em;
+            color: #333;
+            padding: 12px;
             background-color: #e9ecef;
             border-radius: 8px;
+            line-height: 1.4;
+            text-align: left;
         }
-        #level-info .round,
+        #level-info .main-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        #level-info .round {
+            font-size: 1.1em;
+            color: #007bff;
+        }
+        #level-info .current-goal {
+            font-size: 0.9em;
+            color: #28a745;
+            background-color: #d1e7dd;
+            padding: 2px 8px;
+            border-radius: 12px;
+            transition: all 0.5s ease-in-out;
+        }
+        #level-info .sub-info {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 4px;
+        }
         #level-info .level,
-        #level-info .mission { margin: 0 4px; }
-        #level-info .round { font-weight: bold; color: #007bff; }
-        #level-info .level { font-weight: bold; color: #28a745; }
+        #level-info .mission {
+            margin: 0;
+            font-weight: normal;
+            color: inherit;
+        }
+
+        /* [추가] 등급별 '도전 중' 문구 스타일 */
+        #level-info .current-goal.goal-1 {
+            background-color: #8e44ad; /* 1등 */
+            color: white;
+            box-shadow: 0 0 8px rgba(142, 68, 173, 0.7);
+        }
+        #level-info .current-goal.goal-mythic {
+            background-color: #00c4e4; /* 신화 */
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 196, 228, 0.8);
+            animation: pulse-animation 1.5s infinite;
+        }
+        #level-info .current-goal.goal-cosmic {
+            background-image: linear-gradient(45deg, #ff4f81, #f9d423); /* 우주 */
+            color: white;
+            box-shadow: 0 0 12px rgba(255, 79, 129, 0.8);
+            animation: pulse-animation 1.2s infinite;
+        }
+        #level-info .current-goal.goal-transcendent {
+            background-image: linear-gradient(45deg, #f9d423, #898ffe); /* 초월 */
+            color: white;
+            box-shadow: 0 0 15px rgba(249, 212, 35, 0.9);
+            animation: pulse-animation 1s infinite;
+        }
+        #level-info .current-goal.goal-legend {
+            background-image: linear-gradient(45deg, #ffd700, #ff8c00); /* 전설 */
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 18px rgba(255, 215, 0, 1);
+            animation: pulse-animation 0.8s infinite;
+        }
+
+        /* [추가] 반짝이는 애니메이션 */
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
         #rank-milestone-message {
             display: block;
@@ -617,6 +700,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 
@@ -657,9 +741,9 @@
 
         <div id="game-container">
             <div id="message">
-                <span id="level-info"></span>
-                <span id="rank-milestone-message"></span>
-                <span id="cumulative-prob"></span>
+                <div id="level-info"></div>
+                <div id="rank-milestone-message"></div>
+                <div id="cumulative-prob"></div>
                 <div id="timer-bar-container">
                     <div id="timer-bar"></div>
                 </div>
@@ -674,7 +758,7 @@
             <button id="restart-button">다시 시작</button>
             <div id="probability-section">
                 <h2>달성 확률 위치</h2>
-                <p style="font-size: 0.85em; color: #666; margin-top: -10px; margin-bottom: 20px;">
+                <p style="font-size: 0.85em; color: #666; margin-top: -10px;">
                     현재까지의 누적 성공 확률을 로또 등수와 비교하여 보여줍니다.
                 </p>
                 <div id="probability-graph-container">
@@ -741,7 +825,6 @@
     const navMenuButton = document.getElementById('nav-menu-button');
     const navRestartButton = document.getElementById('nav-restart-button');
 
-
     // --- 게임 상태 변수 ---
     let currentLevel = 2;
     let currentRound = 1;
@@ -749,6 +832,7 @@
     let cumulativeProbability = 1;
     let gameMode = 'fixed';
     let fixedCardCount = 2;
+    let currentGoal = { text: '', className: '' };
 
     // --- [수정] 등급 데이터를 공통으로 관리 ---
     const lottoProbabilityData = [
@@ -810,13 +894,22 @@
         goToMenu();
     });
 
+    // luckyPick.html 파일의 <script> 태그 안에서 restartGame 함수를 찾아 아래 코드로 교체하세요.
+
     function restartGame() {
         closeSideNav();
         resultModal.style.display = 'none';
+
+        // [수정] 게임 상태를 완전히 초기화
+        currentRound = 1;
+        cumulativeProbability = 1;
+        document.getElementById('rank-milestone-message').innerHTML = ''; // [추가] 돌파 메시지 초기화
+
         const startLevel = gameMode === 'classic' ? 2 : fixedCardCount;
         currentLevel = startLevel;
         setupGame(startLevel, true);
     }
+
     modalRestartButton.addEventListener('click', restartGame);
     restartButton.addEventListener('click', restartGame);
     navRestartButton.addEventListener('click', restartGame);
@@ -856,11 +949,27 @@
     pcMenuButton.addEventListener('click', openSideNav);
     navOverlay.addEventListener('click', closeSideNav);
 
+    // 도전 목표 텍스트와 클래스를 업데이트하는 함수
+    function updateCurrentGoalText() {
+        currentGoal.text = '최고 등급 달성!';
+        currentGoal.className = 'goal-legend'; // 기본값
+
+        const rankClasses = ['goal-5', 'goal-4', 'goal-3', 'goal-2', 'goal-1', 'goal-mythic', 'goal-cosmic', 'goal-transcendent', 'goal-legend'];
+
+        for (let i = 0; i < fullRankData.length; i++) {
+            const goal = fullRankData[i];
+            if (cumulativeProbability > goal.prob) {
+                currentGoal.text = `${goal.text} 도전 중`;
+                currentGoal.className = rankClasses[i] || '';
+                break;
+            }
+        }
+    }
+
 
     function updateGoalGrid() {
         const goalGridEl = document.getElementById('goal-grid');
         goalGridEl.innerHTML = '';
-
         const currentSuccesses = Math.max(0, currentRound - 1);
         const singleTryProb = 1 / currentLevel;
 
@@ -899,16 +1008,34 @@
         });
     }
 
+
+    // luckyPick.html 파일의 <script> 태그 안에서 setupGame 함수를 찾아 아래 코드로 교체하세요.
+
     function setupGame(level, isNewGame = false) {
+        if (isNewGame) {
+            currentRound = 1;
+            cumulativeProbability = 1;
+        }
+
+        updateCurrentGoalText();
+
         gameBoard.innerHTML = '';
         const levelText = gameMode === 'classic' ? `레벨 ${level - 1}` : `공 ${level}개 고정 모드`;
+        const missionText = `공 ${level}개 중 '1'을 찾아보세요!`;
 
         levelInfoEl.innerHTML = `
-            <span class="round">Round ${currentRound}</span> |
-            <span class="level">${levelText}</span> |
-            <span class="mission">공 ${level}개 중 '1'을 찾아보세요!</span>
+            <div class="main-info">
+                <span class="round">Round ${currentRound}</span>
+                <span class="current-goal ${currentGoal.className}">${currentGoal.text}</span>
+            </div>
+            <div class="sub-info">
+                <span class="level">${levelText}</span> |
+                <span class="mission">${missionText}</span>
+            </div>
         `;
+
         isClickable = true;
+
 
         const graphBar = document.getElementById('probability-graph-bar');
         const labelsContainer = document.getElementById('graph-labels');
@@ -947,11 +1074,6 @@
 
         graphBar.style.background = `linear-gradient(to right, ${gradientStops.join(', ')})`;
 
-        if (isNewGame) {
-            currentRound = 1;
-            cumulativeProbability = 1;
-        }
-
         updateGoalGrid();
         updateCumulativeProbDisplay();
         updateProbabilityGraph();
@@ -959,14 +1081,30 @@
         let cards = Array(level).fill(0);
         const correctIndex = Math.floor(Math.random() * level);
         cards[correctIndex] = 1;
+
+        // [수정] 등급에 따라 공 색상을 결정하는 로직 변경
+        const ballRankClasses = {
+            'goal-5': '', // 5등 도전 시 기본 공 색상
+            'goal-4': 'ball-tier-4',
+            'goal-3': 'ball-tier-3',
+            'goal-2': 'ball-tier-2',
+            'goal-1': 'ball-tier-1',
+            'goal-mythic': 'ball-tier-1',
+            'goal-cosmic': 'ball-tier-1',
+            'goal-transcendent': 'ball-tier-1',
+            'goal-legend': 'ball-tier-1'
+        };
+        const ballClass = ballRankClasses[currentGoal.className] || '';
+
         for (let i = 0; i < level; i++) {
             const card = document.createElement('div');
-            card.classList.add('card');
+            card.className = `card ${ballClass}`; // 수정된 클래스 적용
             card.dataset.value = cards[i];
             card.addEventListener('click', handleCardClick);
             gameBoard.appendChild(card);
         }
     }
+
 
     function handleCardClick(event) {
         if (!isClickable) return;
@@ -982,6 +1120,8 @@
         if (isCorrect) {
             const oldProb = cumulativeProbability;
             cumulativeProbability *= (1 / currentLevel);
+
+            updateCurrentGoalText();
             updateCumulativeProbDisplay();
             updateProbabilityGraph(true, oldProb);
             updateGoalGrid();
@@ -1014,7 +1154,6 @@
                 }
             }, 2000);
         } else {
-            levelInfoEl.innerHTML = `아쉽네요! '1'은 저기 있었어요.`;
             setTimeout(() => showResultModal(false), 1000);
         }
     }
@@ -1169,7 +1308,6 @@
         }
     }
 </script>
-
 
 </body>
 </html>

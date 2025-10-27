@@ -963,22 +963,30 @@
     navMenuButton.addEventListener('click', goToMenu);
 
      modalShareButton.addEventListener('click', async () => {
-        // 공유할 텍스트를 생성합니다.
-        const shareText = `나의 로또 운빨 도전 결과!\n\n${finalRecordText.innerText}\n${bestLottoRecord.innerText}\n\n당신도 도전해보세요! 👇\n`;
-        const shareUrl = "https://parkminkyu.github.io/newLotto/luckyPick.html"; // 공유될 링크 주소
+         // 공유할 텍스트를 생성합니다.
+        const shareTitle = '로또 운빨 체험 결과!';
+        const shareText = `나의 로또 운빨 도전 결과!\n\n${finalRecordText.innerText}\n${bestLottoRecord.innerText}\n\n당신도 도전해보세요! 👇`;
+        const shareUrl = "https://parkminkyu.github.io/luckyPick/";
+        const fullShareContent = `${shareTitle}\n\n${shareText}\n${shareUrl}`;
 
         try {
             // Web Share API를 사용하여 공유
             if (navigator.share) {
-                await navigator.share({
-                    title: '로또 운빨 체험 결과!',
+                 await navigator.share({
+                    title: shareTitle,
                     text: shareText,
                     url: shareUrl,
                 });
                 console.log('결과 공유 성공!');
             } else {
-                // Web Share API를 지원하지 않는 경우 (주로 PC 환경)
-                alert('이 브라우저에서는 공유하기 기능을 지원하지 않습니다. 결과를 직접 복사하여 공유해주세요.');
+                // Web Share API를 지원하지 않는 경우 (PC 환경 등) 클립보드에 복사
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(fullShareContent);
+                    alert('결과가 클립보드에 복사되었습니다. 원하는 곳에 붙여넣기하여 공유해주세요!');
+                } else {
+                    // clipboard API도 지원하지 않는 경우를 대비한 최종 안내
+                    alert('이 브라우저에서는 자동 복사를 지원하지 않습니다. 결과를 직접 복사하여 공유해주세요.');
+                }
             }
         } catch (error) {
             console.error('공유 중 오류 발생:', error);

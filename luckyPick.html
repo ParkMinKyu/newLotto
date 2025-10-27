@@ -455,6 +455,8 @@
         }
         #modal-restart-button { background-color: #28a745; color: white; }
         #modal-menu-button { background-color: #6c757d; color: white; }
+        #modal-share-button { background-color: #007bff; color: white; }
+
 
         /* [추가] 모달 내 확률 섹션 스타일 */
         #modal-probability-section {
@@ -481,7 +483,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 1001;
+            z-index: 1011;
         }
         #timer-bar-container {
             width: 100%;
@@ -808,8 +810,9 @@
                 <!-- [추가] 모달 내에 확률 섹션이 들어갈 컨테이너 -->
                 <div id="modal-probability-section"></div>
                 <div id="result-buttons">
-                    <button id="modal-restart-button">다시 시작</button>
                     <button id="modal-menu-button">모드 선택으로</button>
+                    <button id="modal-restart-button">다시 시작</button>
+                    <button id="modal-share-button">결과 공유하기</button>
                 </div>
             </div>
         </div>
@@ -842,6 +845,7 @@
     const bestLottoRecord = document.getElementById('best-lotto-record');
     const modalRestartButton = document.getElementById('modal-restart-button');
     const modalMenuButton = document.getElementById('modal-menu-button');
+    const modalShareButton = document.getElementById('modal-share-button');
     const confettiCanvas = document.getElementById('confetti-canvas');
     const probabilitySectionEl = document.getElementById('probability-section');
     const modalProbabilitySectionEl = document.getElementById('modal-probability-section');
@@ -958,6 +962,28 @@
     modalMenuButton.addEventListener('click', goToMenu);
     navMenuButton.addEventListener('click', goToMenu);
 
+     modalShareButton.addEventListener('click', async () => {
+        // 공유할 텍스트를 생성합니다.
+        const shareText = `나의 로또 운빨 도전 결과!\n\n${finalRecordText.innerText}\n${bestLottoRecord.innerText}\n\n당신도 도전해보세요! 👇`;
+        const shareUrl = "https://parkminkyu.github.io/luckyPick/"; // 공유될 링크 주소
+
+        try {
+            // Web Share API를 사용하여 공유
+            if (navigator.share) {
+                await navigator.share({
+                    title: '로또 운빨 체험 결과!',
+                    text: shareText,
+                    url: shareUrl,
+                });
+                console.log('결과 공유 성공!');
+            } else {
+                // Web Share API를 지원하지 않는 경우 (주로 PC 환경)
+                alert('이 브라우저에서는 공유하기 기능을 지원하지 않습니다. 결과를 직접 복사하여 공유해주세요.');
+            }
+        } catch (error) {
+            console.error('공유 중 오류 발생:', error);
+        }
+    });
 
     // 사이드 메뉴 기능
     function openSideNav() {

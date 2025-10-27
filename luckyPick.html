@@ -989,6 +989,10 @@
                 }
             }
         } catch (error) {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(fullShareContent);
+                alert('결과가 클립보드에 복사되었습니다. 원하는 곳에 붙여넣기하여 공유해주세요!');
+            }
             console.error('공유 중 오류 발생:', error);
         }
     });
